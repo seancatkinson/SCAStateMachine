@@ -36,6 +36,9 @@ public class StateMachine <T where T: Equatable, T: Hashable>
         return _currentState
     }
     
+/**
+    Array of state change rules
+*/
     private var _stateChanges : [StateChange<T>] = []
     
     private var _activated : Bool = false
@@ -74,6 +77,9 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :returns: a bool success value
 */
     public func canChangeToState(newState: T) -> Bool {
+        guard _stateChanges.count > 0 else {
+            return true
+        }
         for change in _stateChanges {
             if change.destinationState == newState {
                 if change.startingStates.contains(_currentState) {

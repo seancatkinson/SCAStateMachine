@@ -59,7 +59,7 @@ class StateChangeTests: XCTestCase {
         let stateMachine = createTestStateMachine()
         // run a test before adding any rules
         let result = stateMachine.canChangeToState(.Testing)
-        XCTAssertFalse(result, "Should be false since no rules have been added yet")
+        XCTAssertTrue(result, "No rules means all state changes are allowed")
     }
     
     func testCanCheckStateChangeRulesAfterAddingIncompleteRules() {
@@ -130,6 +130,24 @@ class StateChangeTests: XCTestCase {
             return
         }
         XCTAssertTrue(false, "Managed to change state without activation")
+    }
+    
+// MARK:- State Types
+    func testCanUseStringsAsStateTypes() {
+        let stateMachine = StateMachine(withInitialState: "One")
+        let testOne = stateMachine.canChangeToState("Two")
+        XCTAssertTrue(testOne, "Should be able to change to any other string")
+        
+        stateMachine.activate()
+        
+        do {
+            try stateMachine.changeToState("Two", userInfo: nil)
+        }
+        catch {
+            XCTAssertTrue(false, "Couldn't change the state")
+            return
+        }
+        XCTAssertEqual(stateMachine.currentState, "Two", "State should now equal Two")
     }
 
 }
