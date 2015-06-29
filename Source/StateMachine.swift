@@ -25,13 +25,13 @@ import Foundation
 
 public class StateMachine <T where T: Equatable, T: Hashable>
 {
-    typealias beforeChangeAction = (newState:T, userInfo:Any?)->()
-    typealias afterChangeAction = (oldState:T, userInfo:Any?)->()
-    typealias beforeChangeActionCollection = Dictionary<T, beforeChangeAction>
-    typealias afterChangeActionCollection = Dictionary<T, afterChangeAction>
+    typealias changeAction = (newState:T, oldState:T, userInfo:Any?)->()
     
 // MARK:- state vars
     private var _currentState : T
+/**
+    Returns the current state of the State Machine
+*/
     public var currentState : T {
         return _currentState
     }
@@ -39,15 +39,20 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     private var _stateChanges : [StateChange<T>] = []
     
     private var _activated : Bool = false
+/**
+    Boolean for whether the StateMachine has been activated
+*/
     public var activated : Bool {
         return _activated
     }
     
 // MARK:- state actions
-    private var _willMoveToStateActions : Dictionary<T, beforeChangeAction> = [:]
-    private var _willMoveFromStateActions : Dictionary<T, beforeChangeAction> = [:]
-    private var _didMoveToStateActions : Dictionary<T, afterChangeAction> = [:]
-    private var _didMoveFromStateActions : Dictionary<T, afterChangeAction> = [:]
+    private var _willChangeToStateActions : Dictionary<T, changeAction> = [:]
+    private var _willChangeFromStateActions : Dictionary<T, changeAction> = [:]
+    private var _didChangeToStateActions : Dictionary<T, changeAction> = [:]
+    private var _didChangeFromStateActions : Dictionary<T, changeAction> = [:]
+    private var _willChangeStateAction: changeAction?
+    private var _didChangeStateAction: changeAction?
     
 // MARK:- Public Methods
 /**
@@ -86,10 +91,12 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     the state change you attempted.
     
     Will perform the state change actions in the following order -
-    - willMoveToState
-    - willMoveFromState
-    - didMoveToState
-    - didMoveFromState
+    - willChangeState
+    - willChangeFromState
+    - willChangeToState
+    - didChangeToState
+    - didChangeFromState
+    - didChangeState
     
     :param: state the state you want to change to
     :param: userInfo any extra info you want to pass to your State change actions
@@ -103,18 +110,29 @@ public class StateMachine <T where T: Equatable, T: Hashable>
         }
         
         let oldState = _currentState
-        if let willMoveToAction = _willMoveToStateActions[newState] {
-            willMoveToAction(newState: newState, userInfo: userInfo)
+        
+        // will Change actions
+        if let willChangeStateAction = _willChangeStateAction {
+            willChangeStateAction(newState: newState, oldState: oldState, userInfo: userInfo)
         }
-        if let willMoveFromAction = _willMoveFromStateActions[oldState] {
-            willMoveFromAction(newState: newState, userInfo: userInfo)
+        if let willChangeFromAction = _willChangeFromStateActions[oldState] {
+            willChangeFromAction(newState: newState, oldState: oldState, userInfo: userInfo)
         }
+        if let willChangeToAction = _willChangeToStateActions[newState] {
+            willChangeToAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        }
+        
         _currentState = newState
-        if let didMoveToAction = _didMoveToStateActions[newState] {
-            didMoveToAction(oldState: oldState, userInfo: userInfo)
+        
+        // did change actions
+        if let didChangeToAction = _didChangeToStateActions[newState] {
+            didChangeToAction(newState: newState, oldState: oldState, userInfo: userInfo)
         }
-        if let didMoveFromAction = _didMoveFromStateActions[oldState] {
-            didMoveFromAction(oldState: oldState, userInfo: userInfo)
+        if let didChangeFromAction = _didChangeFromStateActions[oldState] {
+            didChangeFromAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        }
+        if let didChangeStateAction = _didChangeStateAction {
+            didChangeStateAction(newState: newState, oldState: oldState, userInfo: userInfo)
         }
     }
     
@@ -128,7 +146,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     
 /**
     Add a state change rule to allow changing to a specific state from a list of other states. Throws
-    a StateMachineError.StateMachineActivated error if the state machine as already been activated
+    a StateMachineError.StateMachineActivated error if the state machine has already been activated
     
     :param: destinationState the state you want to allow movement to
     :param: fromStartingStates a list of states that will allow moving to the destinationState
@@ -146,63 +164,99 @@ public class StateMachine <T where T: Equatable, T: Hashable>
 // MARK: State Change Actions
     
 /**
-    Set a block to be executed before the state machine changes to a specific state. Throws a
+    Set a block to be executed before the state machine changes to any other state. Throws a
     StateMachineError.StateMachineActivated error if the state machine has been activated
     
-    :param: newState the state to add the action for
-    :param: perform the block to be executed when the state machine will change to the provided state
+    :param: closure the block to be executed when the state machine will change to the provided state
 */
-    public func beforeChangingToState(newState: T, perform:beforeChangeAction) throws {
+    public func perform(beforeChanging closure:changeAction) throws {
         guard _activated == false else {
             throw StateMachineError.StateMachineActivated
         }
         
-        _willMoveToStateActions[newState] = perform
+        _willChangeStateAction = closure
     }
     
 /**
-    Set a block to be executed before the state machine changes from a specific state. Throws a
+    Set a block to be executed after the state machine changes to any other state. Throws a
     StateMachineError.StateMachineActivated error if the state machine has been activated
     
-    :param: oldState the state to add the action for
-    :param: perform the block to be executed when the state machine will change from the provided state
+    :param: closure the block to be executed when the state machine did change to the provided state
 */
-    public func beforeChangingFromState(oldState: T,  perform:beforeChangeAction) throws {
+    public func perform(afterChanging closure:changeAction) throws {
         guard _activated == false else {
             throw StateMachineError.StateMachineActivated
         }
         
-        _willMoveFromStateActions[oldState] = perform
+        _didChangeStateAction = closure
     }
     
 /**
-    Set a block to be executed after the state machine changes to a specific state. Throws a
+    Set a block to be executed before the state machine changes to a set of specific states. Throws a
     StateMachineError.StateMachineActivated error if the state machine has been activated
     
-    :param: newState the state to add the action for
-    :param: perform the block to be executed when the state machine did change to the provided state
+    :param: closure the block to be executed when the state machine will change to the provided states
+    :param: states the states to add the action for
 */
-    public func afterChangingToState(newState: T, perform:afterChangeAction) throws {
+    public func perform(closure:changeAction, beforeChangingToStates states: T...) throws {
         guard _activated == false else {
             throw StateMachineError.StateMachineActivated
         }
         
-        _didMoveToStateActions[newState] = perform
+        for state in states {
+            _willChangeToStateActions[state] = closure
+        }
     }
     
 /**
-    Set a block to be executed after the state machine changes from a specific state. Throws a
+    Set a block to be executed before the state machine changes from a set of specific states. Throws a
     StateMachineError.StateMachineActivated error if the state machine has been activated
     
-    :param: oldState the state to add the action for
-    :param: perform the block to be executed when the state machine did change from the provided state
+    :param: closure the block to be executed when the state machine will change from the provided states
+    :param: states the states to add the action for
 */
-    public func afterChangingFromState(oldState: T, perform:afterChangeAction) throws {
+    public func perform(closure:changeAction, beforeChangingFromStates states: T...) throws {
         guard _activated == false else {
             throw StateMachineError.StateMachineActivated
         }
         
-        _didMoveFromStateActions[oldState] = perform
+        for state in states {
+            _willChangeFromStateActions[state] = closure
+        }
+    }
+    
+/**
+    Set a block to be executed after the state machine changes to a set of specific states. Throws a
+    StateMachineError.StateMachineActivated error if the state machine has been activated
+    
+    :param: closure the block to be executed when the state machine did change to the provided states
+    :param: states the states to add the action for
+*/
+    public func perform(closure:changeAction, afterChangingToStates states: T...) throws {
+        guard _activated == false else {
+            throw StateMachineError.StateMachineActivated
+        }
+        
+        for state in states {
+            _didChangeToStateActions[state] = closure
+        }
+    }
+    
+/**
+    Set a block to be executed after the state machine changes from a set of specific states. Throws a
+    StateMachineError.StateMachineActivated error if the state machine has been activated
+    
+    :param: closure the block to be executed when the state machine did change from the provided states
+    :param: states the states to add the action for
+*/
+    public func perform(closure:changeAction, afterChangingFromStates states: T...) throws {
+        guard _activated == false else {
+            throw StateMachineError.StateMachineActivated
+        }
+        
+        for state in states {
+            _didChangeFromStateActions[state] = closure
+        }
     }
 }
 

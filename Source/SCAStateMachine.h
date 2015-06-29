@@ -1,4 +1,4 @@
-//  SweeterSwift.h
+//  SCAStateMachine.h
 //
 //  Copyright (c) 2015 SeanCAtkinson (http://seancatkinson.com)
 //
