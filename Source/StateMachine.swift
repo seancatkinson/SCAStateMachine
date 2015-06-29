@@ -70,7 +70,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     }
     
 /**
-    Check if the state machine can change to a specific state
+    Check if the state machine can change to a specific state. Returns true if no rules have yet been set.
     
     :param: state the state you want to check
     
@@ -152,7 +152,8 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     
 /**
     Add a state change rule to allow changing to a specific state from a list of other states. Throws
-    a StateMachineError.StateMachineActivated error if the state machine has already been activated
+    a StateMachineError.StateMachineActivated error if the state machine has already been activated. If no 
+    rules are set then all state changes are allowed.
     
     :param: destinationState the state you want to allow movement to
     :param: fromStartingStates a list of states that will allow moving to the destinationState
