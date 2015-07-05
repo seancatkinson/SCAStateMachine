@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		964FD29F1B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */; };
 		964FD2A01B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */; };
+		9667F52D1B49747E00B25183 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667F52C1B49747E00B25183 /* BasicTests.swift */; };
+		9667F52E1B49747E00B25183 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667F52C1B49747E00B25183 /* BasicTests.swift */; };
 		968F0B2B1B25A6F1000A4D3E /* SCAStateMachine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		968F0B2C1B25A6FA000A4D3E /* SCAStateMachine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E1DC0D1B19D6F6000DBF49 /* SCAStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		969B6E6C1B407D3000A1F25B /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969B6E6B1B407D3000A1F25B /* StateMachine.swift */; };
@@ -64,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachineTestHelpers.swift; sourceTree = "<group>"; };
+		9667F52C1B49747E00B25183 /* BasicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTests.swift; sourceTree = "<group>"; };
 		969B6E6B1B407D3000A1F25B /* StateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		96D36C261B4085FD003EC90C /* StateChangeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeTests.swift; sourceTree = "<group>"; };
 		96D36C291B408649003EC90C /* StateChangeActionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeActionTests.swift; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */,
+				9667F52C1B49747E00B25183 /* BasicTests.swift */,
 				96D36C261B4085FD003EC90C /* StateChangeTests.swift */,
 				96D36C291B408649003EC90C /* StateChangeActionTests.swift */,
 				96E1DC2E1B19DDA2000DBF49 /* Supporting Files */,
@@ -349,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9667F52D1B49747E00B25183 /* BasicTests.swift in Sources */,
 				964FD29F1B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */,
 				96D36C271B4085FD003EC90C /* StateChangeTests.swift in Sources */,
 				96D36C2A1B408649003EC90C /* StateChangeActionTests.swift in Sources */,
@@ -367,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9667F52E1B49747E00B25183 /* BasicTests.swift in Sources */,
 				964FD2A01B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */,
 				96D36C281B4085FD003EC90C /* StateChangeTests.swift in Sources */,
 				96D36C2B1B408649003EC90C /* StateChangeActionTests.swift in Sources */,
