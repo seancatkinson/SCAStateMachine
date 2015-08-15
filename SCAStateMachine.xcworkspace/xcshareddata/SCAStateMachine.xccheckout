@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AA3A877A-34B3-45BB-BC76-A2BD5903B932</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SCAStateMachine</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>237002CC743A7780DF9124C644A510CFEA3D723D</key>
+		<string>https://github.com/seancatkinson/SCAStateMachine.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SCAStateMachine.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>237002CC743A7780DF9124C644A510CFEA3D723D</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/seancatkinson/SCAStateMachine.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>237002CC743A7780DF9124C644A510CFEA3D723D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>237002CC743A7780DF9124C644A510CFEA3D723D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SCAStateMachine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

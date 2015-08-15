@@ -31,32 +31,107 @@ class StateChangeActionTests: XCTestCase {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         do {
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 print("Hello World")
             }, beforeChangingToStates: .Testing)
         }
         catch {
-            XCTAssertTrue(false, "Couldn't set an action")
+            XCTFail("Couldn't set an action")
             return
         }
-        XCTAssertTrue(true, "Set the action")
     }
     
-    func testCannotSetActionsAfterActivation() {
+    func testCannotSetBeforeChangingActionsAfterActivation() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         stateMachine.activate()
         do {
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
+                print("Hello World")
+            })
+        }
+        catch {
+            return
+        }
+        XCTFail("Set an action after activation")
+    }
+    
+    func testCannotSetBeforeChangingToActionsAfterActivation() {
+        var stateMachine = createTestStateMachine()
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine.activate()
+        do {
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 print("Hello World")
                 }, beforeChangingToStates: .Testing)
         }
         catch {
-            XCTAssertTrue(true, "Couldn't set an action")
             return
         }
-        XCTAssertTrue(false, "Set an action after activation")
+        XCTFail("Set an action after activation")
     }
+    
+    func testCannotSetBeforeChangingFromActionsAfterActivation() {
+        var stateMachine = createTestStateMachine()
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine.activate()
+        do {
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                print("Hello World")
+                }, beforeChangingFromStates: .Testing)
+        }
+        catch {
+            return
+        }
+        XCTFail("Set an action after activation")
+    }
+    
+    func testCannotSetAfterChangingToActionsAfterActivation() {
+        var stateMachine = createTestStateMachine()
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine.activate()
+        do {
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                print("Hello World")
+                }, afterChangingToStates: .Testing)
+        }
+        catch {
+            return
+        }
+        XCTFail("Set an action after activation")
+    }
+    
+    func testCannotSetAfterChangingFromActionsAfterActivation() {
+        var stateMachine = createTestStateMachine()
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine.activate()
+        do {
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                print("Hello World")
+                }, afterChangingFromStates: .Testing)
+        }
+        catch {
+            return
+        }
+        XCTFail("Set an action after activation")
+    }
+    
+    func testCannotSetAfterChangingActionsAfterActivation() {
+        var stateMachine = createTestStateMachine()
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine.activate()
+        do {
+            try stateMachine.perform(afterChanging:{ (destinationState, startingState, userInfo) -> () in
+                print("Hello World")
+                })
+        }
+        catch {
+            return
+        }
+        XCTFail("Set an action after activation")
+    }
+    
+    
 
     func testActionsFireInTheCorrectOrder() {
         var stateMachine = createTestStateMachine()
@@ -65,38 +140,38 @@ class StateChangeActionTests: XCTestCase {
         var myNumber:Int = 0
         
         do {
-            try stateMachine.perform(beforeChanging: { (newState, oldState, userInfo) -> () in
+            try stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
                 myNumber += 1
                 XCTAssertEqual(myNumber, 1, "myNumber should equal 1")
             })
             
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 myNumber += 10
                 XCTAssertEqual(myNumber, 11, "myNumber should equal 11")
             }, beforeChangingFromStates: .Pending)
             
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 myNumber += 100
                 XCTAssertEqual(myNumber, 111, "myNumber should equal 111")
                 }, beforeChangingToStates: .Testing)
             
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 myNumber += 1000
                 XCTAssertEqual(myNumber, 1111, "myNumber should equal 1111")
             }, afterChangingToStates: .Testing)
 
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
                 myNumber += 10000
                 XCTAssertEqual(myNumber, 11111, "myNumber should equal 11111")
             }, afterChangingFromStates: .Pending)
             
-            try stateMachine.perform(afterChanging: { (newState, oldState, userInfo) -> () in
+            try stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
                 myNumber += 100000
                 XCTAssertEqual(myNumber, 111111, "myNumber should equal 111111")
             })
         }
         catch {
-            XCTAssertTrue(false, "Couldn't set an action")
+            XCTFail("Couldn't set an action")
             return
         }
         
@@ -106,10 +181,9 @@ class StateChangeActionTests: XCTestCase {
             try stateMachine.changeToState(.Testing, userInfo: nil)
         }
         catch {
-            XCTAssertTrue(false, "Couldn't change to state .Testing")
+            XCTFail("Couldn't change to state .Testing")
             return
         }
-        XCTAssertTrue(true, "Changed State")
         XCTAssertEqual(myNumber, 111111, "myNumber should equal 111111")
     }
     
@@ -120,60 +194,86 @@ class StateChangeActionTests: XCTestCase {
         let myNumber:Int = 8000
         
         do {
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
-                XCTAssertTrue(newState == TestStates.Testing, "newState should equal .Testing but instead equals: \(newState)")
-                XCTAssertTrue(oldState == TestStates.Pending, "oldState should equal .Pending but instead equals: \(oldState)")
+            try stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
                 XCTAssertTrue(stateMachine.currentState == .Pending, "currentState should still equal .Pending but instead equals: \(stateMachine.currentState)")
                 
                 if let userInfo = userInfo where userInfo is Int {
                     let passedNumber = userInfo as! Int
                     XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
                 } else {
-                    XCTAssertTrue(false, "userInfo isn't valid")
+                    XCTFail("userInfo isn't valid")
+                }
+            })
+            
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
+                XCTAssertTrue(stateMachine.currentState == .Pending, "currentState should still equal .Pending but instead equals: \(stateMachine.currentState)")
+                
+                if let userInfo = userInfo where userInfo is Int {
+                    let passedNumber = userInfo as! Int
+                    XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
+                } else {
+                    XCTFail("userInfo isn't valid")
                 }
             }, beforeChangingToStates: .Testing)
 
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
-                XCTAssertTrue(newState == TestStates.Testing, "newState should equal .Testing but instead equals: \(newState)")
-                XCTAssertTrue(oldState == TestStates.Pending, "oldState should equal .Pending but instead equals: \(oldState)")
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
                 XCTAssertTrue(stateMachine.currentState == .Pending, "currentState should still equal .Pending but instead equals: \(stateMachine.currentState)")
                 
                 if let userInfo = userInfo where userInfo is Int {
                     let passedNumber = userInfo as! Int
                     XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
                 } else {
-                    XCTAssertTrue(false, "userInfo isn't valid")
+                    XCTFail("userInfo isn't valid")
                 }
             }, beforeChangingFromStates: .Pending)
             
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
-                XCTAssertTrue(newState == TestStates.Testing, "newState should equal .Testing but instead equals: \(newState)")
-                XCTAssertTrue(oldState == TestStates.Pending, "oldState should equal .Pending but instead equals: \(oldState)")
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
                 XCTAssertTrue(stateMachine.currentState == .Testing, "currentState should now equal .Testing but instead equals: \(stateMachine.currentState)")
                 
                 if let userInfo = userInfo where userInfo is Int {
                     let passedNumber = userInfo as! Int
                     XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
                 } else {
-                    XCTAssertTrue(false, "userInfo isn't valid")
+                    XCTFail("userInfo isn't valid")
                 }
             }, afterChangingToStates: .Testing)
             
-            try stateMachine.perform({ (newState, oldState, userInfo) -> () in
-                XCTAssertTrue(newState == TestStates.Testing, "newState should equal .Testing but instead equals: \(newState)")
-                XCTAssertTrue(oldState == TestStates.Pending, "oldState should equal .Pending but instead equals: \(oldState)")
+            try stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
                 XCTAssertTrue(stateMachine.currentState == .Testing, "currentState should now equal .Testing but instead equals: \(stateMachine.currentState)")
                 
                 if let userInfo = userInfo where userInfo is Int {
                     let passedNumber = userInfo as! Int
                     XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
                 } else {
-                    XCTAssertTrue(false, "userInfo isn't valid")
+                    XCTFail("userInfo isn't valid")
                 }
             }, afterChangingFromStates: .Pending)
+            
+            try stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
+                XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+                XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
+                XCTAssertTrue(stateMachine.currentState == .Testing, "currentState should still equal .Pending but instead equals: \(stateMachine.currentState)")
+                
+                if let userInfo = userInfo where userInfo is Int {
+                    let passedNumber = userInfo as! Int
+                    XCTAssertTrue(passedNumber == myNumber, "userInfo should equal what is passed")
+                } else {
+                    XCTFail("userInfo isn't valid")
+                }
+            })
         }
         catch {
-            XCTAssertTrue(false, "Couldn't set an action")
+            XCTFail("Couldn't set an action")
             return
         }
         
@@ -183,10 +283,9 @@ class StateChangeActionTests: XCTestCase {
             try stateMachine.changeToState(.Testing, userInfo: myNumber)
         }
         catch {
-            XCTAssertTrue(false, "Couldn't change to state .Testing")
+            XCTFail("Couldn't change to state .Testing")
             return
         }
-        XCTAssertTrue(true, "Changed State")
     }
 
 }

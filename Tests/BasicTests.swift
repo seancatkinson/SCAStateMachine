@@ -29,12 +29,12 @@ import Foundation
 
 class BasicTests: XCTestCase {
 
-    func testActivatedReturnsCorrectlyBeforeActivation() {
+    func testActivatedReturnsFalseBeforeActivation() {
         let stateMachine = createTestStateMachine()
         XCTAssertFalse(stateMachine.activated, "StateMachine should not be activated yet")
     }
     
-    func testActivatedReturnsCorrectlyAfterActivation() {
+    func testActivatedReturnsTrueAfterActivation() {
         let stateMachine = createTestStateMachine()
         stateMachine.activate()
         XCTAssertTrue(stateMachine.activated, "StateMachine should be activated now")

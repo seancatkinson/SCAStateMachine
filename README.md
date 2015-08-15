@@ -50,12 +50,10 @@ enum AnimatingState {
   case Animating
 }
 
-let stateMachine = StateMachine(withInitialState: AnimatingState.NotAnimating)
+let stateMachine = StateMachine(withStartingState: AnimatingState.NotAnimating)
 stateMachine.activate()
 
-do {
-  try! stateMachine.changeToState(.Animating, userInfo: nil)
-}
+try! stateMachine.changeToState(.Animating, userInfo: nil)
 ```
 
 ### Advanced Usage
@@ -70,42 +68,68 @@ enum LoadingState {
   case Error
 }
 
-let stateMachine = StateMachine(withInitialState: LoadingState.Ready)
-do {
-  try! stateMachine.addStateChangeTo(.Loading, fromStartingStates: .Ready, .Loaded, .Error)
-  try! stateMachine.addStateChangeTo(.Loaded, fromStartingStates: .Loading)
-  try! stateMachine.addStateChangeTo(.Error, fromStartingStates: .Loading)
-  
-  try! stateMachine.perform(beforeChanging: { (newState, oldState, userInfo) -> () in
-      // do something before actioning any changes 
-  })
-  try! stateMachine.perform({ (newState, oldState, userInfo) -> () in
-      // do something before changeing from the .Ready state
-  }, beforeChangingFromStates: .Ready)
-            
-  try! stateMachine.perform({ (newState, oldState, userInfo) -> () in
-      // do something before changing to the .Loading state
-  }, beforeChangingToStates: .Loading)
-            
-  try! stateMachine.perform({ (newState, oldState, userInfo) -> () in
-      // do something after changing to the .Error or .Loaded states
-  }, afterChangingToStates: .Error, .Loaded)
-
-  try! stateMachine.perform({ (newState, oldState, userInfo) -> () in
-      // do something after changing from the .loaded or .Error states
-  }, afterChangingFromStates: .Error, .Loading,)
-            
-  try! stateMachine.perform(afterChanging: { (newState, oldState, userInfo) -> () in
-      // do something after changing from any state
-  })
+enum MyCustomError {
+  case CustomErrorOne
 }
+
+let stateMachine = StateMachine(withStartingState: LoadingState.Ready)
+
+try! stateMachine.addStateChangeTo(.Loading, fromStartingStates: .Ready, .Loaded, .Error)
+try! stateMachine.addStateChangeTo(.Loaded, fromStartingStates: .Loading)
+try! stateMachine.addStateChangeTo(.Error, fromStartingStates: .Loading)
+
+try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+  if mySuccessCheck == false {
+      throw MyCustomError.CustomErrorOne
+  }
+}, forDestinationStates: .Loaded)
+
+try! stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
+  // do something before actioning any changes 
+})
+try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+  // do something before changeing from the .Ready state
+}, beforeChangingFromStates: .Ready)
+        
+try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+  // do something before changing to the .Loading state
+}, beforeChangingToStates: .Loading)
+        
+try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+  // do something after changing to the .Error or .Loaded states
+}, afterChangingToStates: .Error, .Loaded)
+
+try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+  // do something after changing from the .loaded or .Error states
+}, afterChangingFromStates: .Error, .Loading,)
+        
+try! stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
+  // do something after changing from any state
+})
+
 stateMachine.activate()
 
-stateMachine.canChangeToState(.Loaded) // false
-stateMachine.canChangeToState(.Loading) // true
-
+// check you can change before changing
 do {
-  try! stateMachine.changeToState(.Loading, userInfo: nil)
+  try stateMachine.canChangeToState(.Loaded) 
+}
+catch MyCustomError.CustomErrorOne {
+  // throw your custom errors inside your conditions and handle them here
+}
+catch {
+  // catch general errors here like state machine not activated
+}
+
+// or just attempt a change
+do {
+  try stateMachine.changeToState(.Loading, userInfo: nil) // succeeds
+  try stateMachine.changeToState(.Loaded, userInfo: nil) // will check 'mySuccessCheck'
+}
+catch MyCustomError.CustomErrorOne {
+  // handle your custom error case
+}
+catch {
+  // handle a general error
 }
 ```
 

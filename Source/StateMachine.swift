@@ -25,7 +25,8 @@ import Foundation
 
 public class StateMachine <T where T: Equatable, T: Hashable>
 {
-    typealias changeAction = (newState:T, oldState:T, userInfo:Any?)->()
+    public typealias changeCondition = (destinationState:T, startingState:T, userInfo:Any?) throws -> ()
+    public typealias changeAction = (destinationState:T, startingState:T, userInfo:Any?)->()
     
 // MARK:- state vars
     private var _currentState : T
@@ -41,6 +42,9 @@ public class StateMachine <T where T: Equatable, T: Hashable>
 */
     private var _stateChanges : [StateChange<T>] = []
     
+/**
+    Private Boolean for whether the state machine has been activated
+*/
     private var _activated : Bool = false
 /**
     Boolean for whether the StateMachine has been activated
@@ -49,7 +53,17 @@ public class StateMachine <T where T: Equatable, T: Hashable>
         return _activated
     }
     
+/**
+    Activate the state machine by allowing state changes and preventing any further state change rules
+    from being added
+*/
+    public func activate() {
+        _activated = true
+    }
+    
 // MARK:- state actions
+    private var _willChangeFromStateConditions : Dictionary<T, [changeCondition]> = [:]
+    private var _willChangeToStateConditions : Dictionary<T, [changeCondition]> = [:]
     private var _willChangeToStateActions : Dictionary<T, changeAction> = [:]
     private var _willChangeFromStateActions : Dictionary<T, changeAction> = [:]
     private var _didChangeToStateActions : Dictionary<T, changeAction> = [:]
@@ -65,29 +79,73 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     
     :returns: the state Machine
 */
-    public init(withInitialState initialState: T) {
-        _currentState = initialState
+    public init(withStartingState startingState: T) {
+        _currentState = startingState
     }
     
 /**
-    Check if the state machine can change to a specific state. Returns true if no rules have yet been set.
+    Check if the state machine can change to a specific state. 
+    Checks if rules have been set, with no rules, all changes are allowed.
+    Checks conditions for from and to states
     
     :param: state the state you want to check
+    :param: userInfo any extra info you want to pass to your State change actions
     
     :returns: a bool success value
 */
-    public func canChangeToState(newState: T) -> Bool {
+    public func canChangeToState(destinationState: T, userInfo:Any?=nil) throws {
+        let stateChangeExists = stateChangeExistsForStartingState(_currentState, destinationState: destinationState)
+        guard stateChangeExists == true else {
+            throw StateMachineError.UnsupportedStateChange
+        }
+        
+        let fromConditions = _willChangeFromStateConditions[_currentState]
+        try allConditionsPass(fromConditions, forStartingState: _currentState, destinationState: destinationState, withUserInfo: userInfo)
+            
+        let toConditions = _willChangeToStateConditions[destinationState]
+        try allConditionsPass(toConditions, forStartingState: _currentState, destinationState: destinationState, withUserInfo: userInfo)
+    }
+    
+/**
+    Checks whether a state change rule has been defined for a given starting
+    state and destination state. 
+    Returns true if no state changes have been defined.
+    
+    :param: startingState the state the statemachine will be in before a change
+    :param: destinationState the state the statemachine will be in after a change
+    
+    :returns: a bool success value
+*/
+    func stateChangeExistsForStartingState(startingState:T, destinationState:T) -> Bool {
         guard _stateChanges.count > 0 else {
             return true
         }
+        
         for change in _stateChanges {
-            if change.destinationState == newState {
-                if change.startingStates.contains(_currentState) {
+            if change.destinationState == destinationState {
+                if change.startingStates.contains(startingState) {
                     return true
                 }
             }
         }
         return false
+    }
+    
+/**
+    Executes each closure in an array of closures that add conditions for 
+    whether a a particular state change should be actioned.
+    
+    :param: conditions the array of condition closures to execute
+    :param: forStartingState the state the statemachine will be in before a change
+    :param: destinationState
+    :param: withUserInfo
+*/
+    func allConditionsPass(conditions:[changeCondition]?, forStartingState startingState:T, destinationState:T, withUserInfo userInfo:Any?=nil) throws {
+        if let conditions = conditions {
+            for condition in conditions {
+                try condition(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
+            }
+        }
     }
     
 /**
@@ -107,47 +165,38 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: state the state you want to change to
     :param: userInfo any extra info you want to pass to your State change actions
 */
-    public func changeToState(newState: T, userInfo:Any?) throws {
+    public func changeToState(destinationState: T, userInfo:Any?=nil) throws {
         guard _activated == true else {
             throw StateMachineError.StateMachineNotActivated
         }
-        guard canChangeToState(newState) else {
-            throw StateMachineError.UnsupportedStateChange
-        }
         
-        let oldState = _currentState
+        try canChangeToState(destinationState, userInfo: userInfo)
+        
+        let startingState = _currentState
         
         // will Change actions
         if let willChangeStateAction = _willChangeStateAction {
-            willChangeStateAction(newState: newState, oldState: oldState, userInfo: userInfo)
+            willChangeStateAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
-        if let willChangeFromAction = _willChangeFromStateActions[oldState] {
-            willChangeFromAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        if let willChangeFromAction = _willChangeFromStateActions[startingState] {
+            willChangeFromAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
-        if let willChangeToAction = _willChangeToStateActions[newState] {
-            willChangeToAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        if let willChangeToAction = _willChangeToStateActions[destinationState] {
+            willChangeToAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
         
-        _currentState = newState
+        _currentState = destinationState
         
         // did change actions
-        if let didChangeToAction = _didChangeToStateActions[newState] {
-            didChangeToAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        if let didChangeToAction = _didChangeToStateActions[destinationState] {
+            didChangeToAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
-        if let didChangeFromAction = _didChangeFromStateActions[oldState] {
-            didChangeFromAction(newState: newState, oldState: oldState, userInfo: userInfo)
+        if let didChangeFromAction = _didChangeFromStateActions[startingState] {
+            didChangeFromAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
         if let didChangeStateAction = _didChangeStateAction {
-            didChangeStateAction(newState: newState, oldState: oldState, userInfo: userInfo)
+            didChangeStateAction(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
         }
-    }
-    
-/**
-    Activate the state machine by allowing state changes and preventing any further state change rules 
-    from being added
-*/
-    public func activate() {
-        _activated = true
     }
     
 /**
@@ -165,6 +214,51 @@ public class StateMachine <T where T: Equatable, T: Hashable>
         let change = StateChange(withDestinationState: destinationState, fromStartingStates: fromStartingStates)
         if !_stateChanges.contains(change) {
             _stateChanges.append(change)
+        }
+    }
+    
+    
+/**
+    Add a block to be performed before attempting to change from a set of 
+    states. If the block returns false, the state change will fail.
+    Multiple blocks can be added for any given state and will be performed in 
+    the order they are added. If no conditions exist and the change is valid, 
+    the change will succeed.
+    
+    :param: closure the block to perform
+    :param: states the states to add the condition for
+*/
+    public func addStateChangeCondition(closure:changeCondition, forStartingStates states: T...) throws {
+        guard _activated == false else {
+            throw StateMachineError.StateMachineActivated
+        }
+        
+        for state in states {
+            var stateConditionsArray:[changeCondition]!  = _willChangeFromStateConditions[state] ?? []
+            stateConditionsArray.append(closure)
+            _willChangeFromStateConditions[state] = stateConditionsArray
+        }
+    }
+    
+/**
+    Add a block to be performed before attempting to change to a set of
+    states. If the block returns false, the state change will fail.
+    Multiple blocks can be added for any given state and will be performed in
+    the order they are added. If no conditions exist and the change is valid,
+    the change will succeed.
+    
+    :param: closure the block to perform
+    :param: states the states to add the condition for
+*/
+    public func addStateChangeCondition(closure:changeCondition, forDestinationStates states: T...) throws {
+        guard _activated == false else {
+            throw StateMachineError.StateMachineActivated
+        }
+        
+        for state in states {
+            var stateConditionsArray:[changeCondition]!  = _willChangeToStateConditions[state] ?? []
+            stateConditionsArray.append(closure)
+            _willChangeToStateConditions[state] = stateConditionsArray
         }
     }
     
@@ -290,7 +384,7 @@ func ==<T where T:Equatable>(lhs:StateChange<T>, rhs:StateChange<T>) -> Bool {
 
 
 // MARK:- Errors
-@objc enum StateMachineError: Int, ErrorType {
+@objc public enum StateMachineError: Int, ErrorType {
     case UnsupportedStateChange
     case StateMachineActivated
     case StateMachineNotActivated

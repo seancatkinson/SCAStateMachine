@@ -28,6 +28,18 @@ import Foundation
 @testable import SCAStateMachine
 
 class StateChangeTests: XCTestCase {
+    
+    func testCanCreateStateChangeObjectsWithStartingStatesArray() {
+        let stateChange = StateChange(withDestinationState: TestStates.Testing, fromStartingStates: [TestStates.Pending])
+        XCTAssertEqual(stateChange.destinationState, TestStates.Testing)
+        XCTAssertEqual(stateChange.startingStates, [TestStates.Pending])
+    }
+    
+    func testCanCreateStateChangeObjectsWithVariadicStartingStates() {
+        let stateChange = StateChange(withDestinationState: TestStates.Testing, fromStartingStates: TestStates.Pending)
+        XCTAssertEqual(stateChange.destinationState, TestStates.Testing)
+        XCTAssertEqual(stateChange.startingStates, [TestStates.Pending])
+    }
 
 // MARK:- Add State Change Rules
     func testCanAddStateChanges() {
@@ -36,7 +48,7 @@ class StateChangeTests: XCTestCase {
             try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
         }
         catch {
-            XCTAssertTrue(false, "Could not add a state change")
+            XCTFail("Could not add a state change")
         }
     }
     
@@ -48,43 +60,46 @@ class StateChangeTests: XCTestCase {
             try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
         }
         catch {
-            XCTAssertTrue(true, "Could not add a state change")
             return
         }
-        XCTAssertTrue(false, "Could add a state change after activation")
+        XCTFail("Could add a state change after activation")
     }
     
 // MARK:- Check State Change Rules
     func testCanCheckStateChangeRulesBeforeAddingRules() {
         let stateMachine = createTestStateMachine()
         // run a test before adding any rules
-        let result = stateMachine.canChangeToState(.Testing)
-        XCTAssertTrue(result, "No rules means all state changes are allowed")
+        do {
+            try stateMachine.canChangeToState(.Testing)
+        }
+        catch {
+            XCTFail("Could not check a state change")
+            return
+        }
     }
     
     func testCanCheckStateChangeRulesAfterAddingIncompleteRules() {
         let stateMachine = createTestStateMachine()
         do {
-            try stateMachine.addStateChangeTo(.Passed, fromStartingStates: .Testing)
+            try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
+            try stateMachine.canChangeToState(.Testing)
         }
         catch {
-            XCTAssertTrue(false, "Could not add a state change")
+            XCTFail("Could not change state")
+            return
         }
-        
-        let result = stateMachine.canChangeToState(.Testing)
-        XCTAssertFalse(result, "Should be false since no rules have been added yet for this change")
     }
     
     func testCanCheckStateChangeRulesAfterAddingCompleteRules() {
         let stateMachine = createTestStateMachine()
         do {
             try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
+            try stateMachine.canChangeToState(.Testing)
         }
         catch {
-            XCTAssertTrue(false, "Could not add a state change")
+            XCTFail("Could not add a state change")
+            return
         }
-        let result = stateMachine.canChangeToState(.Testing)
-        XCTAssertTrue(result, "Should be true since we have just added a supporting rule")
     }
     
 // MARK:- Change State
@@ -97,10 +112,9 @@ class StateChangeTests: XCTestCase {
             try stateMachine.changeToState(.Testing, userInfo: nil)
         }
         catch {
-            XCTAssertTrue(false, "Couldn't change the state")
+            XCTFail("Couldn't change the state")
             return
         }
-        XCTAssertTrue(true)
     }
     
     func testCannotChangeToUnapplicableState() {
@@ -112,10 +126,9 @@ class StateChangeTests: XCTestCase {
             try stateMachine.changeToState(.Passed, userInfo: nil)
         }
         catch {
-            XCTAssertTrue(true, "Couldn't change the state")
             return
         }
-        XCTAssertTrue(false, "Managed to move to unapplicable state")
+        XCTFail("Managed to move to unapplicable state")
     }
     
     func testCannotChangeWithoutActivation() {
@@ -126,17 +139,21 @@ class StateChangeTests: XCTestCase {
             try stateMachine.changeToState(.Passed, userInfo: nil)
         }
         catch {
-            XCTAssertTrue(true, "Couldn't change the state")
             return
         }
-        XCTAssertTrue(false, "Managed to change state without activation")
+        XCTFail("Managed to change state without activation")
     }
     
 // MARK:- State Types
     func testCanUseStringsAsStateTypes() {
-        let stateMachine = StateMachine(withInitialState: "One")
-        let testOne = stateMachine.canChangeToState("Two")
-        XCTAssertTrue(testOne, "Should be able to change to any other string")
+        let stateMachine = StateMachine(withStartingState: "One")
+        do {
+            try stateMachine.canChangeToState("Two")
+        }
+        catch {
+            XCTFail("Couldn't change the state")
+            return
+        }
         
         stateMachine.activate()
         
@@ -144,7 +161,7 @@ class StateChangeTests: XCTestCase {
             try stateMachine.changeToState("Two", userInfo: nil)
         }
         catch {
-            XCTAssertTrue(false, "Couldn't change the state")
+            XCTFail("Couldn't change the state")
             return
         }
         XCTAssertEqual(stateMachine.currentState, "Two", "State should now equal Two")
