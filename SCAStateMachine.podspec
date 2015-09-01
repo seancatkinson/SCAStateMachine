@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'SCAStateMachine'
-  s.version      = '0.0.2'
+  s.version      = '0.0.3'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.summary      = 'A lightweight state machine built in Swift.'
   s.homepage     = 'https://github.com/seancatkinson/SCAStateMachine'
