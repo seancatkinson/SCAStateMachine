@@ -11,7 +11,7 @@ A lightweight state machine built in Swift for iOS & Mac OSX
 - [x] Basic Usage support to get going with minmal setup
 - [x] Advanced Usage support to control which states can be changed to which states
 - [x] Uses Swift 2.0 error mechanism for communicating issues
-- [x] Lightweight - SCAStateMachine has no dependencies beyond Foundation
+- [x] Lightweight - SCAStateMachine has no dependencies
 - [x] All methods documented and unit tested
 
 ## Requirements

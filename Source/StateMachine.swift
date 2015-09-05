@@ -21,8 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Foundation
-
 public class StateMachine <T where T: Equatable, T: Hashable>
 {
     public typealias changeCondition = (destinationState:T, startingState:T, userInfo:Any?) throws -> ()
