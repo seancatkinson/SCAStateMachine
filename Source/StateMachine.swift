@@ -42,25 +42,6 @@ public class StateMachine <T where T: Equatable, T: Hashable>
 */
     private var _stateChanges : [StateChange<T>] = []
     
-/**
-    Private Boolean for whether the state machine has been activated
-*/
-    private var _activated : Bool = false
-/**
-    Boolean for whether the StateMachine has been activated
-*/
-    public var activated : Bool {
-        return _activated
-    }
-    
-/**
-    Activate the state machine by allowing state changes and preventing any further state change rules
-    from being added
-*/
-    public func activate() {
-        _activated = true
-    }
-    
 // MARK:- state actions
     private var _willChangeFromStateConditions : Dictionary<T, [changeCondition]> = [:]
     private var _willChangeToStateConditions : Dictionary<T, [changeCondition]> = [:]
@@ -166,10 +147,6 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: userInfo any extra info you want to pass to your State change actions
 */
     public func changeToState(destinationState: T, userInfo:Any?=nil) throws {
-        guard _activated == true else {
-            throw StateMachineError.StateMachineNotActivated
-        }
-        
         try canChangeToState(destinationState, userInfo: userInfo)
         
         let startingState = _currentState
@@ -207,10 +184,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: destinationState the state you want to allow movement to
     :param: fromStartingStates a list of states that will allow moving to the destinationState
 */
-    public func addStateChangeTo(destinationState: T, fromStartingStates: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
+    public func addStateChangeTo(destinationState: T, fromStartingStates: T...) {
         let change = StateChange(withDestinationState: destinationState, fromStartingStates: fromStartingStates)
         if !_stateChanges.contains(change) {
             _stateChanges.append(change)
@@ -228,11 +202,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to perform
     :param: states the states to add the condition for
 */
-    public func addStateChangeCondition(closure:changeCondition, forStartingStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func addStateChangeCondition(closure:changeCondition, forStartingStates states: T...) {
         for state in states {
             var stateConditionsArray:[changeCondition]!  = _willChangeFromStateConditions[state] ?? []
             stateConditionsArray.append(closure)
@@ -250,11 +220,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to perform
     :param: states the states to add the condition for
 */
-    public func addStateChangeCondition(closure:changeCondition, forDestinationStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func addStateChangeCondition(closure:changeCondition, forDestinationStates states: T...) {
         for state in states {
             var stateConditionsArray:[changeCondition]!  = _willChangeToStateConditions[state] ?? []
             stateConditionsArray.append(closure)
@@ -270,11 +236,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     
     :param: closure the block to be executed when the state machine will change to the provided state
 */
-    public func perform(beforeChanging closure:changeAction) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(beforeChanging closure:changeAction) {
         _willChangeStateAction = closure
     }
     
@@ -284,11 +246,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     
     :param: closure the block to be executed when the state machine did change to the provided state
 */
-    public func perform(afterChanging closure:changeAction) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(afterChanging closure:changeAction) {
         _didChangeStateAction = closure
     }
     
@@ -299,11 +257,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to be executed when the state machine will change to the provided states
     :param: states the states to add the action for
 */
-    public func perform(closure:changeAction, beforeChangingToStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(closure:changeAction, beforeChangingToStates states: T...) {
         for state in states {
             _willChangeToStateActions[state] = closure
         }
@@ -316,11 +270,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to be executed when the state machine will change from the provided states
     :param: states the states to add the action for
 */
-    public func perform(closure:changeAction, beforeChangingFromStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(closure:changeAction, beforeChangingFromStates states: T...) {
         for state in states {
             _willChangeFromStateActions[state] = closure
         }
@@ -333,11 +283,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to be executed when the state machine did change to the provided states
     :param: states the states to add the action for
 */
-    public func perform(closure:changeAction, afterChangingToStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(closure:changeAction, afterChangingToStates states: T...) {
         for state in states {
             _didChangeToStateActions[state] = closure
         }
@@ -350,11 +296,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     :param: closure the block to be executed when the state machine did change from the provided states
     :param: states the states to add the action for
 */
-    public func perform(closure:changeAction, afterChangingFromStates states: T...) throws {
-        guard _activated == false else {
-            throw StateMachineError.StateMachineActivated
-        }
-        
+    public func perform(closure:changeAction, afterChangingFromStates states: T...) {
         for state in states {
             _didChangeFromStateActions[state] = closure
         }
@@ -386,6 +328,4 @@ func ==<T where T:Equatable>(lhs:StateChange<T>, rhs:StateChange<T>) -> Bool {
 // MARK:- Errors
 @objc public enum StateMachineError: Int, ErrorType {
     case UnsupportedStateChange
-    case StateMachineActivated
-    case StateMachineNotActivated
 }

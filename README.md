@@ -51,7 +51,6 @@ enum AnimatingState {
 }
 
 let stateMachine = StateMachine(withStartingState: AnimatingState.NotAnimating)
-stateMachine.activate()
 
 try! stateMachine.changeToState(.Animating, userInfo: nil)
 ```
@@ -74,40 +73,39 @@ enum MyCustomError {
 
 let stateMachine = StateMachine(withStartingState: LoadingState.Ready)
 
-try! stateMachine.addStateChangeTo(.Loading, fromStartingStates: .Ready, .Loaded, .Error)
-try! stateMachine.addStateChangeTo(.Loaded, fromStartingStates: .Loading)
-try! stateMachine.addStateChangeTo(.Error, fromStartingStates: .Loading)
+stateMachine.addStateChangeTo(.Loading, fromStartingStates: .Ready, .Loaded, .Error)
+stateMachine.addStateChangeTo(.Loaded, fromStartingStates: .Loading)
+stateMachine.addStateChangeTo(.Error, fromStartingStates: .Loading)
 
-try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
   if mySuccessCheck == false {
       throw MyCustomError.CustomErrorOne
   }
 }, forDestinationStates: .Loaded)
 
-try! stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
+stateMachine.perform(beforeChanging: { (destinationState, startingState, userInfo) -> () in
   // do something before actioning any changes 
 })
-try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
   // do something before changeing from the .Ready state
 }, beforeChangingFromStates: .Ready)
         
-try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
   // do something before changing to the .Loading state
 }, beforeChangingToStates: .Loading)
         
-try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
   // do something after changing to the .Error or .Loaded states
 }, afterChangingToStates: .Error, .Loaded)
 
-try! stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
   // do something after changing from the .loaded or .Error states
 }, afterChangingFromStates: .Error, .Loading,)
         
-try! stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
+stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
   // do something after changing from any state
 })
 
-stateMachine.activate()
 
 // check you can change before changing
 do {
@@ -117,7 +115,7 @@ catch MyCustomError.CustomErrorOne {
   // throw your custom errors inside your conditions and handle them here
 }
 catch {
-  // catch general errors here like state machine not activated
+  // catch general errors
 }
 
 // or just attempt a change

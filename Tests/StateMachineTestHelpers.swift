@@ -23,8 +23,8 @@ func createTestStateMachine() -> StateMachine<TestStates> {
 }
 
 func addTestStateRulesToTestStateMachine(inout stateMachine:StateMachine<TestStates>) {
-    try! stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
-    try! stateMachine.addStateChangeTo(.Passed, fromStartingStates: .Testing)
-    try! stateMachine.addStateChangeTo(.Failed, fromStartingStates: .Testing)
-    try! stateMachine.addStateChangeTo(.Pending, fromStartingStates: .Passed, .Failed)
+    stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
+    stateMachine.addStateChangeTo(.Passed, fromStartingStates: .Testing)
+    stateMachine.addStateChangeTo(.Failed, fromStartingStates: .Testing)
+    stateMachine.addStateChangeTo(.Pending, fromStartingStates: .Passed, .Failed)
 }

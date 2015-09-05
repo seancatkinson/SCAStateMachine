@@ -35,121 +35,76 @@ class StateChangeConditionTests: XCTestCase {
     func testCanSetConditions() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        do {            
-            try stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    throw StateConditionErrors.ErrorOne
-                }, forDestinationStates: .Testing)
-        }
-        catch {
-            XCTFail("Couldn't set a condition")
-            return
-        }
-    }
-    
-    func testCannotSetStartingStateConditionsAfterActivation() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
-        stateMachine.activate()
+        
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+            throw StateConditionErrors.ErrorOne
+        }, forDestinationStates: .Testing)
+        
         do {
-            try stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                // do nothing :)
-                }, forStartingStates: .Testing)
+            try stateMachine.canChangeToState(.Testing)
         }
-        catch {
+        catch StateConditionErrors.ErrorOne {
             return
         }
-        XCTFail("Set a condition after activation")
-    }
-    
-    func testCannotSetDestinationStateConditionsAfterActivation() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
-        stateMachine.activate()
-        do {
-            try stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    // do nothing :)
-                }, forDestinationStates: .Testing)
-        }
-        catch {
-            return
-        }
-        XCTFail("Set a condition after activation")
+        catch {}
+        
+        XCTFail("Could change to state")
+        return
     }
     
     func testConditionsForStartingStatesAreExecuted() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        let expectation = expectationWithDescription("condition should be executed")
-        do {
-            try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    expectation.fulfill()
-                }, forStartingStates: .Pending)
-        }
-        stateMachine.activate()
+        
+        var number = 0
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+            number = 12
+        }, forStartingStates: .Pending)
+        
         
         do {
             try! stateMachine.changeToState(.Testing)
         }
         
-        waitForExpectationsWithTimeout(0.5) { (error) -> Void in
-            if let error = error {
-                print(error.description)
-            }
-        }
+        XCTAssertEqual(number, 12)
     }
     
     func testConditionsForDestinationStatesAreExecuted() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        let expectation = expectationWithDescription("condition should be executed")
-        try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                expectation.fulfill()
-            }, forDestinationStates: .Testing)
-        stateMachine.activate()
+        var number = 0
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+                number = 12
+        }, forDestinationStates: .Testing)
         
         try! stateMachine.changeToState(.Testing)
         
-        waitForExpectationsWithTimeout(0.5) { (error) -> Void in
-            if let error = error {
-                print(error.description)
-            }
-        }
+        XCTAssertEqual(number, 12)
     }
     
     func testMultipleConditionsCanBeExecuted() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        let expectation = expectationWithDescription("condition should be executed")
-        let expectationtwo = expectationWithDescription("condition two should be executed")
-        do {
-            try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    expectation.fulfill()
-                }, forStartingStates: .Pending)
-            try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    expectationtwo.fulfill()
-                }, forDestinationStates: .Testing)
-            
-        }
-        stateMachine.activate()
+        var number = 0
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+                    number++
+        }, forStartingStates: .Pending)
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+                    number++
+        }, forDestinationStates: .Testing)
         
         try! stateMachine.changeToState(.Testing)
         
-        waitForExpectationsWithTimeout(0.5) { (error) -> Void in
-            if let error = error {
-                print(error.description)
-            }
-        }
+        XCTAssertEqual(number, 2)
     }
     
     func testOnlyConditionsForSpecifiedStatesAreExecuted() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        do {
-            try! stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    XCTFail("Condition shouldn't be executed")
-                }, forDestinationStates: .Passed)
-        }
-        stateMachine.activate()
+        
+        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+            XCTFail("Condition shouldn't be executed")
+        }, forDestinationStates: .Passed)
         
         do {
             try! stateMachine.changeToState(.Testing)

@@ -44,25 +44,13 @@ class StateChangeTests: XCTestCase {
 // MARK:- Add State Change Rules
     func testCanAddStateChanges() {
         let stateMachine = createTestStateMachine()
+        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
         do {
-            try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
+            try stateMachine.canChangeToState(.Testing)
         }
         catch {
             XCTFail("Could not add a state change")
         }
-    }
-    
-    func testCannotAddStateChangeAfterActivation() {
-        let stateMachine = createTestStateMachine()
-        stateMachine.activate()
-        
-        do {
-            try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
-        }
-        catch {
-            return
-        }
-        XCTFail("Could add a state change after activation")
     }
     
 // MARK:- Check State Change Rules
@@ -80,8 +68,8 @@ class StateChangeTests: XCTestCase {
     
     func testCanCheckStateChangeRulesAfterAddingIncompleteRules() {
         let stateMachine = createTestStateMachine()
+        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
         do {
-            try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
             try stateMachine.canChangeToState(.Testing)
         }
         catch {
@@ -92,8 +80,8 @@ class StateChangeTests: XCTestCase {
     
     func testCanCheckStateChangeRulesAfterAddingCompleteRules() {
         let stateMachine = createTestStateMachine()
+        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
         do {
-            try stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
             try stateMachine.canChangeToState(.Testing)
         }
         catch {
@@ -106,7 +94,6 @@ class StateChangeTests: XCTestCase {
     func testCanChangeState() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        stateMachine.activate()
         
         do {
             try stateMachine.changeToState(.Testing, userInfo: nil)
@@ -120,7 +107,6 @@ class StateChangeTests: XCTestCase {
     func testCannotChangeToUnapplicableState() {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
-        stateMachine.activate()
         
         do {
             try stateMachine.changeToState(.Passed, userInfo: nil)
@@ -154,8 +140,6 @@ class StateChangeTests: XCTestCase {
             XCTFail("Couldn't change the state")
             return
         }
-        
-        stateMachine.activate()
         
         do {
             try stateMachine.changeToState("Two", userInfo: nil)
