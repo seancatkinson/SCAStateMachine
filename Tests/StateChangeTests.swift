@@ -30,57 +30,120 @@ import Foundation
 class StateChangeTests: XCTestCase {
     
     func testCanCreateStateChangeObjectsWithStartingStatesArray() {
-        let stateChange = StateChange(withDestinationState: TestStates.Testing, fromStartingStates: [TestStates.Pending])
-        XCTAssertEqual(stateChange.destinationState, TestStates.Testing)
-        XCTAssertEqual(stateChange.startingStates, [TestStates.Pending])
-    }
-    
-    func testCanCreateStateChangeObjectsWithVariadicStartingStates() {
-        let stateChange = StateChange(withDestinationState: TestStates.Testing, fromStartingStates: TestStates.Pending)
-        XCTAssertEqual(stateChange.destinationState, TestStates.Testing)
-        XCTAssertEqual(stateChange.startingStates, [TestStates.Pending])
+        let stateChange = StateChange(withDestinationStates: [TestStates.Testing], fromStartingStates: [TestStates.Pending])
+        XCTAssertEqual(stateChange.destinationStates, [.Testing])
+        XCTAssertEqual(stateChange.startingStates, [.Pending])
+        XCTAssertTrue(stateChange.destinationStates.contains(.Testing))
+        XCTAssertTrue(stateChange.startingStates.contains(.Pending))
     }
 
 // MARK:- Add State Change Rules
-    func testCanAddStateChanges() {
-        let stateMachine = createTestStateMachine()
-        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
-        do {
-            try stateMachine.canChangeToState(.Testing)
-        }
-        catch {
+    func testCanAddToStateChangesFromMultipleStartingStates() {
+        var stateMachine = createTestStateMachine(.Passed)
+        stateMachine.addStateChangeRulesTo(.Pending, fromStartingStates: .Passed, .Failed)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Pending) else {
             XCTFail("Could not add a state change")
+            return
+        }
+        
+        stateMachine = createTestStateMachine(.Failed)
+        stateMachine.addStateChangeRulesTo(.Pending, fromStartingStates: .Passed, .Failed)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Pending) else {
+            XCTFail("Could not add a state change")
+            return
         }
     }
+    
+    func testCanAddToStateChangesToMultipleDestinationStates() {
+        let stateMachine = createTestStateMachine(.Testing)
+        stateMachine.addStateChangeRulesTo(.Passed, .Failed, fromStartingState: .Testing)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Passed) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+        
+        guard let _ = try? stateMachine.canChangeToState(.Failed) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+    }
+    
+    func testCanAddFromStateChangeRulesFromMultipleStartingStates() {
+        var stateMachine = createTestStateMachine(.Passed)
+        stateMachine.addStateChangeRulesFrom(.Passed, .Failed, toDestinationState: .Pending)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Pending) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+        
+        stateMachine = createTestStateMachine(.Failed)
+        stateMachine.addStateChangeRulesFrom(.Passed, .Failed, toDestinationState: .Pending)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Pending) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+    }
+    
+    func testCanAddFromStateChangeRulesToMultipleDestinationStates() {
+        let stateMachine = createTestStateMachine(.Testing)
+        stateMachine.addStateChangeRulesFrom(.Testing, toDestinationStates: .Passed, .Failed)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Passed) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+        
+        guard let _ = try? stateMachine.canChangeToState(.Failed) else {
+            XCTFail("Could not add a state change")
+            return
+        }
+    }
+    
+    
     
 // MARK:- Check State Change Rules
     func testCanCheckStateChangeRulesBeforeAddingRules() {
-        let stateMachine = createTestStateMachine()
-        // run a test before adding any rules
-        do {
-            try stateMachine.canChangeToState(.Testing)
+        let stateMachine = createTestStateMachine(.Pending)
+        guard let _ = try? stateMachine.canChangeToState(.Testing) else {
+            XCTFail("Could not change state to .Testing")
+            return
         }
-        catch {
-            XCTFail("Could not check a state change")
+        guard let _ = try? stateMachine.canChangeToState(.Passed) else {
+            XCTFail("Could not change state to .Passed")
+            return
+        }
+        guard let _ = try? stateMachine.canChangeToState(.Failed) else {
+            XCTFail("Could not change state to .Failed")
             return
         }
     }
     
-    func testCanCheckStateChangeRulesAfterAddingIncompleteRules() {
+    func testCannotChangeStateWithoutCorrectRules() {
         let stateMachine = createTestStateMachine()
-        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
-        do {
-            try stateMachine.canChangeToState(.Testing)
-        }
-        catch {
-            XCTFail("Could not change state")
+        stateMachine.addStateChangeRulesTo(.Testing, fromStartingStates: .Pending)
+        
+        guard let _ = try? stateMachine.canChangeToState(.Testing) else {
+            XCTFail("Could not change state to .Testing")
             return
         }
+        
+        guard let _ = try? stateMachine.canChangeToState(.Passed) else {
+            // we want this to fail
+            // no rules have been setup
+            return
+        }
+        
+        XCTFail("Could change state to .Passed even though no rules were set up")
     }
     
     func testCanCheckStateChangeRulesAfterAddingCompleteRules() {
         let stateMachine = createTestStateMachine()
-        stateMachine.addStateChangeTo(.Testing, fromStartingStates: .Pending)
+        stateMachine.addStateChangeRulesTo(.Testing, fromStartingStates: .Pending)
         do {
             try stateMachine.canChangeToState(.Testing)
         }
@@ -149,6 +212,14 @@ class StateChangeTests: XCTestCase {
             return
         }
         XCTAssertEqual(stateMachine.currentState, "Two", "State should now equal Two")
+    }
+    
+    func testStateMachineErrorHasDescription() {
+        let string = StateMachineError.UnsupportedStateChange.description
+        XCTAssertTrue(string.characters.count > 0)
+        
+        let stringTwo = StateMachineError.AlreadyInRequestedState.description
+        XCTAssertTrue(stringTwo.characters.count > 0)
     }
 
 }

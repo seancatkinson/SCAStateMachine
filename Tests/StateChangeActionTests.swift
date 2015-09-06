@@ -188,5 +188,251 @@ class StateChangeActionTests: XCTestCase {
             return
         }
     }
+    
+    func  testCannotChangeToStateWhenAlreadyInRequestedState() {
+        
+        let stateMachine = createTestStateMachine(.Pending)
+        do {
+            try stateMachine.changeToState(.Pending)
+        }
+        catch {
+            return
+        }
+        XCTFail("Error should have thrown")
+    }
+    
+    
+    func testCanAutomaticallyChangeTo3rdStateBeforeChangingTo2ndState() {
+        
+        let stateMachine = createTestStateMachine(.Pending)
+        
+        print("Expected: Change from 'Pending' to 'Testing")
+        print("Expected: Attempt Change from 'Testing' to 'Failed")
+        print("Expected: Change from 'Testing' to 'Pending' instead")
+        
+        stateMachine.perform (beforeChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changing from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform (afterChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changed from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform({ [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            do {
+                try stateMachine?.changeToState(.Pending)
+            }
+            catch {
+                XCTFail("\(error)")
+            }
+        }, beforeChangingToStates: .Failed)
+        
+        do {
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Pending)
+            try stateMachine.changeToState(.Testing)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Testing)
+            try stateMachine.changeToState(.Failed)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Pending)
+        }
+        catch {
+            XCTFail("\(error)")
+        }
+    }
+    
+    func testCanAutomaticallyChangeTo3rdStateAfterChangingTo2ndState() {
+        let stateMachine = createTestStateMachine(.Pending)
+        
+        print("Expected: Change from 'Pending' to 'Testing")
+        print("Expected: Change from 'Testing' to 'Failed")
+        print("Expected: Change from 'Failed' to 'Pending'")
+        
+        stateMachine.perform (beforeChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changing from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform (afterChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changed from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform({ [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            XCTAssertEqual(stateMachine!.currentState, TestStates.Failed)
+            do {
+                try stateMachine?.changeToState(.Pending)
+            }
+            catch {
+                XCTFail("\(error)")
+            }
+        }, afterChangingToStates: .Failed)
+        
+        do {
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Pending)
+            try stateMachine.changeToState(.Testing)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Testing)
+            try stateMachine.changeToState(.Failed)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Pending)
+        }
+        catch {
+            XCTFail("\(error)")
+        }
+    }
+    
+    func testCanPreventAutomaticChangesTo3rdStatesBeforeChangingTo2ndStatesWithRules() {
+        var stateMachine = createTestStateMachine(.Pending)
+        addTestStateRulesToTestStateMachine(&stateMachine)
+        
+        print("Expected: Change from 'Pending' to 'Testing")
+        print("Expected: Change from 'Testing' to 'Failed")
+        print("Expected: Failed Attempt to Change from 'Testing' to 'Pending' before changing to Failed")
+        print("Expected: Final State - 'Failed'")
+        
+        stateMachine.perform (beforeChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changing from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform (afterChanging: { (destinationState, startingState, userInfo) -> () in
+            print(">>> Changed from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform({ [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            XCTAssertEqual(stateMachine!.currentState, TestStates.Testing)
+            print(">>> Will attempt to change from 'Testing' to 'Pending'")
+            do {
+                try stateMachine?.changeToState(.Pending)
+            }
+            catch {
+                // call should throw
+                print(">>> Attempt to change from 'Testing' to 'Pending' Failed :)")
+                return
+            }
+            
+            XCTFail("State Change to .Pending Succeeded")
+            
+        }, beforeChangingToStates: .Failed)
+        
+        do {
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Pending)
+            try stateMachine.changeToState(.Testing)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Testing)
+            try stateMachine.changeToState(.Failed)
+            print("Current State: \(stateMachine.currentState)")
+            XCTAssertEqual(stateMachine.currentState, TestStates.Failed)
+        }
+        catch {
+            XCTFail("\(error)")
+        }
+    }
+    
+//TODO: Choose a better name for this test
+    func testStateChangesExitAtExpectedTimesWhenAutomaticallyChangingTo3rdStatesOne() {
+        let stateMachine = StateMachine(withStartingState: TestStates.Pending)
+        stateMachine.perform (beforeChanging: { (destinationState, startingState, userInfo) -> () in
+            print("Will change from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform(afterChanging: { (destinationState, startingState, userInfo) -> () in
+            print("Did  change from \(startingState) to \(destinationState)")
+            if startingState == .Pending {
+                XCTFail("Should have been skipped")
+                return
+            }
+            XCTAssertEqual(startingState, TestStates.Testing)
+        })
+        
+        stateMachine.perform({ [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            try! stateMachine?.changeToState(.Passed)
+        }, afterChangingFromStates: .Pending)
+
+        
+        try! stateMachine.changeToState(.Testing)
+    }
+    
+//TODO: Choose a better name for this test
+    func testStateChangesExitAtExpectedTimesWhenAutomaticallyChangingTo3rdStatesTwo() {
+
+        let stateMachine = StateMachine(withStartingState: TestStates.Pending)
+        stateMachine.perform (beforeChanging: { [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            print("Will change from \(startingState) to \(destinationState)")
+            if destinationState == .Testing {
+                try! stateMachine?.changeToState(.Passed)
+            }
+        })
+        
+        stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+            if destinationState == .Testing {
+                XCTFail("Shouldn't be performed")
+            }
+            
+        }, beforeChangingFromStates: .Pending)
+        
+        try! stateMachine.changeToState(.Testing)
+    }
+    
+//TODO: Choose a better name for this test
+    func testStateChangesExitAtExpectedTimesWhenAutomaticallyChangingTo3rdStatesThree() {
+        
+        let stateMachine = StateMachine(withStartingState: TestStates.Pending)
+        stateMachine.perform (beforeChanging: { (destinationState, startingState, userInfo) -> () in
+            print("Will change from \(startingState) to \(destinationState)")
+        })
+        
+        stateMachine.perform({ [weak stateMachine]  (destinationState, startingState, userInfo) -> () in
+            if destinationState == .Testing {
+                try! stateMachine?.changeToState(.Passed)
+            }
+        }, beforeChangingFromStates: .Pending)
+        
+        stateMachine.perform({ (destinationState, startingState, userInfo) -> () in
+            XCTFail("Shouldn't be performed")
+        }, afterChangingToStates: .Testing)
+        
+        try! stateMachine.changeToState(.Testing)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
