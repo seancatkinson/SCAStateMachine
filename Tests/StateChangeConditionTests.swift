@@ -36,9 +36,9 @@ class StateChangeConditionTests: XCTestCase {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) throws in
             throw StateConditionErrors.ErrorOne
-        }, forDestinationStates: .Testing)
+        }
         
         do {
             try stateMachine.canChangeToState(.Testing)
@@ -57,10 +57,9 @@ class StateChangeConditionTests: XCTestCase {
         addTestStateRulesToTestStateMachine(&stateMachine)
         
         var number = 0
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+        stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
             number = 12
-        }, forStartingStates: .Pending)
-        
+        }
         
         do {
             try! stateMachine.changeToState(.Testing)
@@ -73,9 +72,9 @@ class StateChangeConditionTests: XCTestCase {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         var number = 0
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                number = 12
-        }, forDestinationStates: .Testing)
+        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+            number = 12
+        }
         
         try! stateMachine.changeToState(.Testing)
         
@@ -86,12 +85,13 @@ class StateChangeConditionTests: XCTestCase {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         var number = 0
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    number++
-        }, forStartingStates: .Pending)
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
-                    number++
-        }, forDestinationStates: .Testing)
+        
+        stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
+            number++
+        }
+        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+            number++
+        }
         
         try! stateMachine.changeToState(.Testing)
         
@@ -102,9 +102,9 @@ class StateChangeConditionTests: XCTestCase {
         var stateMachine = createTestStateMachine()
         addTestStateRulesToTestStateMachine(&stateMachine)
         
-        stateMachine.addStateChangeCondition({ (destinationState, startingState, userInfo) throws in
+        stateMachine.checkConditionBeforeChangingTo(.Passed) { (destinationState, startingState, userInfo) -> () in
             XCTFail("Condition shouldn't be executed")
-        }, forDestinationStates: .Passed)
+        }
         
         do {
             try! stateMachine.changeToState(.Testing)

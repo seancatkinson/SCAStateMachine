@@ -169,7 +169,7 @@ class StateChangeTests: XCTestCase {
     
     func testCannotChangeToUnapplicableState() {
         var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        addTestStateRulesToTestStateMachine(&stateMachine)                
         
         do {
             try stateMachine.changeToState(.Passed, userInfo: nil)

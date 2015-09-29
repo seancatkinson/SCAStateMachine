@@ -237,6 +237,7 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     }
     
     
+// MARK: - State Change Conditions
     
 /**
     Add a block to be performed before attempting to change from a set of 
@@ -246,10 +247,10 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     the order they are added. If no conditions exist and the change is valid, 
     the change will succeed.
     
-    :param: closure the block to perform
     :param: states the states to add the condition for
+    :param: closure the block to perform
 */
-    public func addStateChangeCondition(closure:changeCondition, forStartingStates states: T...) {
+    public func checkConditionBeforeChangingFrom(states: T..., _ closure:changeCondition) {
         for state in states {
             var stateConditionsArray:[changeCondition]!  = self._willChangeFromStateConditions[state] ?? []
             stateConditionsArray.append(closure)
@@ -258,17 +259,17 @@ public class StateMachine <T where T: Equatable, T: Hashable>
     }
     
 /**
-    Add a block to be performed before attempting to change to a set of
+    Add a closure to be performed before attempting to change to a set of
     states. If the block throws, the state change will fail and the thrown error
     will bubble up to the caller.
     Multiple blocks can be added for any given state and will be performed in
     the order they are added. If no conditions exist and the change is valid,
     the change will succeed.
     
-    :param: closure the block to perform
     :param: states the states to add the condition for
+    :param: closure the block to perform
 */
-    public func addStateChangeCondition(closure:changeCondition, forDestinationStates states: T...) {
+    public func checkConditionBeforeChangingTo(states: T..., _ closure:changeCondition) {
         for state in states {
             var stateConditionsArray:[changeCondition]!  = self._willChangeToStateConditions[state] ?? []
             stateConditionsArray.append(closure)
@@ -279,72 +280,66 @@ public class StateMachine <T where T: Equatable, T: Hashable>
 // MARK: State Change Actions
     
 /**
-    Set a block to be executed before the state machine changes to any other state. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
+    Set a block to be executed before the state machine changes to any other state.
     
     :param: closure the block to be executed when the state machine will change to the provided state
 */
-    public func perform(beforeChanging closure:changeAction) {
+    public func performBeforeChanging(closure:changeAction) {
         self._willChangeStateAction = closure
     }
     
 /**
-    Set a block to be executed after the state machine changes to any other state. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
+    Set a block to be executed after the state machine changes to any other state.
     
     :param: closure the block to be executed when the state machine did change to the provided state
 */
-    public func perform(afterChanging closure:changeAction) {
+    public func performAfterChanging(closure:changeAction) {
         self._didChangeStateAction = closure
     }
     
 /**
-    Set a block to be executed before the state machine changes to a set of specific states. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
+    Set a block to be executed before the state machine changes to a set of specific states.
     
-    :param: closure the block to be executed when the state machine will change to the provided states
-    :param: states the states to add the action for
+     :param: states the states to add the action for
+     :param: closure the block to be executed when the state machine will change to the provided states
 */
-    public func perform(closure:changeAction, beforeChangingToStates states: T...) {
+    public func performBeforeChangingTo(states: T..., _ closure:changeAction) {
         for state in states {
             self._willChangeToStateActions[state] = closure
         }
     }
     
 /**
-    Set a block to be executed before the state machine changes from a set of specific states. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
+    Set a block to be executed before the state machine changes from a set of specific states.
     
-    :param: closure the block to be executed when the state machine will change from the provided states
-    :param: states the states to add the action for
+     :param: states the states to add the action for
+     :param: closure the block to be executed when the state machine will change from the provided states
 */
-    public func perform(closure:changeAction, beforeChangingFromStates states: T...) {
+    public func performBeforeChangingFrom(states: T..., _ closure:changeAction) {
         for state in states {
             self._willChangeFromStateActions[state] = closure
         }
     }
     
 /**
-    Set a block to be executed after the state machine changes to a set of specific states. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
+    Set a block to be executed after the state machine changes to a set of specific states.
     
     :param: closure the block to be executed when the state machine did change to the provided states
     :param: states the states to add the action for
 */
-    public func perform(closure:changeAction, afterChangingToStates states: T...) {
+    public func performAfterChangingTo(states: T..., _ closure:changeAction) {
         for state in states {
             self._didChangeToStateActions[state] = closure
         }
     }
-    
+
 /**
-    Set a block to be executed after the state machine changes from a set of specific states. Throws a
-    StateMachineError.StateMachineActivated error if the state machine has been activated
-    
-    :param: closure the block to be executed when the state machine did change from the provided states
-    :param: states the states to add the action for
+     Set a block to be executed after the state machine changes from a set of specific states.
+     
+     :param: states the states to add the action for
+     :param: closure the block to be executed when the state machine did change from the provided states
 */
-    public func perform(closure:changeAction, afterChangingFromStates states: T...) {
+    public func performAfterChangingFrom(states: T..., _ closure:changeAction) {
         for state in states {
             self._didChangeFromStateActions[state] = closure
         }
