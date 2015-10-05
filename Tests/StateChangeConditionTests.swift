@@ -30,11 +30,10 @@ enum StateConditionErrors : ErrorType {
     case ErrorTwo
 }
 
-class StateChangeConditionTests: XCTestCase {
+class StateChangeConditionTests: SCAStateMachineBaseTests {
 
     func testCanSetConditions() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) throws in
             throw StateConditionErrors.ErrorOne
@@ -53,8 +52,7 @@ class StateChangeConditionTests: XCTestCase {
     }
     
     func testConditionsForStartingStatesAreExecuted() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         var number = 0
         stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
@@ -69,8 +67,8 @@ class StateChangeConditionTests: XCTestCase {
     }
     
     func testConditionsForDestinationStatesAreExecuted() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
+        
         var number = 0
         stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
             number = 12
@@ -82,8 +80,8 @@ class StateChangeConditionTests: XCTestCase {
     }
     
     func testMultipleConditionsCanBeExecuted() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
+        
         var number = 0
         
         stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
@@ -99,8 +97,7 @@ class StateChangeConditionTests: XCTestCase {
     }
     
     func testOnlyConditionsForSpecifiedStatesAreExecuted() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         stateMachine.checkConditionBeforeChangingTo(.Passed) { (destinationState, startingState, userInfo) -> () in
             XCTFail("Condition shouldn't be executed")

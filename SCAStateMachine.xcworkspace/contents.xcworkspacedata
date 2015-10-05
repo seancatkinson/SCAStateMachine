@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "container:"
+      name = "Examples">
+      <FileRef
+         location = "group:/Users/seancatkinson/Documents/Personal/iOS/SCAKit/SCAStateMachine/Turnstile Example.playground">
+      </FileRef>
+      <FileRef
+         location = "group:ExampleApp/SCAStateMachineExampleApp/SCAStateMachineExampleApp.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:SCAStateMachine.xcodeproj">
+   </FileRef>
    <FileRef
       location = "group:SCAStateMachine.podspec">
    </FileRef>
    <FileRef
       location = "group:README.md">
-   </FileRef>
-   <FileRef
-      location = "group:iOS Example.playground">
-   </FileRef>
-   <FileRef
-      location = "group:SCAStateMachine.xcodeproj">
    </FileRef>
 </Workspace>

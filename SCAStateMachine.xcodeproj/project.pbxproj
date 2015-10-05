@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		964FD29F1B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */; };
+		964790C71BC13EB500C56D59 /* SCAStateMachineBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */; settings = {ASSET_TAGS = (); }; };
 		96644F171B7D3CC4003029E7 /* StateChangeConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */; };
 		968F0B2B1B25A6F1000A4D3E /* SCAStateMachine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		969B6E6C1B407D3000A1F25B /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969B6E6B1B407D3000A1F25B /* StateMachine.swift */; };
@@ -40,7 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachineTestHelpers.swift; sourceTree = "<group>"; };
+		964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAStateMachineBaseTests.swift; sourceTree = "<group>"; };
 		96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeConditionTests.swift; sourceTree = "<group>"; };
 		969B6E6B1B407D3000A1F25B /* StateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		96D36C261B4085FD003EC90C /* StateChangeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeTests.swift; sourceTree = "<group>"; };
@@ -91,11 +91,11 @@
 		96E1DBE81B19D54A000DBF49 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				964FD29E1B40A3A2005D24C8 /* StateMachineTestHelpers.swift */,
 				96D36C261B4085FD003EC90C /* StateChangeTests.swift */,
 				96D36C291B408649003EC90C /* StateChangeActionTests.swift */,
 				96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */,
 				96E1DC2E1B19DDA2000DBF49 /* Supporting Files */,
+				964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -243,10 +243,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				964FD29F1B40A3A2005D24C8 /* StateMachineTestHelpers.swift in Sources */,
 				96644F171B7D3CC4003029E7 /* StateChangeConditionTests.swift in Sources */,
 				96D36C271B4085FD003EC90C /* StateChangeTests.swift in Sources */,
 				96D36C2A1B408649003EC90C /* StateChangeActionTests.swift in Sources */,
+				964790C71BC13EB500C56D59 /* SCAStateMachineBaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

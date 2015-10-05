@@ -27,7 +27,7 @@ import XCTest
 import Foundation
 @testable import SCAStateMachine
 
-class StateChangeTests: XCTestCase {
+class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanCreateStateChangeObjectsWithStartingStatesArray() {
         let stateChange = StateChange(withDestinationStates: [TestStates.Testing], fromStartingStates: [TestStates.Pending])
@@ -155,8 +155,7 @@ class StateChangeTests: XCTestCase {
     
 // MARK:- Change State
     func testCanChangeState() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
             try stateMachine.changeToState(.Testing, userInfo: nil)
@@ -168,8 +167,7 @@ class StateChangeTests: XCTestCase {
     }
     
     func testCannotChangeToUnapplicableState() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)                
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
             try stateMachine.changeToState(.Passed, userInfo: nil)
@@ -181,8 +179,7 @@ class StateChangeTests: XCTestCase {
     }
     
     func testCannotChangeWithoutActivation() {
-        var stateMachine = createTestStateMachine()
-        addTestStateRulesToTestStateMachine(&stateMachine)
+        stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
             try stateMachine.changeToState(.Passed, userInfo: nil)

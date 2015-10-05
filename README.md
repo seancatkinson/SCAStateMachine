@@ -3,7 +3,7 @@
 A lightweight state machine built in Swift for iOS & Mac OSX
 
 ## Features
-- [x] Flexible - States can be of any type conforming to the Equatable & Hashable protocols
+- [x] Flexible - States can be of any type conforming to the Hashable protocol
 - [x] Supports an arbitrary number of states and state changes
 - [x] Block-based API
 - [x] Several action points to customise when various blocks are executed
@@ -11,7 +11,7 @@ A lightweight state machine built in Swift for iOS & Mac OSX
 - [x] Basic Usage support to get going with minmal setup
 - [x] Advanced Usage support to control which states can be changed to which states
 - [x] Uses Swift 2.0 error mechanism for communicating issues
-- [x] Lightweight - SCAStateMachine has no dependencies
+- [x] Lightweight - SCAStateMachine has no dependencies beyond Foundation
 - [x] All methods documented and unit tested
 
 ## Requirements
@@ -88,17 +88,6 @@ stateMachine.checkConditionBeforeChangingTo(.Loaded) { (destinationState, starti
     if mySuccessCheck() == false {
         throw MyCustomError.CustomErrorOne
     }
-}
-
-stateMachine.performBeforeChanging { (destinationState, startingState, userInfo) -> () in
-    // do something before actioning any changes
-}
-
-stateMachine.performBeforeChangingFrom(.Ready) { (destinationState, startingState, userInfo) -> () in
-    // do something before changeing from the .Ready state
-}
-stateMachine.performBeforeChangingTo(.Loading) { (destinationState, startingState, userInfo) -> () in
-    // do something before changing to the .Loading state
 }
 
 stateMachine.performAfterChangingTo(.Error, .Loaded) { (destinationState, startingState, userInfo) -> () in
