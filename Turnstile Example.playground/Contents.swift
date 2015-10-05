@@ -2,54 +2,43 @@
 
 import SCAStateMachine
 
-
-
-
-
-
-//func lock() {
-//    print("Locking")
-//}
-//func unlock() {
-//    print("Unlocking")
-//}
-//
-//enum TurnstileState {
-//    case Locked
-//    case Unlocked
-//}
-//
-//enum TurnstileEvent : String {
-//    case Push
-//    case Coin
-//}
-//
-//
-//let stateMachine = StateMachine(withStartingState: TurnstileState.Locked)
-//
-//stateMachine.performBeforeChangingTo(.Locked) { _,_,_ in lock() }
-//stateMachine.performBeforeChangingTo(.Unlocked) { _,_,_ in unlock() }
-
-/*
-
-// register the transitions
-stateMachine.registerTransitionsFrom(.Locked, to: .Unlocked, named:TurnstilEvent.Coin)
-stateMachine.registerTransitionsFrom(.Unlocked, to: .Locked, named:TurnstilEvent.Push)
-
-// check if a transition is possible
-stateMachine.canPerformTransition("Push") // false
-stateMachine.canPerformTransition("Coin") // true
-
-// or just attempt to do it
-do {
-    try stateMachine.performTransition("Coin")
-} 
-catch {
-    // we will catch this unsupported transition
+func lock() {
+    print("Locking")
+}
+func unlock() {
+    print("Unlocking")
 }
 
-// check the current state of the machine
-stateMachine.currentState == .Unlocked // true
+enum TurnstileState {
+    case Locked
+    case Unlocked
+}
+
+enum TurnstileEvent : String {
+    case Push
+    case Coin
+}
 
 
-*/
+let stateMachine = StateMachine(withStartingState: TurnstileState.Locked)
+
+stateMachine.performAfterChangingTo(.Locked) { _,_,_ in lock() }
+stateMachine.performAfterChangingTo(.Unlocked) { _,_,_ in unlock() }
+
+stateMachine.addStateTransition(named: "Coin", toDestinationState: .Unlocked, fromStartingStates: .Locked)
+stateMachine.addStateTransition(named: "Push", toDestinationState: .Locked, fromStartingStates: .Unlocked)
+
+do {
+    let destinationState = try stateMachine.canPerformTransition(named:"Coin")
+    // do something with the destination state
+}
+catch {
+    // catch UnspportedStateChange/NoTransitionMatchingName/Custom Errors
+}
+
+do {
+    try stateMachine.performTransition(named:"Coin")
+}
+catch {
+    // catch UnspportedStateChange/NoTransitionMatchingName/Custom Errors
+}

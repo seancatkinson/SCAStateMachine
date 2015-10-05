@@ -36,7 +36,7 @@ public class StateMachine <T where T: Hashable>
 // MARK:- state vars
     private var _currentState : T
 /**
-    Returns the current state of the State Machine
+    - Returns: the current state of the State Machine
 */
     public var currentState : T {
         var state : T?
@@ -48,6 +48,11 @@ public class StateMachine <T where T: Hashable>
     Array of state change rules
 */
     private var _stateChangeRules : [StateChange<T>] = []
+    
+/**
+    Dictionary of state transitions
+*/
+    private var _stateTransitions : [String:StateTransition<T>] = [:]
     
 // MARK:- state change conditions
     private var _willChangeFromStateConditions : Dictionary<T, [changeCondition]> = [:]
@@ -62,24 +67,24 @@ public class StateMachine <T where T: Hashable>
 /**
     Initialises a state machine with an initial state
     
-    :param: withInitialState the initial state of the StateMachine
+    - Parameter withInitialState: the initial state of the StateMachine
     
-    :returns: the state Machine
+    - Returns: the state Machine
 */
     public init(withStartingState startingState: T, targetQueue : dispatch_queue_t = dispatch_get_main_queue()) {
         self._currentState = startingState
         self.targetQueue = targetQueue
     }
     
-// MARK: - State Change Execution
+// MARK: - State Change Execution Checks
 /**
     Check if the state machine can change to a specific state. 
     Checks if rules have been set, with no rules, all changes are allowed.
     Checks conditions for from and to states.
     Rethrows errors thrown by condition statements
     
-    :param: state the state you want to check
-    :param: userInfo any extra info you want to pass to your State change actions
+    - Parameter state: the state you want to check
+    - Parameter userInfo: any extra info you want to pass to your State change actions
 */
     public func canChangeToState(destinationState: T, userInfo:Any?=nil) throws {
         var error : ErrorType?
@@ -112,14 +117,64 @@ public class StateMachine <T where T: Hashable>
     }
     
 /**
+    Check if the state machine can perform a transition registered to the 
+    provided name.
+    Checks if rules have been set, with no rules, all changes are allowed.
+    Checks conditions for from and to states.
+    Rethrows errors thrown by condition statements
+    
+    - Parameter state: the state you want to check
+    - Parameter userInfo: any extra info you want to pass to your State change actions
+    
+    
+    
+    - Returns: the state that the transition will move to
+*/
+    public func canPerformTransition(named name:String, userInfo:Any?=nil) throws -> T {
+        var destinationState : T?
+        
+        do {
+            var error : ErrorType?
+            var maybeTransition : StateTransition<T>?
+            
+            dispatch_sync(self.machineQueue) {
+                maybeTransition = self._stateTransitions[name]
+                
+                guard let transition = maybeTransition else {
+                    error = StateMachineError.NoTransitionMatchingName(name)
+                    return
+                }
+                
+                destinationState = transition.stateChange.destinationStates.first
+                
+                guard destinationState != nil else {
+                    error = StateMachineError.InvalidStateMachineSetup
+                    return
+                }
+            }
+            
+            guard error == nil else {
+                throw error!
+            }
+        }
+        catch let thrownError {
+            throw thrownError
+        }
+        
+        try self.canChangeToState(destinationState!, userInfo: userInfo)
+        
+        return destinationState!
+    }
+    
+/**
     Checks whether a state change rule has been defined for a given starting
     state and destination state. 
     Returns true if no state changes have been defined.
     
-    :param: startingState the state the statemachine will be in before a change
-    :param: destinationState the state the statemachine will be in after a change
+    - Parameter startingState: the state the statemachine will be in before a change
+    - Parameter destinationState: the state the statemachine will be in after a change
     
-    :returns: a bool success value
+    - Returns: a bool success value
 */
     func stateChangeExistsForStartingState(startingState:T, destinationState:T) -> Bool {
         guard self._stateChangeRules.count > 0 else {
@@ -136,10 +191,10 @@ public class StateMachine <T where T: Hashable>
     Executes each closure in an array of closures that add conditions for 
     whether a a particular state change should be actioned.
     
-    :param: conditions the array of condition closures to execute
-    :param: forStartingState the state the statemachine will be in before a change
-    :param: destinationState
-    :param: withUserInfo
+    - Parameter conditions: the array of condition closures to execute
+    - Parameter forStartingState: the state the statemachine will be in before a change
+    - Parameter destinationState:
+    - Parameter withUserInfo:
 */
     func allConditionsPass(conditions:[changeCondition]?, forStartingState startingState:T, destinationState:T, withUserInfo userInfo:Any?=nil) throws {
         if let conditions = conditions {
@@ -149,28 +204,12 @@ public class StateMachine <T where T: Hashable>
         }
     }
     
-/**
-    Asynchronously change the state machine to a new state, passing through some extra information if desired.
-    Error Checking is performed synchronously before the change is attempted
-    If no state change rules have been defined, all state changes are allowed. Throws a StateMachineError.UnsupportedStateChange error if a state change rules have been defined but not one for the requested change.
-    If you attempt to change to a 3rd state inside a handler for a change to a 2nd state, all handlers of the original transition will still be performed first
+// MARK: State Change Execution
     
-    Will perform the state change actions in the following order -
-    - didChangeToState
-    - didChangeFromState
-    - didChangeState
-    
-    :param: state the state you want to change to
-    :param: userInfo any extra info you want to pass to your State change actions
-*/
-    public func changeToState(destinationState: T, userInfo:Any?=nil) throws {
-        // don't need to dispatch_sync this call as the method itself does it 
-        // for us
-        try self.canChangeToState(destinationState, userInfo: userInfo)
-        
+    // change the state and perform the stored actions
+    func performStateChangeActionsFor(startingState: T, destinationState: T, userInfo:Any? = nil) {
         dispatch_barrier_async(self.machineQueue) {
             
-            let startingState = self._currentState
             self._currentState = destinationState
             
             // did change actions
@@ -192,7 +231,67 @@ public class StateMachine <T where T: Hashable>
         }
     }
     
+/**
+    Asynchronously change the state machine to a new state, passing through some
+    extra information if desired.
+    Error Checking is performed synchronously before the change is attempted
+    If no state change rules have been defined, all state changes are allowed.
     
+    If you attempt to change to a 3rd state inside a handler for a change to a 
+    2nd state, all handlers of the original transition will still be performed 
+    first.
+    
+    Will perform the state change actions in the following order -
+    - didChangeToState
+    - didChangeFromState
+    - didChangeState
+    
+    - Parameter state: the state you want to change to
+    - Parameter userInfo: any extra info you want to pass to your State change actions
+    
+    - Throws: 
+        - `StateMachineError.UnsupportedStateChange` if state change rules
+    have been defined but not one for the requested change.
+        - `<Your Error Here>` if you throw from any of the conditions you
+    have defined matching this state change
+*/
+    public func changeToState(destinationState: T, userInfo:Any?=nil) throws {
+        // this will dispatch_sync for us
+        try self.canChangeToState(destinationState, userInfo: userInfo)
+        
+        // this will dispatch_barrier_async for us
+        self.performStateChangeActionsFor(self._currentState, destinationState: destinationState, userInfo: userInfo)
+    }
+    
+/**
+    Perform a registered transition to asynchronously change the state machine 
+    to a new state, passing through some extra information if desired.
+    Error Checking is performed synchronously before the change is attempted
+    If no state change rules have been defined, all state changes are allowed. 
+    Throws a StateMachineError.UnsupportedStateChange error if a state change rules have been defined but not one for the requested change.
+    If you attempt to change to a 3rd state inside a handler for a change to a 2nd state, all handlers of the original transition will still be performed first
+    
+    Will perform the state change actions in the following order -
+    - didChangeToState
+    - didChangeFromState
+    - didChangeState
+    
+    - Parameter state: the state you want to change to
+    - Parameter userInfo: any extra info you want to pass to your State change actions
+*/
+    public func performTransition(named name:String, userInfo:Any?=nil) throws {
+        // this will dispatch_sync for us
+        let destinationState = try self.canPerformTransition(named: name)
+        
+        // this will dispatch_barrier_async for us
+        self.performStateChangeActionsFor(self._currentState, destinationState: destinationState, userInfo: userInfo)
+    }
+    
+    
+    
+// MARK: - Add State Change Rules
+    
+    // Base Helper method to add state change rules
     func addStateChangeRulesFrom(startingStates: [T], toDestinationStates: [T]) {
         dispatch_barrier_async(self.machineQueue) {
             let change = StateChange(withDestinationStates: toDestinationStates, fromStartingStates: startingStates)
@@ -205,8 +304,8 @@ public class StateMachine <T where T: Hashable>
 /**
     Add a state change rule to allow changing to a specific state from a list of other states.
     
-    :param: destinationState the state you want to allow movement to
-    :param: fromStartingStates a list of states that will allow moving to the destinationState
+    - Parameter destinationState: the state you want to allow movement to
+    - Parameter fromStartingStates: a list of states that will allow moving to the destinationState
 */
     public func addStateChangeRulesTo(destinationState: T, fromStartingStates: T...) {
         self.addStateChangeRulesFrom(fromStartingStates, toDestinationStates: [destinationState])
@@ -215,8 +314,8 @@ public class StateMachine <T where T: Hashable>
 /**
     Add a state change rule to allow changing to a list of states from a specific state.
 
-    :param: destinationStates the list of states you want to allow movement to
-    :param: fromStartingStates a state that will allow moving to the destinationStates
+    - Parameter destinationStates: the list of states you want to allow movement to
+    - Parameter fromStartingStates: a state that will allow moving to the destinationStates
 */
     public func addStateChangeRulesTo(destinationStates:T..., fromStartingState: T) {
         self.addStateChangeRulesFrom([fromStartingState], toDestinationStates: destinationStates)
@@ -225,8 +324,8 @@ public class StateMachine <T where T: Hashable>
 /**
     Add a state change rule to allow changing to a specific state from a list of other states.
     
-    :param: toDestinationState the state you want to allow movement to
-    :param: startingStates a list of states that will allow moving to the destinationState
+    - Parameter toDestinationState: the state you want to allow movement to
+    - Parameter startingStates: a list of states that will allow moving to the destinationState
 */
     public func addStateChangeRulesFrom(startingStates: T..., toDestinationState: T) {
         self.addStateChangeRulesFrom(startingStates, toDestinationStates: [toDestinationState])
@@ -235,11 +334,29 @@ public class StateMachine <T where T: Hashable>
 /**
     Add a state change rule to allow changing to a list of states from a specific state.
     
-    :param: destinationStates the list of states you want to allow movement to
-    :param: fromStartingStates a state that will allow moving to the destinationStates
+    - Parameter destinationStates: the list of states you want to allow movement to
+    - Parameter fromStartingStates: a state that will allow moving to the destinationStates
 */
     public func addStateChangeRulesFrom(startingState: T, toDestinationStates: T...) {
         self.addStateChangeRulesFrom([startingState], toDestinationStates: toDestinationStates)
+    }
+    
+// MARK: Add Named State Transition & State Change Rules
+    
+/**
+    Add a named state change rule to allow changing to a specific state from a list of other states.
+    Use the name in performTransition(named:<name>) to try the change
+
+    - Parameter named: the name of the transition
+    - Parameter toDestinationState: the state you want to allow movement to
+    - Parameter startingStates: a list of states that will allow moving to the destinationState
+*/
+    public func addStateTransition(named name:String, toDestinationState:T, fromStartingStates: T...) {
+        dispatch_barrier_async(self.machineQueue) {
+            let transition = StateTransition(named: name, withDestinationState: toDestinationState, fromStartingStates: fromStartingStates)
+            self._stateTransitions[name] = transition
+            self.addStateChangeRulesFrom(fromStartingStates, toDestinationStates: [toDestinationState])
+        }
     }
     
     
@@ -253,8 +370,8 @@ public class StateMachine <T where T: Hashable>
     the order they are added. If no conditions exist and the change is valid, 
     the change will succeed.
     
-    :param: states the states to add the condition for
-    :param: closure the block to perform
+    - Parameter states: the states to add the condition for
+    - Parameter closure: the block to perform
 */
     public func checkConditionBeforeChangingFrom(states: T..., _ closure:changeCondition) {
         dispatch_barrier_async(self.machineQueue) {
@@ -274,8 +391,8 @@ public class StateMachine <T where T: Hashable>
     the order they are added. If no conditions exist and the change is valid,
     the change will succeed.
     
-    :param: states the states to add the condition for
-    :param: closure the block to perform
+    - Parameter states: the states to add the condition for
+    - Parameter closure: the block to perform
 */
     public func checkConditionBeforeChangingTo(states: T..., _ closure:changeCondition) {
         dispatch_barrier_async(self.machineQueue) {
@@ -292,7 +409,7 @@ public class StateMachine <T where T: Hashable>
 /**
     Set a block to be executed after the state machine changes to any other state.
     
-    :param: closure the block to be executed when the state machine did change to the provided state
+    - Parameter closure: the block to be executed when the state machine did change to the provided state
 */
     public func performAfterChanging(onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
         dispatch_barrier_async(self.machineQueue) {
@@ -303,8 +420,8 @@ public class StateMachine <T where T: Hashable>
 /**
     Set a block to be executed after the state machine changes to a set of specific states.
     
-    :param: closure the block to be executed when the state machine did change to the provided states
-    :param: states the states to add the action for
+    - Parameter closure: the block to be executed when the state machine did change to the provided states
+    - Parameter states: the states to add the action for
 */
     public func performAfterChangingTo(states: T..., onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
         dispatch_barrier_async(self.machineQueue) {
@@ -317,8 +434,8 @@ public class StateMachine <T where T: Hashable>
 /**
      Set a block to be executed after the state machine changes from a set of specific states.
      
-     :param: states the states to add the action for
-     :param: closure the block to be executed when the state machine did change from the provided states
+     - Parameter states: the states to add the action for
+     - Parameter closure: the block to be executed when the state machine did change from the provided states
 */
     public func performAfterChangingFrom(states: T..., onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
         dispatch_barrier_async(self.machineQueue) {
@@ -364,11 +481,22 @@ struct StateTransition <T where T:Equatable> {
 
 
 // MARK:- Errors
-public enum StateMachineError: String, CustomStringConvertible, ErrorType {
+public enum StateMachineError: CustomStringConvertible, ErrorType {
     case UnsupportedStateChange
     case AlreadyInRequestedState
+    case NoTransitionMatchingName(String)
+    case InvalidStateMachineSetup
     
     public var description : String {
-        return self.rawValue
+        switch self {
+        case .UnsupportedStateChange:
+            return "Attempted state change is not supported"
+        case .AlreadyInRequestedState:
+            return "Already in the state you're trying to change to"
+        case .NoTransitionMatchingName(let name):
+            return "You have not added a transition named: \(name)"
+        case InvalidStateMachineSetup:
+            return "Invalid State Machine Setup"
+        }
     }
 }
