@@ -473,10 +473,6 @@ struct StateTransition <T where T:Equatable> {
         self.name = name
         self.stateChange = StateChange(withDestinationStates: [withDestinationState], fromStartingStates: fromStartingStates)
     }
-    
-    init(named name:String, withDestinationState: T, fromStartingStates: T...) {
-        self.init(named:name, withDestinationState:withDestinationState, fromStartingStates:fromStartingStates)
-    }
 }
 
 

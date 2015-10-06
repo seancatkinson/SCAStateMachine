@@ -217,6 +217,12 @@ class StateChangeTests: SCAStateMachineBaseTests {
         
         let stringTwo = StateMachineError.AlreadyInRequestedState.description
         XCTAssertTrue(stringTwo.characters.count > 0)
+        
+        let stringThree = StateMachineError.NoTransitionMatchingName("Hello").description
+        XCTAssertTrue(stringThree.characters.count > 0)
+        
+        let stringFour = StateMachineError.InvalidStateMachineSetup.description
+        XCTAssertTrue(stringFour.characters.count > 0)
     }
 
 }
