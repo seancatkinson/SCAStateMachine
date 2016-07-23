@@ -1,7 +1,7 @@
 # SCAStateMachine
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Docs 100%](https://img.shields.io/badge/docs-100%25-brightgreen.svg)()
+[![Docs 100%](https://img.shields.io/badge/docs-100%25-brightgreen.svg)]()
 
 A lightweight state machine built in Swift for iOS & Mac OSX. For swift 3 see the swift3 branch.
 
