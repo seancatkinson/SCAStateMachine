@@ -76,7 +76,7 @@ public class StateMachine <T where T: Hashable>
         self.targetQueue = targetQueue
     }
     
-// MARK: - State Change Execution Checks
+// MARK: - Check state changes are available before making them
 /**
     Check if the state machine can change to a specific state. 
     Checks if rules have been set, with no rules, all changes are allowed.
@@ -204,7 +204,7 @@ public class StateMachine <T where T: Hashable>
         }
     }
     
-// MARK: State Change Execution
+// MARK: Perform State Changes
     
     // change the state and perform the stored actions
     func performStateChangeActionsFor(startingState: T, destinationState: T, userInfo:Any? = nil) {
@@ -255,7 +255,7 @@ public class StateMachine <T where T: Hashable>
         - `<Your Error Here>` if you throw from any of the conditions you
     have defined matching this state change
 */
-    public func changeToState(destinationState: T, userInfo:Any?=nil) throws {
+    public func changeTo(destinationState: T, userInfo:Any?=nil) throws {
         // this will dispatch_sync for us
         try self.canChangeTo(destinationState, userInfo: userInfo)
         
@@ -321,8 +321,6 @@ public class StateMachine <T where T: Hashable>
         self.addStateChangeRulesFrom([startingState], to: destinationStates)
     }
     
-// MARK: Add Named State Transition & State Change Rules
-    
 /**
     Add a named state change rule to allow changing to a specific state from a list of other states.
     Use the name in performTransition(named:<name>) to try the change
@@ -340,7 +338,7 @@ public class StateMachine <T where T: Hashable>
     }
     
     
-// MARK: - State Change Conditions
+// MARK: - Add state change conditions (Gates)
     
 /**
     Add a block to be performed before attempting to change from a set of 
