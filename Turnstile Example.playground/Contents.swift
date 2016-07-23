@@ -1,7 +1,5 @@
 //: Playground - noun: a place where people can play
 
-import SCAStateMachine
-
 func lock() {
     print("Locking")
 }
@@ -20,13 +18,13 @@ enum TurnstileEvent : String {
 }
 
 
-let stateMachine = StateMachine(withStartingState: TurnstileState.Locked)
+let stateMachine = StateMachine(startingOn: TurnstileState.Locked)
 
 stateMachine.performAfterChangingTo(.Locked) { _,_,_ in lock() }
 stateMachine.performAfterChangingTo(.Unlocked) { _,_,_ in unlock() }
 
-stateMachine.addStateTransition(named: "Coin", toDestinationState: .Unlocked, fromStartingStates: .Locked)
-stateMachine.addStateTransition(named: "Push", toDestinationState: .Locked, fromStartingStates: .Unlocked)
+stateMachine.addStateTransition(named: "Coin", to: .Unlocked, from: .Locked)
+stateMachine.addStateTransition(named: "Push", to: .Locked, from: .Unlocked)
 
 do {
     let destinationState = try stateMachine.canPerformTransition(named:"Coin")

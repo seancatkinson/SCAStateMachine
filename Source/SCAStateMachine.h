@@ -20,7 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+//! Project version number for SCAStateMachine.
+extern double SCAStateMachineVersionNumber;
 
-FOUNDATION_EXPORT double SCAStateMachineVersionNumber;
-FOUNDATION_EXPORT const unsigned char SCAStateMachineVersionString[];
+//! Project version string for SCAStateMachine.
+extern const unsigned char SCAStateMachineVersionString[];

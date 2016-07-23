@@ -20,8 +20,8 @@ class SCAStateMachineBaseTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
         self.stateMachine = nil
+        super.tearDown()
     }
 
 }
@@ -39,12 +39,12 @@ enum TestStates : String, CustomStringConvertible {
 }
 
 func createTestStateMachine(withStartingState: TestStates = TestStates.Pending) -> StateMachine<TestStates> {
-    return StateMachine(withStartingState: withStartingState)
+    return StateMachine(startingOn: withStartingState)
 }
 
 func addTestStateRulesToTestStateMachine(stateMachine:StateMachine<TestStates>) -> StateMachine<TestStates> {
-    stateMachine.addStateChangeRulesFrom(.Pending, toDestinationState: .Testing)
-    stateMachine.addStateChangeRulesFrom(.Testing, toDestinationStates:.Passed, .Failed)
-    stateMachine.addStateChangeRulesFrom(.Passed, .Failed, toDestinationState: .Pending)
+    stateMachine.allowChangingFrom(.Pending, to: .Testing) // this indicates a test started
+    stateMachine.allowChangingFrom(.Testing, to:.Passed, .Failed) // this indicates test failed with a result
+    stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed) // this allows restarting the test
     return stateMachine
 }

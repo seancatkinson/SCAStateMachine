@@ -5,9 +5,6 @@
       location = "container:"
       name = "Examples">
       <FileRef
-         location = "group:/Users/seancatkinson/Documents/Personal/iOS/SCAKit/SCAStateMachine/Turnstile Example.playground">
-      </FileRef>
-      <FileRef
          location = "group:ExampleApp/SCAStateMachineExampleApp/SCAStateMachineExampleApp.xcodeproj">
       </FileRef>
    </Group>

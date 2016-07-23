@@ -40,7 +40,7 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         }
         
         do {
-            try stateMachine.canChangeToState(.Testing)
+            try stateMachine.canChangeTo(.Testing)
         }
         catch StateConditionErrors.ErrorOne {
             return

@@ -7,17 +7,49 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		964790C71BC13EB500C56D59 /* SCAStateMachineBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */; settings = {ASSET_TAGS = (); }; };
+		01B3D9DC1D43B41100A19B5D /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969B6E6B1B407D3000A1F25B /* StateMachine.swift */; };
+		01B3D9E61D43B45800A19B5D /* SCAStateMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3D9D41D43B3A900A19B5D /* SCAStateMachine.framework */; };
+		01B3D9EC1D43B49000A19B5D /* StateChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C261B4085FD003EC90C /* StateChangeTests.swift */; };
+		01B3D9ED1D43B49000A19B5D /* StateChangeActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C291B408649003EC90C /* StateChangeActionTests.swift */; };
+		01B3D9EE1D43B49000A19B5D /* StateChangeConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */; };
+		01B3D9EF1D43B49000A19B5D /* StateTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C66A1E1BC44E3C00D00F62 /* StateTransitionTests.swift */; };
+		01B3D9F01D43B49000A19B5D /* SCAStateMachineBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */; };
+		01B3DA0F1D43B70E00A19B5D /* SCAStateMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B3D9FE1D43B6FC00A19B5D /* SCAStateMachine.framework */; };
+		01B3DA151D43B75300A19B5D /* StateChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C261B4085FD003EC90C /* StateChangeTests.swift */; };
+		01B3DA161D43B75300A19B5D /* StateChangeActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C291B408649003EC90C /* StateChangeActionTests.swift */; };
+		01B3DA171D43B75300A19B5D /* StateChangeConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */; };
+		01B3DA181D43B75300A19B5D /* StateTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C66A1E1BC44E3C00D00F62 /* StateTransitionTests.swift */; };
+		01B3DA191D43B75300A19B5D /* SCAStateMachineBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */; };
+		01B3DA1A1D43B75A00A19B5D /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969B6E6B1B407D3000A1F25B /* StateMachine.swift */; };
+		01B3DA1B1D43B87C00A19B5D /* SCAStateMachine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 01B3D9D41D43B3A900A19B5D /* SCAStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01B3DA2B1D43C92A00A19B5D /* SCAStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E1DC381B1A0CE5000DBF49 /* SCAStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01B3DA2C1D43C93500A19B5D /* SCAStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E1DC381B1A0CE5000DBF49 /* SCAStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01B3DA2D1D43C93C00A19B5D /* SCAStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E1DC381B1A0CE5000DBF49 /* SCAStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		964790C71BC13EB500C56D59 /* SCAStateMachineBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */; };
 		96644F171B7D3CC4003029E7 /* StateChangeConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */; };
 		968F0B2B1B25A6F1000A4D3E /* SCAStateMachine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		969B6E6C1B407D3000A1F25B /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969B6E6B1B407D3000A1F25B /* StateMachine.swift */; };
-		96C66A1F1BC44E3C00D00F62 /* StateTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C66A1E1BC44E3C00D00F62 /* StateTransitionTests.swift */; settings = {ASSET_TAGS = (); }; };
+		96C66A1F1BC44E3C00D00F62 /* StateTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C66A1E1BC44E3C00D00F62 /* StateTransitionTests.swift */; };
 		96D36C271B4085FD003EC90C /* StateChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C261B4085FD003EC90C /* StateChangeTests.swift */; };
 		96D36C2A1B408649003EC90C /* StateChangeActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D36C291B408649003EC90C /* StateChangeActionTests.swift */; };
 		96E1DC391B1A0CE5000DBF49 /* SCAStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E1DC381B1A0CE5000DBF49 /* SCAStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		01B3D9E71D43B45800A19B5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96E1DBE11B19D501000DBF49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01B3D9D31D43B3A900A19B5D;
+			remoteInfo = SCAStateMachineOSX;
+		};
+		01B3DA101D43B70E00A19B5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96E1DBE11B19D501000DBF49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01B3D9FD1D43B6FC00A19B5D;
+			remoteInfo = SCAStateMachineTV;
+		};
 		96E1DBFB1B19D58E000DBF49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96E1DBE11B19D501000DBF49 /* Project object */;
@@ -28,6 +60,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		01B3D9F11D43B4A700A19B5D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				01B3DA1B1D43B87C00A19B5D /* SCAStateMachine.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96C94A711B1C4CA7006CFD6E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,6 +83,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01B3D9D41D43B3A900A19B5D /* SCAStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCAStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B3D9E11D43B45800A19B5D /* SCAStateMachineOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCAStateMachineOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B3D9F41D43B61300A19B5D /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		01B3D9F51D43B61300A19B5D /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		01B3D9F61D43B61300A19B5D /* Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
+		01B3D9F71D43B61300A19B5D /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		01B3D9F81D43B61300A19B5D /* Tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Tests.xcconfig; sourceTree = "<group>"; };
+		01B3D9FE1D43B6FC00A19B5D /* SCAStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCAStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B3DA0A1D43B70E00A19B5D /* SCAStateMachineTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCAStateMachineTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B3DA211D43BA5000A19B5D /* SCAStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCAStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B3DA2A1D43BDD600A19B5D /* generate_docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_docs.sh; sourceTree = "<group>"; };
 		964790C61BC13EB500C56D59 /* SCAStateMachineBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAStateMachineBaseTests.swift; sourceTree = "<group>"; };
 		96644F161B7D3CC4003029E7 /* StateChangeConditionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeConditionTests.swift; sourceTree = "<group>"; };
 		969B6E6B1B407D3000A1F25B /* StateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
@@ -48,13 +101,50 @@
 		96D36C261B4085FD003EC90C /* StateChangeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeTests.swift; sourceTree = "<group>"; };
 		96D36C291B408649003EC90C /* StateChangeActionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeActionTests.swift; sourceTree = "<group>"; };
 		96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCAStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		96E1DBF91B19D58E000DBF49 /* SCAStateMachine Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SCAStateMachine Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96E1DBF91B19D58E000DBF49 /* SCAStateMachineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCAStateMachineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E1DC271B19D8B6000DBF49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96E1DC2F1B19DDB7000DBF49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96E1DC381B1A0CE5000DBF49 /* SCAStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAStateMachine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		01B3D9D01D43B3A900A19B5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9DE1D43B45800A19B5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3D9E61D43B45800A19B5D /* SCAStateMachine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9FA1D43B6FC00A19B5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA071D43B70E00A19B5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA0F1D43B70E00A19B5D /* SCAStateMachine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA1D1D43BA5000A19B5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96E1DBEA1B19D58E000DBF49 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,9 +162,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01B3D9F31D43B5F100A19B5D /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				01B3D9F41D43B61300A19B5D /* Base.xcconfig */,
+				01B3D9F51D43B61300A19B5D /* Debug.xcconfig */,
+				01B3D9F61D43B61300A19B5D /* Framework.xcconfig */,
+				01B3D9F71D43B61300A19B5D /* Release.xcconfig */,
+				01B3D9F81D43B61300A19B5D /* Tests.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		01B3DA291D43BDBE00A19B5D /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				01B3DA2A1D43BDD600A19B5D /* generate_docs.sh */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
 		96E1DBE01B19D501000DBF49 = {
 			isa = PBXGroup;
 			children = (
+				01B3DA291D43BDBE00A19B5D /* scripts */,
+				01B3D9F31D43B5F100A19B5D /* Configurations */,
 				96E1DBE71B19D54A000DBF49 /* Source */,
 				96E1DBE81B19D54A000DBF49 /* Tests */,
 				96E1DBEF1B19D58E000DBF49 /* Products */,
@@ -107,7 +219,12 @@
 			isa = PBXGroup;
 			children = (
 				96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */,
-				96E1DBF91B19D58E000DBF49 /* SCAStateMachine Tests.xctest */,
+				96E1DBF91B19D58E000DBF49 /* SCAStateMachineTests.xctest */,
+				01B3D9D41D43B3A900A19B5D /* SCAStateMachine.framework */,
+				01B3D9E11D43B45800A19B5D /* SCAStateMachineOSXTests.xctest */,
+				01B3D9FE1D43B6FC00A19B5D /* SCAStateMachine.framework */,
+				01B3DA0A1D43B70E00A19B5D /* SCAStateMachineTVTests.xctest */,
+				01B3DA211D43BA5000A19B5D /* SCAStateMachine.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +249,30 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		01B3D9D11D43B3A900A19B5D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA2B1D43C92A00A19B5D /* SCAStateMachine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9FB1D43B6FC00A19B5D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA2C1D43C93500A19B5D /* SCAStateMachine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA1E1D43BA5000A19B5D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA2D1D43C93C00A19B5D /* SCAStateMachine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96E1DBEB1B19D58E000DBF49 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,6 +284,97 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		01B3D9D31D43B3A900A19B5D /* SCAStateMachineOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B3D9D91D43B3A900A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineOSX" */;
+			buildPhases = (
+				01B3D9CF1D43B3A900A19B5D /* Sources */,
+				01B3D9D01D43B3A900A19B5D /* Frameworks */,
+				01B3D9D11D43B3A900A19B5D /* Headers */,
+				01B3D9D21D43B3A900A19B5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCAStateMachineOSX;
+			productName = SCAStateMachineOSX;
+			productReference = 01B3D9D41D43B3A900A19B5D /* SCAStateMachine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01B3D9E01D43B45800A19B5D /* SCAStateMachineOSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B3D9E91D43B45800A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineOSXTests" */;
+			buildPhases = (
+				01B3D9DD1D43B45800A19B5D /* Sources */,
+				01B3D9DE1D43B45800A19B5D /* Frameworks */,
+				01B3D9DF1D43B45800A19B5D /* Resources */,
+				01B3D9F11D43B4A700A19B5D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01B3D9E81D43B45800A19B5D /* PBXTargetDependency */,
+			);
+			name = SCAStateMachineOSXTests;
+			productName = "SCAStateMachineOSX Tests";
+			productReference = 01B3D9E11D43B45800A19B5D /* SCAStateMachineOSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01B3D9FD1D43B6FC00A19B5D /* SCAStateMachineTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B3DA031D43B6FC00A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineTV" */;
+			buildPhases = (
+				01B3D9F91D43B6FC00A19B5D /* Sources */,
+				01B3D9FA1D43B6FC00A19B5D /* Frameworks */,
+				01B3D9FB1D43B6FC00A19B5D /* Headers */,
+				01B3D9FC1D43B6FC00A19B5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCAStateMachineTV;
+			productName = SCAStateMachineTV;
+			productReference = 01B3D9FE1D43B6FC00A19B5D /* SCAStateMachine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01B3DA091D43B70E00A19B5D /* SCAStateMachineTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B3DA121D43B70E00A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineTVTests" */;
+			buildPhases = (
+				01B3DA061D43B70E00A19B5D /* Sources */,
+				01B3DA071D43B70E00A19B5D /* Frameworks */,
+				01B3DA081D43B70E00A19B5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01B3DA111D43B70E00A19B5D /* PBXTargetDependency */,
+			);
+			name = SCAStateMachineTVTests;
+			productName = SCAStateMachineTVTests;
+			productReference = 01B3DA0A1D43B70E00A19B5D /* SCAStateMachineTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01B3DA201D43BA5000A19B5D /* SCAStateMachineWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B3DA261D43BA5000A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineWatch" */;
+			buildPhases = (
+				01B3DA1C1D43BA5000A19B5D /* Sources */,
+				01B3DA1D1D43BA5000A19B5D /* Frameworks */,
+				01B3DA1E1D43BA5000A19B5D /* Headers */,
+				01B3DA1F1D43BA5000A19B5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCAStateMachineWatch;
+			productName = SCAStateMachineWatch;
+			productReference = 01B3DA211D43BA5000A19B5D /* SCAStateMachine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		96E1DBED1B19D58E000DBF49 /* SCAStateMachine */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96E1DC021B19D58E000DBF49 /* Build configuration list for PBXNativeTarget "SCAStateMachine" */;
@@ -161,9 +393,9 @@
 			productReference = 96E1DBEE1B19D58E000DBF49 /* SCAStateMachine.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		96E1DBF81B19D58E000DBF49 /* SCAStateMachine Tests */ = {
+		96E1DBF81B19D58E000DBF49 /* SCAStateMachineTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 96E1DC051B19D58E000DBF49 /* Build configuration list for PBXNativeTarget "SCAStateMachine Tests" */;
+			buildConfigurationList = 96E1DC051B19D58E000DBF49 /* Build configuration list for PBXNativeTarget "SCAStateMachineTests" */;
 			buildPhases = (
 				96E1DBF51B19D58E000DBF49 /* Sources */,
 				96E1DBF61B19D58E000DBF49 /* Frameworks */,
@@ -175,9 +407,9 @@
 			dependencies = (
 				96E1DBFC1B19D58E000DBF49 /* PBXTargetDependency */,
 			);
-			name = "SCAStateMachine Tests";
+			name = SCAStateMachineTests;
 			productName = SweeterSwiftTests;
-			productReference = 96E1DBF91B19D58E000DBF49 /* SCAStateMachine Tests.xctest */;
+			productReference = 96E1DBF91B19D58E000DBF49 /* SCAStateMachineTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -186,9 +418,27 @@
 		96E1DBE11B19D501000DBF49 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
+					01B3D9D31D43B3A900A19B5D = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					01B3D9E01D43B45800A19B5D = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					01B3D9FD1D43B6FC00A19B5D = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 994W3RC44F;
+					};
+					01B3DA091D43B70E00A19B5D = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 994W3RC44F;
+					};
+					01B3DA201D43BA5000A19B5D = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 994W3RC44F;
+					};
 					96E1DBED1B19D58E000DBF49 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 994W3RC44F;
@@ -211,12 +461,52 @@
 			projectRoot = "";
 			targets = (
 				96E1DBED1B19D58E000DBF49 /* SCAStateMachine */,
-				96E1DBF81B19D58E000DBF49 /* SCAStateMachine Tests */,
+				96E1DBF81B19D58E000DBF49 /* SCAStateMachineTests */,
+				01B3D9D31D43B3A900A19B5D /* SCAStateMachineOSX */,
+				01B3D9E01D43B45800A19B5D /* SCAStateMachineOSXTests */,
+				01B3D9FD1D43B6FC00A19B5D /* SCAStateMachineTV */,
+				01B3DA091D43B70E00A19B5D /* SCAStateMachineTVTests */,
+				01B3DA201D43BA5000A19B5D /* SCAStateMachineWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		01B3D9D21D43B3A900A19B5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9DF1D43B45800A19B5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9FC1D43B6FC00A19B5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA081D43B70E00A19B5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA1F1D43BA5000A19B5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96E1DBEC1B19D58E000DBF49 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,6 +524,53 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		01B3D9CF1D43B3A900A19B5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3D9DC1D43B41100A19B5D /* StateMachine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9DD1D43B45800A19B5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3D9EC1D43B49000A19B5D /* StateChangeTests.swift in Sources */,
+				01B3D9ED1D43B49000A19B5D /* StateChangeActionTests.swift in Sources */,
+				01B3D9EE1D43B49000A19B5D /* StateChangeConditionTests.swift in Sources */,
+				01B3D9EF1D43B49000A19B5D /* StateTransitionTests.swift in Sources */,
+				01B3D9F01D43B49000A19B5D /* SCAStateMachineBaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3D9F91D43B6FC00A19B5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA1A1D43B75A00A19B5D /* StateMachine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA061D43B70E00A19B5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B3DA151D43B75300A19B5D /* StateChangeTests.swift in Sources */,
+				01B3DA161D43B75300A19B5D /* StateChangeActionTests.swift in Sources */,
+				01B3DA171D43B75300A19B5D /* StateChangeConditionTests.swift in Sources */,
+				01B3DA181D43B75300A19B5D /* StateTransitionTests.swift in Sources */,
+				01B3DA191D43B75300A19B5D /* SCAStateMachineBaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B3DA1C1D43BA5000A19B5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96E1DBE91B19D58E000DBF49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,6 +594,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		01B3D9E81D43B45800A19B5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01B3D9D31D43B3A900A19B5D /* SCAStateMachineOSX */;
+			targetProxy = 01B3D9E71D43B45800A19B5D /* PBXContainerItemProxy */;
+		};
+		01B3DA111D43B70E00A19B5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01B3D9FD1D43B6FC00A19B5D /* SCAStateMachineTV */;
+			targetProxy = 01B3DA101D43B70E00A19B5D /* PBXContainerItemProxy */;
+		};
 		96E1DBFC1B19D58E000DBF49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 96E1DBED1B19D58E000DBF49 /* SCAStateMachine */;
@@ -265,44 +612,498 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		01B3D9DA1D43B3A900A19B5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seancatkinson.SCAStateMachineOSX;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01B3D9DB1D43B3A900A19B5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seancatkinson.SCAStateMachineOSX;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01B3D9EA1D43B45800A19B5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		01B3D9EB1D43B45800A19B5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		01B3DA041D43B6FC00A19B5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seancatkinson.SCAStateMachineTV;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01B3DA051D43B6FC00A19B5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seancatkinson.SCAStateMachineTV;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01B3DA131D43B70E00A19B5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		01B3DA141D43B70E00A19B5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01B3DA271D43BA5000A19B5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		01B3DA281D43BA5000A19B5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 		96E1DBE51B19D501000DBF49 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F51D43B61300A19B5D /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		96E1DBE61B19D501000DBF49 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F71D43B61300A19B5D /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		96E1DC031B19D58E000DBF49 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -345,16 +1146,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SCAStateMachine;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "$(inherited)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -365,6 +1162,7 @@
 		};
 		96E1DC041B19D58E000DBF49 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F61D43B61300A19B5D /* Framework.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -401,15 +1199,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SCAStateMachine;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "$(inherited)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -420,6 +1214,7 @@
 		};
 		96E1DC061B19D58E000DBF49 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -461,13 +1256,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @executable_path/../Frameworks  @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "$(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -475,6 +1267,7 @@
 		};
 		96E1DC071B19D58E000DBF49 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01B3D9F81D43B61300A19B5D /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -510,12 +1303,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @executable_path/../Frameworks  @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "$(inherited)";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -524,6 +1314,46 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		01B3D9D91D43B3A900A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B3D9DA1D43B3A900A19B5D /* Debug */,
+				01B3D9DB1D43B3A900A19B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		01B3D9E91D43B45800A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineOSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B3D9EA1D43B45800A19B5D /* Debug */,
+				01B3D9EB1D43B45800A19B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		01B3DA031D43B6FC00A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B3DA041D43B6FC00A19B5D /* Debug */,
+				01B3DA051D43B6FC00A19B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		01B3DA121D43B70E00A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B3DA131D43B70E00A19B5D /* Debug */,
+				01B3DA141D43B70E00A19B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		01B3DA261D43BA5000A19B5D /* Build configuration list for PBXNativeTarget "SCAStateMachineWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B3DA271D43BA5000A19B5D /* Debug */,
+				01B3DA281D43BA5000A19B5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		96E1DBE41B19D501000DBF49 /* Build configuration list for PBXProject "SCAStateMachine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -542,7 +1372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		96E1DC051B19D58E000DBF49 /* Build configuration list for PBXNativeTarget "SCAStateMachine Tests" */ = {
+		96E1DC051B19D58E000DBF49 /* Build configuration list for PBXNativeTarget "SCAStateMachineTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96E1DC061B19D58E000DBF49 /* Debug */,

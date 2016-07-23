@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>StateMachine Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/StateMachine" class="dashAnchor"></a>
+
+    <a title="StateMachine Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          SCAStateMachine Docs
+        </a>
+         (100% documented)
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/seancatkinson/SCAStateMachine">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">SCAStateMachine Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      StateMachine Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/StateMachine.html">StateMachine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/StateMachineError.html">StateMachineError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>StateMachine</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">StateMachine</span> <span class="o">&lt;</span><span class="kt">T</span> <span class="k">where</span> <span class="kt">T</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>State machine object that tracks a single state at a time. Allows moving between states via transitions and manually.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Current%20State"></a>
+                <a name="//apple_ref/swift/Section/Current State" class="dashAnchor"></a>
+                <a href="#/Current%20State">
+                  <h3 class="section-name">Current State</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC15SCAStateMachine12StateMachine12currentStatex"></a>
+                    <a name="//apple_ref/swift/Property/currentState" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC15SCAStateMachine12StateMachine12currentStatex">currentState</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The current state of the State Machine</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentState</span> <span class="p">:</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialisation"></a>
+                <a name="//apple_ref/swift/Section/Initialisation" class="dashAnchor"></a>
+                <a href="#/Initialisation">
+                  <h3 class="section-name">Initialisation</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachinecFT10startingOnx11targetQueuePSo17OS_dispatch_queue__GS0_x_"></a>
+                    <a name="//apple_ref/swift/Method/init(startingOn:targetQueue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachinecFT10startingOnx11targetQueuePSo17OS_dispatch_queue__GS0_x_">init(startingOn:targetQueue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialises a state machine with an initial state</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    <p>Parameter withInitialState: the initial state of the StateMachine</p>
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    <p>the state Machine</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">startingOn</span> <span class="nv">startingState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">targetQueue</span> <span class="p">:</span> <span class="n">dispatch_queue_t</span> <span class="o">=</span> <span class="nf">dispatch_get_main_queue</span><span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withInitialState</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the initial state of the StateMachine</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the state Machine</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/State%20Change%20Execution%20Checks"></a>
+                <a name="//apple_ref/swift/Section/State Change Execution Checks" class="dashAnchor"></a>
+                <a href="#/State%20Change%20Execution%20Checks">
+                  <h3 class="section-name">State Change Execution Checks</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine11canChangeToFzTx8userInfoGSqP___T_"></a>
+                    <a name="//apple_ref/swift/Method/canChangeTo(_:userInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine11canChangeToFzTx8userInfoGSqP___T_">canChangeTo(_:userInfo:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Check if the state machine can change to a specific state. 
+Checks if rules have been set, with no rules, all changes are allowed.
+Checks conditions for from and to states.
+Rethrows errors thrown by condition statements</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter state: the state you want to check
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter userInfo: any extra info you want to pass to your State change actions
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">canChangeTo</span><span class="p">(</span><span class="nv">destinationState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span><span class="kt">Any</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to check</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userInfo</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any extra info you want to pass to your State change actions</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine20canPerformTransitionFzT5namedSS8userInfoGSqP___x"></a>
+                    <a name="//apple_ref/swift/Method/canPerformTransition(named:userInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine20canPerformTransitionFzT5namedSS8userInfoGSqP___x">canPerformTransition(named:userInfo:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Check if the state machine can perform a transition registered to the 
+provided name.
+Checks if rules have been set, with no rules, all changes are allowed.
+Checks conditions for from and to states.
+Rethrows errors thrown by condition statements</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter state: the state you want to check
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    <p>Parameter userInfo: any extra info you want to pass to your State change actions</p>
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    <p>the state that the transition will move to</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">canPerformTransition</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span><span class="kt">Any</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to check</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userInfo</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any extra info you want to pass to your State change actions</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the state that the transition will move to</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/State%20Change%20Execution"></a>
+                <a name="//apple_ref/swift/Section/State Change Execution" class="dashAnchor"></a>
+                <a href="#/State%20Change%20Execution">
+                  <h3 class="section-name">State Change Execution</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine13changeToStateFzTx8userInfoGSqP___T_"></a>
+                    <a name="//apple_ref/swift/Method/changeToState(_:userInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine13changeToStateFzTx8userInfoGSqP___T_">changeToState(_:userInfo:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asynchronously change the state machine to a new state, passing through some
+extra information if desired.
+Error Checking is performed synchronously before the change is attempted
+If no state change rules have been defined, all state changes are allowed.</p>
+
+<p>If you attempt to change to a 3rd state inside a handler for a change to a 
+2nd state, all handlers of the original transition will still be performed 
+first.</p>
+
+<p>Will perform the state change actions in the following order -
+- didChangeToState
+- didChangeFromState
+- didChangeState</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter state: the state you want to change to
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    <p>Parameter userInfo: any extra info you want to pass to your State change actions</p>
+
+</div>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p></p>
+
+<ul>
+<li><code><a href="../Enums/StateMachineError.html#/s:FO15SCAStateMachine17StateMachineError22UnsupportedStateChangeFMS0_S0_">StateMachineError.UnsupportedStateChange</a></code> if state change rules
+have been defined but not one for the requested change.</li>
+<li><code>&lt;Your Error Here&gt;</code> if you throw from any of the conditions you
+have defined matching this state change</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">changeToState</span><span class="p">(</span><span class="nv">destinationState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span><span class="kt">Any</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to change to</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userInfo</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any extra info you want to pass to your State change actions</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine17performTransitionFzT5namedSS8userInfoGSqP___T_"></a>
+                    <a name="//apple_ref/swift/Method/performTransition(named:userInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine17performTransitionFzT5namedSS8userInfoGSqP___T_">performTransition(named:userInfo:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Perform a registered transition to asynchronously change the state machine 
+to a new state, passing through some extra information if desired.
+Error Checking is performed synchronously before the change is attempted
+If no state change rules have been defined, all state changes are allowed. 
+Throws a StateMachineError.UnsupportedStateChange error if a state change rules have been defined but not one for the requested change.
+If you attempt to change to a 3rd state inside a handler for a change to a 2nd state, all handlers of the original transition will still be performed first</p>
+
+<p>Will perform the state change actions in the following order -
+- didChangeToState
+- didChangeFromState
+- didChangeState</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter state: the state you want to change to
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter userInfo: any extra info you want to pass to your State change actions
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performTransition</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span><span class="kt">Any</span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to change to</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userInfo</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any extra info you want to pass to your State change actions</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Add%20State%20Change%20Rules"></a>
+                <a name="//apple_ref/swift/Section/Add State Change Rules" class="dashAnchor"></a>
+                <a href="#/Add%20State%20Change%20Rules">
+                  <h3 class="section-name">Add State Change Rules</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine15allowChangingToFtx4fromGSax__T_"></a>
+                    <a name="//apple_ref/swift/Method/allowChangingTo(_:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine15allowChangingToFtx4fromGSax__T_">allowChangingTo(_:from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a state change rule to allow changing to a specific state from a list of other states.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter destinationState: the state you want to allow movement to
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter fromStartingStates: a list of states that will allow moving to the destinationState
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingTo</span><span class="p">(</span><span class="nv">destinationState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>destinationState</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to allow movement to</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fromStartingStates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a list of states that will allow moving to the destinationState</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine17allowChangingFromFtx2toGSax__T_"></a>
+                    <a name="//apple_ref/swift/Method/allowChangingFrom(_:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine17allowChangingFromFtx2toGSax__T_">allowChangingFrom(_:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a state change rule to allow changing to a list of states from a specific state.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter destinationStates: the list of states you want to allow movement to
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter fromStartingStates: a state that will allow moving to the destinationStates
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingFrom</span><span class="p">(</span><span class="nv">startingState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">to</span> <span class="nv">destinationStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>destinationStates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the list of states you want to allow movement to</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fromStartingStates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a state that will allow moving to the destinationStates</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Add%20Named%20State%20Transition%20&amp;%20State%20Change%20Rules"></a>
+                <a name="//apple_ref/swift/Section/Add Named State Transition &amp; State Change Rules" class="dashAnchor"></a>
+                <a href="#/Add%20Named%20State%20Transition%20&amp;%20State%20Change%20Rules">
+                  <h3 class="section-name">Add Named State Transition &amp; State Change Rules</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine18addStateTransitionFt5namedSS2tox4fromGSax__T_"></a>
+                    <a name="//apple_ref/swift/Method/addStateTransition(named:to:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine18addStateTransitionFt5namedSS2tox4fromGSax__T_">addStateTransition(named:to:from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a named state change rule to allow changing to a specific state from a list of other states.
+Use the name in performTransition(named:<name>) to try the change</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter named: the name of the transition
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter toDestinationState: the state you want to allow movement to
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter startingStates: a list of states that will allow moving to the destinationState
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addStateTransition</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">destinationState</span><span class="p">:</span><span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>named</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the name of the transition</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>toDestinationState</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the state you want to allow movement to</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>startingStates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a list of states that will allow moving to the destinationState</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/State%20Change%20Conditions"></a>
+                <a name="//apple_ref/swift/Section/State Change Conditions" class="dashAnchor"></a>
+                <a href="#/State%20Change%20Conditions">
+                  <h3 class="section-name">State Change Conditions</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingFrom(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingFrom(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a block to be performed before attempting to change from a set of 
+states. If the block throws, the state change will fail and the thrown error
+will bubble up to the caller.
+Multiple blocks can be added for any given state and will be performed in 
+the order they are added. If no conditions exist and the change is valid, 
+the change will succeed.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter states: the states to add the condition for
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: the block to perform
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">_</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>states</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the states to add the condition for</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the block to perform</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingTo(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingTo(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a closure to be performed before attempting to change to a set of
+states. If the block throws, the state change will fail and the thrown error
+will bubble up to the caller.
+Multiple blocks can be added for any given state and will be performed in
+the order they are added. If no conditions exist and the change is valid,
+the change will succeed.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter states: the states to add the condition for
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: the block to perform
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">_</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>states</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the states to add the condition for</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the block to perform</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/State%20Change%20Actions"></a>
+                <a name="//apple_ref/swift/Section/State Change Actions" class="dashAnchor"></a>
+                <a href="#/State%20Change%20Actions">
+                  <h3 class="section-name">State Change Actions</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine20performAfterChangingFT7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/performAfterChanging(onQueue:closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine20performAfterChangingFT7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_">performAfterChanging(onQueue:closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set a block to be executed after the state machine changes to any other state.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: the block to be executed when the state machine did change to the provided state
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChanging</span><span class="p">(</span><span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the block to be executed when the state machine did change to the provided state</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine22performAfterChangingToFTGSax_7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/performAfterChangingTo(_:onQueue:closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine22performAfterChangingToFTGSax_7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_">performAfterChangingTo(_:onQueue:closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set a block to be executed after the state machine changes to a set of specific states.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: the block to be executed when the state machine did change to the provided states
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter states: the states to add the action for
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the block to be executed when the state machine did change to the provided states</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>states</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the states to add the action for</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC15SCAStateMachine12StateMachine24performAfterChangingFromFTGSax_7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/performAfterChangingFrom(_:onQueue:closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine24performAfterChangingFromFTGSax_7onQueueGSqPSo17OS_dispatch_queue__7closureFT16destinationStatex13startingStatex8userInfoGSqP___T__T_">performAfterChangingFrom(_:onQueue:closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set a block to be executed after the state machine changes from a set of specific states.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter states: the states to add the action for
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter closure: the block to be executed when the state machine did change from the provided states
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>states</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the states to add the action for</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the block to be executed when the state machine did change from the provided states</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="http://seancatkinson.com" target="_blank" rel="external">SeanCAtkinson</a>. All rights reserved. (Last updated: 2016-07-23)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

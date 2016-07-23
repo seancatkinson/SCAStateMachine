@@ -13,7 +13,8 @@ import Foundation
 class StateTransitionTests: SCAStateMachineBaseTests {
 
     func testCanCreateTransition() {
-        self.stateMachine.addStateTransition(named: "test", toDestinationState: .Testing, fromStartingStates: .Pending)
+        self.stateMachine.addStateTransition(named: "test", to: .Testing, from: .Pending)
+        
         do {
             try self.stateMachine.canPerformTransition(named: "test")
             XCTAssertTrue(true)
@@ -40,7 +41,7 @@ class StateTransitionTests: SCAStateMachineBaseTests {
         
         let expectation = self.expectationWithDescription("Should be performed")
         
-        self.stateMachine.addStateTransition(named: "test", toDestinationState: .Testing, fromStartingStates: .Pending)
+        self.stateMachine.addStateTransition(named: "test", to: .Testing, from: .Pending)
         self.stateMachine.performAfterChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
             expectation.fulfill()
         }

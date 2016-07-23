@@ -2,8 +2,61 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>SCAStateMachine.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>SCAStateMachineOSX.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>SCAStateMachineTV.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>SCAStateMachineWatch.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01B3D9C31D439BEE00A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>01B3D9D31D43B3A900A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>01B3D9E01D43B45800A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>01B3D9FD1D43B6FC00A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>01B3DA091D43B70E00A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>01B3DA201D43BA5000A19B5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>96E1DBED1B19D58E000DBF49</key>
 		<dict>
 			<key>primary</key>

@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         // we'll set the target queue to a background queue we've created for
         // the sake of the example. Any actions you add to be performed will be
         // dispatched to this queue - unless you override it
-        machine = StateMachine(withStartingState: Colour.White, targetQueue: self.backgroundQueue)
+        machine = StateMachine(startingOn: Colour.White, targetQueue: self.backgroundQueue)
         
         // blue and red can move between each other
         // white can move to anything but can never go back...
@@ -36,8 +36,8 @@ class ViewController: UIViewController {
         // additional conditions are defined
         // define rules in the order you're most comfortable with 
         // from -> to  /  to -> from
-        machine.addStateChangeRulesFrom(.Red, .White, toDestinationState: .Blue)
-        machine.addStateChangeRulesTo(.Red, fromStartingStates: .Blue, .White)
+        machine.allowChangingTo(.Blue, from: .Red, .White)
+        machine.allowChangingTo(.Red, from: .Blue, .White)
         
         
         // add some conditions that must pass before a change will be allowed
@@ -80,8 +80,8 @@ class ViewController: UIViewController {
         do {
             try machine.changeToState(.Blue)
         }
-        catch {
-            print("An error occurred when changing the background to blue")
+        catch let error {
+            print("An error occurred when changing the background to blue. Error: \(error)")
         }
     }
     
@@ -89,8 +89,8 @@ class ViewController: UIViewController {
         do {
             try machine.changeToState(.Red)
         }
-        catch {
-            print("An error occurred when changing the background to red")
+        catch let error {
+            print("An error occurred when changing the background to red. Error: \(error)")
         }
     }
 

@@ -22,15 +22,15 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96E1DBF81B19D58E000DBF49"
-               BuildableName = "SCAStateMachine Tests.xctest"
-               BlueprintName = "SCAStateMachine Tests"
+               BuildableName = "SCAStateMachineTests.xctest"
+               BlueprintName = "SCAStateMachineTests"
                ReferencedContainer = "container:SCAStateMachine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,8 +48,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96E1DBF81B19D58E000DBF49"
-               BuildableName = "SCAStateMachine Tests.xctest"
-               BlueprintName = "SCAStateMachine Tests"
+               BuildableName = "SCAStateMachineTests.xctest"
+               BlueprintName = "SCAStateMachineTests"
                ReferencedContainer = "container:SCAStateMachine.xcodeproj">
             </BuildableReference>
          </TestableReference>
