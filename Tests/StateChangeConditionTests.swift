@@ -85,10 +85,10 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         var number = 0
         
         stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
-            number++
+            number = number + 1
         }
         stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
-            number++
+            number = number + 1
         }
         
         try! stateMachine.changeToState(.Testing)

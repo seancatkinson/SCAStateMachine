@@ -1,6 +1,6 @@
 # SCAStateMachine
 
-A lightweight state machine built in Swift for iOS & Mac OSX
+A lightweight state machine built in Swift for iOS & Mac OSX. For swift3 see the swift 3 branch.
 
 ## Features
 - [x] Flexible - States can be of any type conforming to the Hashable protocol
