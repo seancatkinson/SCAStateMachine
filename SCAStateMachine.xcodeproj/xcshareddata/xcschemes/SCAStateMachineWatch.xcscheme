@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "01B3DA201D43BA5000A19B5D"
-               BuildableName = "SCAStateMachineWatch.framework"
+               BuildableName = "SCAStateMachine.framework"
                BlueprintName = "SCAStateMachineWatch"
                ReferencedContainer = "container:SCAStateMachine.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01B3DA201D43BA5000A19B5D"
-            BuildableName = "SCAStateMachineWatch.framework"
+            BuildableName = "SCAStateMachine.framework"
             BlueprintName = "SCAStateMachineWatch"
             ReferencedContainer = "container:SCAStateMachine.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01B3DA201D43BA5000A19B5D"
-            BuildableName = "SCAStateMachineWatch.framework"
+            BuildableName = "SCAStateMachine.framework"
             BlueprintName = "SCAStateMachineWatch"
             ReferencedContainer = "container:SCAStateMachine.xcodeproj">
          </BuildableReference>

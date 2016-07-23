@@ -1,7 +1,7 @@
 # SCAStateMachine
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Docs 100%](https://img.shields.io/badge/docs-100%25-brightgreen.svg)]()
+[![Docs 100%](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://seancatkinson.github.io/SCAStateMachine/)
 
 A lightweight state machine built in Swift for iOS & Mac OSX. For swift 3 see the swift3 branch.
 
@@ -144,6 +144,10 @@ catch {
     // handle a general error
 }
 ```
+
+### Documentation
+
+[Full docs here](http://seancatkinson.github.io/SCAStateMachine/)
 
 ### Requirements
 - iOS 8.1+ / Mac OS X 10.9+
