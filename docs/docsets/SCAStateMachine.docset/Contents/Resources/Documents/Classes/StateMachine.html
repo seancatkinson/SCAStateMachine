@@ -127,9 +127,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachinecFT10startingOnx11targetQueuePSo17OS_dispatch_queue__GS0_x_"></a>
-                    <a name="//apple_ref/swift/Method/init(startingOn:targetQueue:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachinecFT10startingOnx11targetQueuePSo17OS_dispatch_queue__GS0_x_">init(startingOn:targetQueue:)</a>
+                    <a name="/s:FC15SCAStateMachine12StateMachinecFT12initialStatex11targetQueuePSo17OS_dispatch_queue__GS0_x_"></a>
+                    <a name="//apple_ref/swift/Method/init(initialState:targetQueue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachinecFT12initialStatex11targetQueuePSo17OS_dispatch_queue__GS0_x_">init(initialState:targetQueue:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -141,7 +141,13 @@
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    <p>Parameter withInitialState: the initial state of the StateMachine</p>
+    Parameter initialState: the initial state of the StateMachine
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    <p>Parameter targetQueue: OPTIONAL - the default queue for change actions to be performed on. Defaults to the main queue</p>
 
 </div>
 
@@ -156,7 +162,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">startingOn</span> <span class="nv">startingState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">targetQueue</span> <span class="p">:</span> <span class="n">dispatch_queue_t</span> <span class="o">=</span> <span class="nf">dispatch_get_main_queue</span><span class="p">())</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">targetQueue</span> <span class="p">:</span> <span class="n">dispatch_queue_t</span> <span class="o">=</span> <span class="nf">dispatch_get_main_queue</span><span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -167,12 +173,25 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>withInitialState</em>
+                                <em>initialState</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
                                   <p>the initial state of the StateMachine</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetQueue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>OPTIONAL - the default queue for change actions to be performed on. Defaults to the main queue</p>
 
                                 </div>
                               </td>
@@ -219,7 +238,7 @@ Rethrows errors thrown by condition statements</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter state: the state you want to check
+    Parameter destinationState: the state you want to check
 
 </div>
 
@@ -245,7 +264,7 @@ Rethrows errors thrown by condition statements</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>state</em>
+                                <em>destinationState</em>
                                 </code>
                               </td>
                               <td>
@@ -565,9 +584,9 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachine15allowChangingToFtx4fromGSax__T_"></a>
+                    <a name="/s:FC15SCAStateMachine12StateMachine15allowChangingToFTx4fromGSax__T_"></a>
                     <a name="//apple_ref/swift/Method/allowChangingTo(_:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine15allowChangingToFtx4fromGSax__T_">allowChangingTo(_:from:)</a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine15allowChangingToFTx4fromGSax__T_">allowChangingTo(_:from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -585,7 +604,7 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter fromStartingStates: a list of states that will allow moving to the destinationState
+    Parameter from: a list of states that will allow moving to the destinationState
 
 </div>
 
@@ -594,7 +613,7 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingTo</span><span class="p">(</span><span class="nv">destinationState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingTo</span><span class="p">(</span><span class="nv">destinationState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -618,7 +637,7 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                             <tr>
                               <td>
                                 <code>
-                                <em>fromStartingStates</em>
+                                <em>from</em>
                                 </code>
                               </td>
                               <td>
@@ -637,9 +656,9 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachine17allowChangingFromFtx2toGSax__T_"></a>
+                    <a name="/s:FC15SCAStateMachine12StateMachine17allowChangingFromFTx2toGSax__T_"></a>
                     <a name="//apple_ref/swift/Method/allowChangingFrom(_:to:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine17allowChangingFromFtx2toGSax__T_">allowChangingFrom(_:to:)</a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine17allowChangingFromFTx2toGSax__T_">allowChangingFrom(_:to:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -651,13 +670,13 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter destinationStates: the list of states you want to allow movement to
+    Parameter startingState: a state that will allow moving to the destinationStates
 
 </div>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter fromStartingStates: a state that will allow moving to the destinationStates
+    Parameter to: the list of states you want to allow movement to
 
 </div>
 
@@ -666,7 +685,7 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingFrom</span><span class="p">(</span><span class="nv">startingState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">to</span> <span class="nv">destinationStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">allowChangingFrom</span><span class="p">(</span><span class="nv">startingState</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">to</span> <span class="nv">destinationStates</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -677,12 +696,12 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                             <tr>
                               <td>
                                 <code>
-                                <em>destinationStates</em>
+                                <em>startingState</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>the list of states you want to allow movement to</p>
+                                  <p>a state that will allow moving to the destinationStates</p>
 
                                 </div>
                               </td>
@@ -690,12 +709,12 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                             <tr>
                               <td>
                                 <code>
-                                <em>fromStartingStates</em>
+                                <em>to</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>a state that will allow moving to the destinationStates</p>
+                                  <p>the list of states you want to allow movement to</p>
 
                                 </div>
                               </td>
@@ -709,9 +728,9 @@ If you attempt to change to a 3rd state inside a handler for a change to a 2nd s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachine18addStateTransitionFt5namedSS2tox4fromGSax__T_"></a>
-                    <a name="//apple_ref/swift/Method/addStateTransition(named:to:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine18addStateTransitionFt5namedSS2tox4fromGSax__T_">addStateTransition(named:to:from:)</a>
+                    <a name="/s:FC15SCAStateMachine12StateMachine18addStateTransitionFT5namedSS4fromGSax_2tox_T_"></a>
+                    <a name="//apple_ref/swift/Method/addStateTransition(named:from:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine18addStateTransitionFT5namedSS4fromGSax_2tox_T_">addStateTransition(named:from:to:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -730,13 +749,13 @@ Use the name in performTransition(named:<name>) to try the change</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter toDestinationState: the state you want to allow movement to
+    Parameter to: the state you want to allow movement to
 
 </div>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter startingStates: a list of states that will allow moving to the destinationState
+    Parameter from: a list of states that will allow moving to the destinationState
 
 </div>
 
@@ -745,7 +764,7 @@ Use the name in performTransition(named:<name>) to try the change</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addStateTransition</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">destinationState</span><span class="p">:</span><span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addStateTransition</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">,</span> <span class="n">from</span> <span class="nv">startingStates</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">],</span> <span class="n">to</span> <span class="nv">destinationState</span><span class="p">:</span><span class="kt">T</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -769,7 +788,7 @@ Use the name in performTransition(named:<name>) to try the change</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>toDestinationState</em>
+                                <em>to</em>
                                 </code>
                               </td>
                               <td>
@@ -782,7 +801,7 @@ Use the name in performTransition(named:<name>) to try the change</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>startingStates</em>
+                                <em>from</em>
                                 </code>
                               </td>
                               <td>
@@ -812,9 +831,9 @@ Use the name in performTransition(named:<name>) to try the change</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
-                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingFrom(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingFrom(_:_:)</a>
+                    <a name="/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_9conditionFzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingFrom(_:condition:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine32checkConditionBeforeChangingFromFTGSax_9conditionFzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingFrom(_:condition:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -831,7 +850,7 @@ the change will succeed.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter states: the states to add the condition for
+    Parameter states: an array of states to add the condition for
 
 </div>
 
@@ -846,7 +865,7 @@ the change will succeed.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">_</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">],</span> <span class="nv">condition</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -862,7 +881,7 @@ the change will succeed.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>the states to add the condition for</p>
+                                  <p>an array of states to add the condition for</p>
 
                                 </div>
                               </td>
@@ -889,9 +908,9 @@ the change will succeed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
-                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingTo(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_FzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingTo(_:_:)</a>
+                    <a name="/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_9conditionFzT16destinationStatex13startingStatex8userInfoGSqP___T__T_"></a>
+                    <a name="//apple_ref/swift/Method/checkConditionBeforeChangingTo(_:condition:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC15SCAStateMachine12StateMachine30checkConditionBeforeChangingToFTGSax_9conditionFzT16destinationStatex13startingStatex8userInfoGSqP___T__T_">checkConditionBeforeChangingTo(_:condition:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -908,7 +927,7 @@ the change will succeed.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter states: the states to add the condition for
+    Parameter states: an array of states to add the condition for
 
 </div>
 
@@ -923,7 +942,7 @@ the change will succeed.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">_</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkConditionBeforeChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">],</span> <span class="nv">condition</span><span class="p">:</span><span class="n">changeCondition</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -939,7 +958,7 @@ the change will succeed.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>the states to add the condition for</p>
+                                  <p>an array of states to add the condition for</p>
 
                                 </div>
                               </td>
@@ -1059,7 +1078,7 @@ the change will succeed.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">],</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1131,7 +1150,7 @@ the change will succeed.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="kt">T</span><span class="o">...</span><span class="p">,</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAfterChangingFrom</span><span class="p">(</span><span class="nv">states</span><span class="p">:</span> <span class="p">[</span><span class="kt">T</span><span class="p">],</span> <span class="n">onQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">closure</span><span class="p">:</span><span class="n">changeAction</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1179,7 +1198,7 @@ the change will succeed.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="http://seancatkinson.com" target="_blank" rel="external">SeanCAtkinson</a>. All rights reserved. (Last updated: 2016-07-23)</p>
+      <p>&copy; 2016 <a class="link" href="http://seancatkinson.com" target="_blank" rel="external">SeanCAtkinson</a>. All rights reserved. (Last updated: 2016-07-24)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -31,12 +31,12 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         let expectation = self.expectationWithDescription("Should be performed")
-        stateMachine.performAfterChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.performAfterChangingTo([.Testing]) { (destinationState, startingState, userInfo) -> () in
             expectation.fulfill()
         }
         
         do {
-            try stateMachine.changeToState(.Testing)
+            try stateMachine.changeTo(.Testing)
         }
         catch {
             XCTFail("Couldn't change state")
@@ -46,6 +46,29 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         self.waitForExpectationsWithTimeout(0.5, handler: nil)
     }
     
+    func testActionsAreNotAddedWhenNoStatesProvided() {
+        
+        stateMachine.allowChangingFrom(.Pending, to: [])
+        stateMachine.allowChangingTo(.Testing, from: [])
+        
+        stateMachine.addStateTransition(named: "Test", from: [], to: .Testing)
+        
+        do { try stateMachine.canPerformTransition(named: "Test") }
+        catch StateMachineError.NoTransitionMatchingName(let name) {
+            XCTAssertEqual(name, "Test")
+        }
+        catch {
+            XCTFail("Should have been caught earlier")
+        }
+        
+        stateMachine.performAfterChangingTo([]) { _,_,_ in }
+        stateMachine.performAfterChangingFrom([]) { _,_,_ in }
+        
+        stateMachine.checkConditionBeforeChangingTo([]) { _,_,_ in }
+        stateMachine.checkConditionBeforeChangingFrom([]) { _,_,_ in }
+        
+        
+    }
     
 
     func testActionsFireInTheCorrectOrder() {
@@ -56,13 +79,13 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         let expectation2 = self.expectationWithDescription("Should be performed")
         let expectation3 = self.expectationWithDescription("Should be performed")
         
-        stateMachine.performAfterChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.performAfterChangingTo([.Testing]) { (destinationState, startingState, userInfo) -> () in
             myNumber += 1
             XCTAssertEqual(myNumber, 1, "myNumber should equal 1")
             expectation1.fulfill()
         }
         
-        stateMachine.performAfterChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.performAfterChangingFrom([.Pending]) { (destinationState, startingState, userInfo) -> () in
             myNumber += 10
             XCTAssertEqual(myNumber, 11, "myNumber should equal 11")
             expectation2.fulfill()
@@ -75,7 +98,7 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         }
         
         do {
-            try stateMachine.changeToState(.Testing, userInfo: nil)
+            try stateMachine.changeTo(.Testing, userInfo: nil)
         }
         catch {
             XCTFail("Couldn't change to state .Testing")
@@ -90,9 +113,9 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         
         let myNumber:Int = 8000
         
-        stateMachine.performAfterChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
-            XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
-            XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
+        stateMachine.performAfterChangingTo([.Testing]) { (destinationState, startingState, userInfo) -> () in
+            XCTAssertTrue(destinationState == TestState.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+            XCTAssertTrue(startingState == TestState.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
             
             if let userInfo = userInfo where userInfo is Int {
                 let passedNumber = userInfo as! Int
@@ -102,9 +125,9 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
             }
         }
 
-        stateMachine.performAfterChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
-            XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
-            XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
+        stateMachine.performAfterChangingFrom([.Pending]) { (destinationState, startingState, userInfo) -> () in
+            XCTAssertTrue(destinationState == TestState.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+            XCTAssertTrue(startingState == TestState.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
             
             if let userInfo = userInfo where userInfo is Int {
                 let passedNumber = userInfo as! Int
@@ -115,8 +138,8 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         }
         
         stateMachine.performAfterChanging { (destinationState, startingState, userInfo) -> () in
-            XCTAssertTrue(destinationState == TestStates.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
-            XCTAssertTrue(startingState == TestStates.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
+            XCTAssertTrue(destinationState == TestState.Testing, "destinationState should equal .Testing but instead equals: \(destinationState)")
+            XCTAssertTrue(startingState == TestState.Pending, "startingState should equal .Pending but instead equals: \(startingState)")
             
             if let userInfo = userInfo where userInfo is Int {
                 let passedNumber = userInfo as! Int
@@ -127,7 +150,7 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         }
         
         do {
-            try stateMachine.changeToState(.Testing, userInfo: myNumber)
+            try stateMachine.changeTo(.Testing, userInfo: myNumber)
         }
         catch {
             XCTFail("Couldn't change to state .Testing")
@@ -138,7 +161,7 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
     func  testCannotChangeToStateWhenAlreadyInRequestedState() {
         
         do {
-            try stateMachine.changeToState(.Pending)
+            try stateMachine.changeTo(.Pending)
         }
         catch {
             return
@@ -149,10 +172,10 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
     func testCanAutomaticallyChangeTo3rdStateAfterChangingTo2ndState() {
         
         let expectation1 = self.expectationWithDescription("Should be performed")
-        stateMachine.performAfterChangingTo(.Failed) { [weak stateMachine] (destinationState, startingState, userInfo) -> () in
-            XCTAssertEqual(stateMachine!.currentState, TestStates.Failed)
+        stateMachine.performAfterChangingTo([.Failed]) { [weak stateMachine] (destinationState, startingState, userInfo) -> () in
+            XCTAssertEqual(stateMachine!.currentState, TestState.Failed)
             do {
-                try stateMachine?.changeToState(.Pending)
+                try stateMachine?.changeTo(.Pending)
             }
             catch {
                 XCTFail("\(error)")
@@ -161,13 +184,13 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         }
         
         let expectation2 = self.expectationWithDescription("Should be performed")
-        stateMachine.performAfterChangingTo(.Pending) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.performAfterChangingTo([.Pending]) { (destinationState, startingState, userInfo) -> () in
             expectation2.fulfill()
         }
         
         do {
-            try stateMachine.changeToState(.Testing)
-            try stateMachine.changeToState(.Failed)
+            try stateMachine.changeTo(.Testing)
+            try stateMachine.changeTo(.Failed)
 
             
         }
@@ -176,7 +199,7 @@ class StateChangeActionTests: SCAStateMachineBaseTests {
         }
         
         self.waitForExpectationsWithTimeout(0.5) { errorOptional in
-            XCTAssertEqual(self.stateMachine.currentState, TestStates.Pending)
+            XCTAssertEqual(self.stateMachine.currentState, TestState.Pending)
         }
     }
 

@@ -27,34 +27,21 @@ A lightweight state machine built in Swift for iOS & Mac OSX. For swift 3 see th
 ```swift
 import SCAStateMachine
 
-func lock() {
-    print("Locking")
-}
-func unlock() {
-    print("Unlocking")
-}
-
 enum TurnstileState {
     case Locked
     case Unlocked
 }
 
-enum TurnstileEvent : String {
-    case Push
-    case Coin
-}
+let stateMachine = StateMachine(initialState: TurnstileState.Locked)
 
+stateMachine.performAfterChangingTo([.Locked]) { _,_,_ in lock() }
+stateMachine.performAfterChangingTo([.Unlocked]) { _,_,_ in unlock() }
 
-let stateMachine = StateMachine(startingOn: TurnstileState.Locked)
-
-stateMachine.performAfterChangingTo(.Locked) { _,_,_ in lock() }
-stateMachine.performAfterChangingTo(.Unlocked) { _,_,_ in unlock() }
-
-stateMachine.addStateTransition(named: "Coin", to: .Unlocked, from: .Locked)
-stateMachine.addStateTransition(named: "Push", to: .Locked, from: .Unlocked)
+stateMachine.addStateTransition(named: "Coin", from: [.Locked], to: .Unlocked)
+stateMachine.addStateTransition(named: "Push", from: [.Unlocked], to: .Locked)
 
 do {
-    let destinationState = try stateMachine.canPerformTransition(named:"Coin") // returns .Unlocked
+    let destinationState = try stateMachine.canPerformTransition(named:"Coin") // returns unlocked
     // do something with the destination state
 }
 catch {
@@ -62,7 +49,10 @@ catch {
 }
 
 do {
-    try stateMachine.performTransition(named:"Coin") // machine moves to .Unlocked state
+    try stateMachine.performTransition(named:"Coin")
+    print(stateMachine.currentState) // Unlocked
+    try stateMachine.performTransition(named: "Push")
+    print(stateMachine.currentState) // Locked
 }
 catch {
     // catch UnspportedStateChange/NoTransitionMatchingName/Custom Errors
@@ -89,29 +79,29 @@ func mySuccessCheck() -> Bool {
     return true
 }
 
-let stateMachine = StateMachine(startingOn: LoadingState.Ready)
+let stateMachine = StateMachine(initialState: LoadingState.Ready)
 
 // ready, loaded and error states can all move to .Loading
-stateMachine.allowChangingTo(.Loading, from: .Ready, .Loaded, .Error)
+stateMachine.allowChangingTo(.Loading, from: [.Ready, .Loaded, .Error])
 
 // .Loading states can move to both .Loaded and .Error states
-stateMachine.allowChangingFrom(.Loading, to: .Loaded, .Error)
+stateMachine.allowChangingFrom(.Loading, to: [.Loaded, .Error])
 
 // GATES: - Run a custom closure before a change is attempted to check if it should be allowed to go ahead
 // Throw custom errors from these closures and they will be picked up later :)
-stateMachine.checkConditionBeforeChangingTo(.Loaded) { (destinationState, startingState, userInfo) -> () in
+stateMachine.checkConditionBeforeChangingTo([.Loaded]) { (destinationState, startingState, userInfo) -> () in
     if mySuccessCheck() == false {
         throw MyCustomError.CustomErrorOne
     }
 }
 
 // do something after changing to the .Error or .Loaded states
-stateMachine.performAfterChangingTo(.Error, .Loaded) { (destinationState, startingState, userInfo) -> () in
+stateMachine.performAfterChangingTo([.Error, .Loaded]) { (destinationState, startingState, userInfo) -> () in
     print("We just moved to either .Error or .Loaded")
 }
 
 // do something after changing from the .loaded or .Error states
-stateMachine.performAfterChangingFrom(.Error, .Loading) { (destinationState, startingState, userInfo) -> () in
+stateMachine.performAfterChangingFrom([.Error, .Loading]) { (destinationState, startingState, userInfo) -> () in
     print("We just moved from .Error or .Loading")
 }
 
@@ -134,8 +124,8 @@ catch {
 
 // or just attempt a change
 do {
-    try stateMachine.changeToState(.Loading, userInfo: nil) // succeeds
-    try stateMachine.changeToState(.Loaded, userInfo: nil) // will check 'mySuccessCheck'
+    try stateMachine.changeTo(.Loading, userInfo: nil) // succeeds
+    try stateMachine.changeTo(.Loaded, userInfo: nil) // will check 'mySuccessCheck'
 }
 catch MyCustomError.CustomErrorOne {
     // handle your custom error case

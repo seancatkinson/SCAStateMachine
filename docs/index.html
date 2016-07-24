@@ -90,34 +90,21 @@
 <a href='#classic-turnstile-example' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='classic-turnstile-example'>Classic Turnstile example</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SCAStateMachine</span>
 
-<span class="kd">func</span> <span class="nf">lock</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nf">print</span><span class="p">(</span><span class="s">"Locking"</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">unlock</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nf">print</span><span class="p">(</span><span class="s">"Unlocking"</span><span class="p">)</span>
-<span class="p">}</span>
-
 <span class="kd">enum</span> <span class="kt">TurnstileState</span> <span class="p">{</span>
     <span class="k">case</span> <span class="kt">Locked</span>
     <span class="k">case</span> <span class="kt">Unlocked</span>
 <span class="p">}</span>
 
-<span class="kd">enum</span> <span class="kt">TurnstileEvent</span> <span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="kt">Push</span>
-    <span class="k">case</span> <span class="kt">Coin</span>
-<span class="p">}</span>
+<span class="k">let</span> <span class="nv">stateMachine</span> <span class="o">=</span> <span class="kt">StateMachine</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="kt">TurnstileState</span><span class="o">.</span><span class="kt">Locked</span><span class="p">)</span>
 
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">([</span><span class="o">.</span><span class="kt">Locked</span><span class="p">])</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="k">in</span> <span class="nf">lock</span><span class="p">()</span> <span class="p">}</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">([</span><span class="o">.</span><span class="kt">Unlocked</span><span class="p">])</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="k">in</span> <span class="nf">unlock</span><span class="p">()</span> <span class="p">}</span>
 
-<span class="k">let</span> <span class="nv">stateMachine</span> <span class="o">=</span> <span class="kt">StateMachine</span><span class="p">(</span><span class="nv">startingOn</span><span class="p">:</span> <span class="kt">TurnstileState</span><span class="o">.</span><span class="kt">Locked</span><span class="p">)</span>
-
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Locked</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="k">in</span> <span class="nf">lock</span><span class="p">()</span> <span class="p">}</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Unlocked</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="k">in</span> <span class="nf">unlock</span><span class="p">()</span> <span class="p">}</span>
-
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">addStateTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Coin"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">.</span><span class="kt">Unlocked</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="o">.</span><span class="kt">Locked</span><span class="p">)</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">addStateTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Push"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">.</span><span class="kt">Locked</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="o">.</span><span class="kt">Unlocked</span><span class="p">)</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">addStateTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Coin"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="kt">Locked</span><span class="p">],</span> <span class="nv">to</span><span class="p">:</span> <span class="o">.</span><span class="kt">Unlocked</span><span class="p">)</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">addStateTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Push"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="kt">Unlocked</span><span class="p">],</span> <span class="nv">to</span><span class="p">:</span> <span class="o">.</span><span class="kt">Locked</span><span class="p">)</span>
 
 <span class="k">do</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">destinationState</span> <span class="o">=</span> <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">canPerformTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span><span class="s">"Coin"</span><span class="p">)</span> <span class="c1">// returns .Unlocked</span>
+    <span class="k">let</span> <span class="nv">destinationState</span> <span class="o">=</span> <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">canPerformTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span><span class="s">"Coin"</span><span class="p">)</span> <span class="c1">// returns unlocked</span>
     <span class="c1">// do something with the destination state</span>
 <span class="p">}</span>
 <span class="k">catch</span> <span class="p">{</span>
@@ -125,7 +112,10 @@
 <span class="p">}</span>
 
 <span class="k">do</span> <span class="p">{</span>
-    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">performTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span><span class="s">"Coin"</span><span class="p">)</span> <span class="c1">// machine moves to .Unlocked state</span>
+    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">performTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span><span class="s">"Coin"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">stateMachine</span><span class="o">.</span><span class="n">currentState</span><span class="p">)</span> <span class="c1">// Unlocked</span>
+    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">performTransition</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Push"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">stateMachine</span><span class="o">.</span><span class="n">currentState</span><span class="p">)</span> <span class="c1">// Locked</span>
 <span class="p">}</span>
 <span class="k">catch</span> <span class="p">{</span>
     <span class="c1">// catch UnspportedStateChange/NoTransitionMatchingName/Custom Errors</span>
@@ -149,29 +139,29 @@
     <span class="k">return</span> <span class="kc">true</span>
 <span class="p">}</span>
 
-<span class="k">let</span> <span class="nv">stateMachine</span> <span class="o">=</span> <span class="kt">StateMachine</span><span class="p">(</span><span class="nv">startingOn</span><span class="p">:</span> <span class="kt">LoadingState</span><span class="o">.</span><span class="kt">Ready</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">stateMachine</span> <span class="o">=</span> <span class="kt">StateMachine</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="kt">LoadingState</span><span class="o">.</span><span class="kt">Ready</span><span class="p">)</span>
 
 <span class="c1">// ready, loaded and error states can all move to .Loading</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">allowChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="o">.</span><span class="kt">Ready</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="o">.</span><span class="kt">Error</span><span class="p">)</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">allowChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="kt">Ready</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="o">.</span><span class="kt">Error</span><span class="p">])</span>
 
 <span class="c1">// .Loading states can move to both .Loaded and .Error states</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">allowChangingFrom</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="o">.</span><span class="kt">Error</span><span class="p">)</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">allowChangingFrom</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="o">.</span><span class="kt">Error</span><span class="p">])</span>
 
 <span class="c1">// GATES: - Run a custom closure before a change is attempted to check if it should be allowed to go ahead</span>
 <span class="c1">// Throw custom errors from these closures and they will be picked up later :)</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">checkConditionBeforeChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Loaded</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">checkConditionBeforeChangingTo</span><span class="p">([</span><span class="o">.</span><span class="kt">Loaded</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
     <span class="k">if</span> <span class="nf">mySuccessCheck</span><span class="p">()</span> <span class="o">==</span> <span class="kc">false</span> <span class="p">{</span>
         <span class="k">throw</span> <span class="kt">MyCustomError</span><span class="o">.</span><span class="kt">CustomErrorOne</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// do something after changing to the .Error or .Loaded states</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Error</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loaded</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingTo</span><span class="p">([</span><span class="o">.</span><span class="kt">Error</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loaded</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="s">"We just moved to either .Error or .Loaded"</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="c1">// do something after changing from the .loaded or .Error states</span>
-<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingFrom</span><span class="p">(</span><span class="o">.</span><span class="kt">Error</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loading</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
+<span class="n">stateMachine</span><span class="o">.</span><span class="nf">performAfterChangingFrom</span><span class="p">([</span><span class="o">.</span><span class="kt">Error</span><span class="p">,</span> <span class="o">.</span><span class="kt">Loading</span><span class="p">])</span> <span class="p">{</span> <span class="p">(</span><span class="n">destinationState</span><span class="p">,</span> <span class="n">startingState</span><span class="p">,</span> <span class="n">userInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="s">"We just moved from .Error or .Loading"</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -194,8 +184,8 @@
 
 <span class="c1">// or just attempt a change</span>
 <span class="k">do</span> <span class="p">{</span>
-    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">changeToState</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// succeeds</span>
-    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">changeToState</span><span class="p">(</span><span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// will check 'mySuccessCheck'</span>
+    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">changeTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Loading</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// succeeds</span>
+    <span class="k">try</span> <span class="n">stateMachine</span><span class="o">.</span><span class="nf">changeTo</span><span class="p">(</span><span class="o">.</span><span class="kt">Loaded</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// will check 'mySuccessCheck'</span>
 <span class="p">}</span>
 <span class="k">catch</span> <span class="kt">MyCustomError</span><span class="o">.</span><span class="kt">CustomErrorOne</span> <span class="p">{</span>
     <span class="c1">// handle your custom error case</span>
@@ -242,7 +232,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="http://seancatkinson.com" target="_blank" rel="external">SeanCAtkinson</a>. All rights reserved. (Last updated: 2016-07-23)</p>
+      <p>&copy; 2016 <a class="link" href="http://seancatkinson.com" target="_blank" rel="external">SeanCAtkinson</a>. All rights reserved. (Last updated: 2016-07-24)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

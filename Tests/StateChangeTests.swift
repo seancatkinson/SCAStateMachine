@@ -30,7 +30,7 @@ import Foundation
 class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanCreateStateChangeObjectsWithStartingStatesArray() {
-        let stateChange = StateChange(withDestinationStates: [TestStates.Testing], fromStartingStates: [TestStates.Pending])
+        let stateChange = StateChange(withDestinationStates: [TestState.Testing], fromStartingStates: [TestState.Pending])
         XCTAssertEqual(stateChange.destinationStates, [.Testing])
         XCTAssertEqual(stateChange.startingStates, [.Pending])
         XCTAssertTrue(stateChange.destinationStates.contains(.Testing))
@@ -40,7 +40,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
 // MARK:- Add State Change Rules
     func testCanAddToStateChangesFromMultipleStartingStates() {
         var stateMachine = createTestStateMachine(.Passed)
-        stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed)
+        stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Pending) else {
             XCTFail("Could not add a state change")
@@ -48,7 +48,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         }
         
         stateMachine = createTestStateMachine(.Failed)
-        stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed)
+        stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Pending) else {
             XCTFail("Could not add a state change")
@@ -58,7 +58,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanAddToStateChangesToMultipleDestinationStates() {
         let stateMachine = createTestStateMachine(.Testing)
-        stateMachine.allowChangingFrom(.Testing, to: .Passed, .Failed)
+        stateMachine.allowChangingFrom(.Testing, to: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Passed) else {
             XCTFail("Could not change from .Testing to .Passed")
@@ -73,7 +73,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanAddFromStateChangeRulesFromMultipleStartingStates() {
         var stateMachine = createTestStateMachine(.Passed)
-        stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed)
+        stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Pending) else {
             XCTFail("Could not add a state change")
@@ -81,7 +81,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         }
         
         stateMachine = createTestStateMachine(.Failed)
-        stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed)
+        stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Pending) else {
             XCTFail("Could not add a state change")
@@ -91,7 +91,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanAddFromStateChangeRulesToMultipleDestinationStates() {
         let stateMachine = createTestStateMachine(.Testing)
-        stateMachine.allowChangingFrom(.Testing, to: .Passed, .Failed)
+        stateMachine.allowChangingFrom(.Testing, to: [.Passed, .Failed])
         
         guard let _ = try? stateMachine.canChangeTo(.Passed) else {
             XCTFail("Could not add a state change")
@@ -125,7 +125,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCannotChangeStateWithoutCorrectRules() {
         let stateMachine = createTestStateMachine()
-        stateMachine.allowChangingTo(.Testing, from: .Pending)
+        stateMachine.allowChangingTo(.Testing, from: [.Pending])
         
         guard let _ = try? stateMachine.canChangeTo(.Testing) else {
             XCTFail("Could not change state to .Testing")
@@ -143,7 +143,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
     func testCanCheckStateChangeRulesAfterAddingCompleteRules() {
         let stateMachine = createTestStateMachine()
-        stateMachine.allowChangingTo(.Testing, from: .Pending)
+        stateMachine.allowChangingTo(.Testing, from: [.Pending])
         do {
             try stateMachine.canChangeTo(.Testing)
         }
@@ -158,7 +158,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
-            try stateMachine.changeToState(.Testing, userInfo: nil)
+            try stateMachine.changeTo(.Testing, userInfo: nil)
         }
         catch {
             XCTFail("Couldn't change the state")
@@ -170,7 +170,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
-            try stateMachine.changeToState(.Passed, userInfo: nil)
+            try stateMachine.changeTo(.Passed, userInfo: nil)
         }
         catch {
             return
@@ -182,7 +182,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         do {
-            try stateMachine.changeToState(.Passed, userInfo: nil)
+            try stateMachine.changeTo(.Passed, userInfo: nil)
         }
         catch {
             return
@@ -192,7 +192,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
     
 // MARK:- State Types
     func testCanUseStringsAsStateTypes() {
-        let stateMachine = StateMachine(startingOn: "One")
+        let stateMachine = StateMachine(initialState: "One")
         do {
             try stateMachine.canChangeTo("Two")
         }
@@ -202,7 +202,7 @@ class StateChangeTests: SCAStateMachineBaseTests {
         }
         
         do {
-            try stateMachine.changeToState("Two", userInfo: nil)
+            try stateMachine.changeTo("Two", userInfo: nil)
         }
         catch {
             XCTFail("Couldn't change the state")
@@ -223,6 +223,9 @@ class StateChangeTests: SCAStateMachineBaseTests {
         
         let stringFour = StateMachineError.InvalidStateMachineSetup.description
         XCTAssertTrue(stringFour.characters.count > 0)
+        
+        let stringFive = StateMachineError.InvalidStateMachineSetup.debugDescription
+        XCTAssertTrue(stringFive.characters.count > 0)
     }
 
 }

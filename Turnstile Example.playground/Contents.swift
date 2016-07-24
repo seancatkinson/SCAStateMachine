@@ -12,19 +12,13 @@ enum TurnstileState {
     case Unlocked
 }
 
-enum TurnstileEvent : String {
-    case Push
-    case Coin
-}
+let stateMachine = StateMachine(initialState: TurnstileState.Locked)
 
+stateMachine.performAfterChangingTo([.Locked]) { _,_,_ in lock() }
+stateMachine.performAfterChangingTo([.Unlocked]) { _,_,_ in unlock() }
 
-let stateMachine = StateMachine(startingOn: TurnstileState.Locked)
-
-stateMachine.performAfterChangingTo(.Locked) { _,_,_ in lock() }
-stateMachine.performAfterChangingTo(.Unlocked) { _,_,_ in unlock() }
-
-stateMachine.addStateTransition(named: "Coin", to: .Unlocked, from: .Locked)
-stateMachine.addStateTransition(named: "Push", to: .Locked, from: .Unlocked)
+stateMachine.addStateTransition(named: "Coin", from: [.Locked], to: .Unlocked)
+stateMachine.addStateTransition(named: "Push", from: [.Unlocked], to: .Locked)
 
 do {
     let destinationState = try stateMachine.canPerformTransition(named:"Coin")
@@ -36,6 +30,9 @@ catch {
 
 do {
     try stateMachine.performTransition(named:"Coin")
+    print(stateMachine.currentState)
+    try stateMachine.performTransition(named: "Push")
+    print(stateMachine.currentState)
 }
 catch {
     // catch UnspportedStateChange/NoTransitionMatchingName/Custom Errors

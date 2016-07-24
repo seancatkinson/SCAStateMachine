@@ -1,5 +1,3 @@
-COMBINE_HIDPI_IMAGES = YES
-
 INFOPLIST_FILE = Tests/Info.plist
 
 LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]           = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks

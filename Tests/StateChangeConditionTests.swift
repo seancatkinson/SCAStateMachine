@@ -35,7 +35,7 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
     func testCanSetConditions() {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
-        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) throws in
+        stateMachine.checkConditionBeforeChangingTo([.Testing]) { (destinationState, startingState, userInfo) throws in
             throw StateConditionErrors.ErrorOne
         }
         
@@ -55,12 +55,12 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         var number = 0
-        stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.checkConditionBeforeChangingFrom([.Pending]) { (destinationState, startingState, userInfo) -> () in
             number = 12
         }
         
         do {
-            try! stateMachine.changeToState(.Testing)
+            try! stateMachine.changeTo(.Testing)
         }
         
         XCTAssertEqual(number, 12)
@@ -70,11 +70,11 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         var number = 0
-        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.checkConditionBeforeChangingTo([.Testing]) { (destinationState, startingState, userInfo) -> () in
             number = 12
         }
         
-        try! stateMachine.changeToState(.Testing)
+        try! stateMachine.changeTo(.Testing)
         
         XCTAssertEqual(number, 12)
     }
@@ -84,14 +84,14 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         
         var number = 0
         
-        stateMachine.checkConditionBeforeChangingFrom(.Pending) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.checkConditionBeforeChangingFrom([.Pending]) { (destinationState, startingState, userInfo) -> () in
             number = number + 1
         }
-        stateMachine.checkConditionBeforeChangingTo(.Testing) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.checkConditionBeforeChangingTo([.Testing]) { (destinationState, startingState, userInfo) -> () in
             number = number + 1
         }
         
-        try! stateMachine.changeToState(.Testing)
+        try! stateMachine.changeTo(.Testing)
         
         XCTAssertEqual(number, 2)
     }
@@ -99,12 +99,12 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
     func testOnlyConditionsForSpecifiedStatesAreExecuted() {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
-        stateMachine.checkConditionBeforeChangingTo(.Passed) { (destinationState, startingState, userInfo) -> () in
+        stateMachine.checkConditionBeforeChangingTo([.Passed]) { (destinationState, startingState, userInfo) -> () in
             XCTFail("Condition shouldn't be executed")
         }
         
         do {
-            try! stateMachine.changeToState(.Testing)
+            try! stateMachine.changeTo(.Testing)
         }
     }
 

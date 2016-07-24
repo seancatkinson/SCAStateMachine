@@ -12,7 +12,7 @@ import Foundation
 
 class SCAStateMachineBaseTests: XCTestCase {
 
-    var stateMachine : StateMachine<TestStates>!
+    var stateMachine : StateMachine<TestState>!
     
     override func setUp() {
         super.setUp()
@@ -27,7 +27,7 @@ class SCAStateMachineBaseTests: XCTestCase {
 }
 
 // MARK:- Helper Methods
-enum TestStates : String, CustomStringConvertible {
+enum TestState : String, CustomStringConvertible {
     case Pending
     case Testing
     case Passed
@@ -38,13 +38,13 @@ enum TestStates : String, CustomStringConvertible {
     }
 }
 
-func createTestStateMachine(withStartingState: TestStates = TestStates.Pending) -> StateMachine<TestStates> {
-    return StateMachine(startingOn: withStartingState)
+func createTestStateMachine(withStartingState: TestState = TestState.Pending) -> StateMachine<TestState> {
+    return StateMachine(initialState: withStartingState)
 }
 
-func addTestStateRulesToTestStateMachine(stateMachine:StateMachine<TestStates>) -> StateMachine<TestStates> {
-    stateMachine.allowChangingFrom(.Pending, to: .Testing) // this indicates a test started
-    stateMachine.allowChangingFrom(.Testing, to:.Passed, .Failed) // this indicates test failed with a result
-    stateMachine.allowChangingTo(.Pending, from: .Passed, .Failed) // this allows restarting the test
+func addTestStateRulesToTestStateMachine(stateMachine:StateMachine<TestState>) -> StateMachine<TestState> {
+    stateMachine.allowChangingFrom(.Pending, to: [.Testing]) // this indicates a test started
+    stateMachine.allowChangingFrom(.Testing, to: [.Passed, .Failed]) // this indicates test failed with a result
+    stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed]) // this allows restarting the test
     return stateMachine
 }

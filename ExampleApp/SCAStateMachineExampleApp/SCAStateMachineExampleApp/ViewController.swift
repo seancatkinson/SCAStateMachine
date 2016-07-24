@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         // we'll set the target queue to a background queue we've created for
         // the sake of the example. Any actions you add to be performed will be
         // dispatched to this queue - unless you override it
-        machine = StateMachine(startingOn: Colour.White, targetQueue: self.backgroundQueue)
+        machine = StateMachine(initialState: Colour.White, targetQueue: self.backgroundQueue)
         
         // blue and red can move between each other
         // white can move to anything but can never go back...
@@ -36,19 +36,19 @@ class ViewController: UIViewController {
         // additional conditions are defined
         // define rules in the order you're most comfortable with 
         // from -> to  /  to -> from
-        machine.allowChangingTo(.Blue, from: .Red, .White)
-        machine.allowChangingTo(.Red, from: .Blue, .White)
+        machine.allowChangingTo(.Blue, from: [.Red, .White])
+        machine.allowChangingTo(.Red, from: [.Blue, .White])
         
         
         // add some conditions that must pass before a change will be allowed
         // to prevent a change, simply throw an error from your condition
         // the error will automatically bubble up to your do/try/catch
-        machine.checkConditionBeforeChangingFrom(.Blue) { (destinationState, startingState, userInfo) throws -> () in
+        machine.checkConditionBeforeChangingFrom([.Blue]) { (destinationState, startingState, userInfo) throws -> () in
             print("Check a condition before we move FROM Blue")
             print("We are currently: \(startingState)")
             print("We want to move to: \(destinationState)")
         }
-        machine.checkConditionBeforeChangingTo(.Blue) { (destinationState, startingState, userInfo) throws -> () in
+        machine.checkConditionBeforeChangingTo([.Blue]) { (destinationState, startingState, userInfo) throws -> () in
             print("Check a condition before we move TO Blue")
             print("We are currently: \(startingState)")
             print("We want to move to: \(destinationState)")
@@ -66,11 +66,11 @@ class ViewController: UIViewController {
 
         // because we're doing UI work, let's override the target queue to be
         // the main queue
-        machine.performAfterChangingTo(.Blue, onQueue:dispatch_get_main_queue()) { (destinationState, startingState, userInfo) -> () in
+        machine.performAfterChangingTo([.Blue], onQueue:dispatch_get_main_queue()) { (destinationState, startingState, userInfo) -> () in
             print("We just changed to Blue")
             self.view.backgroundColor = UIColor.blueColor()
         }
-        machine.performAfterChangingTo(.Red, onQueue:dispatch_get_main_queue()) { (destinationState, startingState, userInfo) -> () in
+        machine.performAfterChangingTo([.Red], onQueue:dispatch_get_main_queue()) { (destinationState, startingState, userInfo) -> () in
             print("We just changed to Red")
             self.view.backgroundColor = UIColor.redColor()
         }
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     
     @IBAction func blueButtonPressed() {
         do {
-            try machine.changeToState(.Blue)
+            try machine.changeTo(.Blue)
         }
         catch let error {
             print("An error occurred when changing the background to blue. Error: \(error)")
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     
     @IBAction func redButtonPressed() {
         do {
-            try machine.changeToState(.Red)
+            try machine.changeTo(.Red)
         }
         catch let error {
             print("An error occurred when changing the background to red. Error: \(error)")

@@ -15,29 +15,29 @@ func mySuccessCheck() -> Bool {
     return true
 }
 
-let stateMachine = StateMachine(startingOn: LoadingState.Ready)
+let stateMachine = StateMachine(initialState: LoadingState.Ready)
 
 // ready, loaded and error states can all move to .Loading
-stateMachine.allowChangingTo(.Loading, from: .Ready, .Loaded, .Error)
+stateMachine.allowChangingTo(.Loading, from: [.Ready, .Loaded, .Error])
 
 // .Loading states can move to both .Loaded and .Error states
-stateMachine.allowChangingFrom(.Loading, to: .Loaded, .Error)
+stateMachine.allowChangingFrom(.Loading, to: [.Loaded, .Error])
 
 // GATES: - Run a custom closure before a change is attempted to check if it should be allowed to go ahead
 // Throw custom errors from these closures and they will be picked up later :)
-stateMachine.checkConditionBeforeChangingTo(.Loaded) { (destinationState, startingState, userInfo) -> () in
+stateMachine.checkConditionBeforeChangingTo([.Loaded]) { (destinationState, startingState, userInfo) -> () in
     if mySuccessCheck() == false {
         throw MyCustomError.CustomErrorOne
     }
 }
 
 // do something after changing to the .Error or .Loaded states
-stateMachine.performAfterChangingTo(.Error, .Loaded) { (destinationState, startingState, userInfo) -> () in
+stateMachine.performAfterChangingTo([.Error, .Loaded]) { (destinationState, startingState, userInfo) -> () in
     print("We just moved to either .Error or .Loaded")
 }
 
 // do something after changing from the .loaded or .Error states
-stateMachine.performAfterChangingFrom(.Error, .Loading) { (destinationState, startingState, userInfo) -> () in
+stateMachine.performAfterChangingFrom([.Error, .Loading]) { (destinationState, startingState, userInfo) -> () in
     print("We just moved from .Error or .Loading")
 }
 
@@ -60,8 +60,8 @@ catch {
 
 // or just attempt a change
 do {
-    try stateMachine.changeToState(.Loading, userInfo: nil) // succeeds
-    try stateMachine.changeToState(.Loaded, userInfo: nil) // will check 'mySuccessCheck'
+    try stateMachine.changeTo(.Loading, userInfo: nil) // succeeds
+    try stateMachine.changeTo(.Loaded, userInfo: nil) // will check 'mySuccessCheck'
 }
 catch MyCustomError.CustomErrorOne {
     // handle your custom error case
