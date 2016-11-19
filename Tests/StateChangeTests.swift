@@ -212,19 +212,19 @@ class StateChangeTests: SCAStateMachineBaseTests {
     }
     
     func testStateMachineErrorHasDescription() {
-        let string = StateMachineError.UnsupportedStateChange.description
+        let string = StateMachineError.unsupportedStateChange.description
         XCTAssertTrue(string.characters.count > 0)
         
-        let stringTwo = StateMachineError.AlreadyInRequestedState.description
+        let stringTwo = StateMachineError.alreadyInRequestedState.description
         XCTAssertTrue(stringTwo.characters.count > 0)
         
-        let stringThree = StateMachineError.NoTransitionMatchingName("Hello").description
+        let stringThree = StateMachineError.noTransitionMatchingName("Hello").description
         XCTAssertTrue(stringThree.characters.count > 0)
         
-        let stringFour = StateMachineError.InvalidStateMachineSetup.description
+        let stringFour = StateMachineError.invalidStateMachineSetup.description
         XCTAssertTrue(stringFour.characters.count > 0)
         
-        let stringFive = StateMachineError.InvalidStateMachineSetup.debugDescription
+        let stringFive = StateMachineError.invalidStateMachineSetup.debugDescription
         XCTAssertTrue(stringFive.characters.count > 0)
     }
 

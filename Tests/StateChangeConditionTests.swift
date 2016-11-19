@@ -25,9 +25,9 @@ import XCTest
 import Foundation
 @testable import SCAStateMachine
 
-enum StateConditionErrors : ErrorType {
-    case ErrorOne
-    case ErrorTwo
+enum StateConditionErrors : Error {
+    case errorOne
+    case errorTwo
 }
 
 class StateChangeConditionTests: SCAStateMachineBaseTests {
@@ -36,13 +36,13 @@ class StateChangeConditionTests: SCAStateMachineBaseTests {
         stateMachine = addTestStateRulesToTestStateMachine(stateMachine)
         
         stateMachine.checkConditionBeforeChangingTo([.Testing]) { (destinationState, startingState, userInfo) throws in
-            throw StateConditionErrors.ErrorOne
+            throw StateConditionErrors.errorOne
         }
         
         do {
             try stateMachine.canChangeTo(.Testing)
         }
-        catch StateConditionErrors.ErrorOne {
+        catch StateConditionErrors.errorOne {
             return
         }
         catch {}

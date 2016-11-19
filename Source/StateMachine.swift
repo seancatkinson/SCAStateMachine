@@ -25,41 +25,41 @@ import Foundation
 
 
 /// State machine object that tracks a single state at a time. Allows moving between states via transitions and manually.
-public class StateMachine <T where T: Hashable>
+open class StateMachine <T> where T: Hashable
 {
 // MARK: TypeAliases
-    public typealias changeCondition = (destinationState:T, startingState:T, userInfo:Any?) throws -> ()
-    public typealias changeAction = (destinationState:T, startingState:T, userInfo:Any?)->()
-    typealias changeActionTuple = (queue:dispatch_queue_t?, action:changeAction)
+    public typealias changeCondition = (_ destinationState:T, _ startingState:T, _ userInfo:Any?) throws -> ()
+    public typealias changeAction = (_ destinationState:T, _ startingState:T, _ userInfo:Any?)->()
+    typealias changeActionTuple = (queue:DispatchQueue?, action:changeAction)
     
 // MARK: - Private State
-    private let machineQueue = dispatch_queue_create("com.seancatkinson.SCAStateMachine.MachineQueue", DISPATCH_QUEUE_SERIAL)
-    private let targetQueue : dispatch_queue_t
+    fileprivate let machineQueue = DispatchQueue(label: "com.seancatkinson.SCAStateMachine.MachineQueue", attributes: [])
+    fileprivate let targetQueue : DispatchQueue
     
     /// PRIVATE: Array of state change rules
-    private var _stateChangeRules : [StateChange<T>] = []
+    fileprivate var _stateChangeRules : [StateChange<T>] = []
     
     /// PRIVATE: Dictionary of state transitions
-    private var _stateTransitions : [String:StateTransition<T>] = [:]
+    fileprivate var _stateTransitions : [String:StateTransition<T>] = [:]
     
     /// PRIVATE: state change conditions
-    private var _willChangeFromStateConditions : Dictionary<T, [changeCondition]> = [:]
-    private var _willChangeToStateConditions : Dictionary<T, [changeCondition]> = [:]
+    fileprivate var _willChangeFromStateConditions : Dictionary<T, [changeCondition]> = [:]
+    fileprivate var _willChangeToStateConditions : Dictionary<T, [changeCondition]> = [:]
 
     /// PRIVATE: state change actions
-    private var _didChangeToStateActions : Dictionary<T, changeActionTuple> = [:]
-    private var _didChangeFromStateActions : Dictionary<T, changeActionTuple> = [:]
-    private var _didChangeStateAction: changeActionTuple?
+    fileprivate var _didChangeToStateActions : Dictionary<T, changeActionTuple> = [:]
+    fileprivate var _didChangeFromStateActions : Dictionary<T, changeActionTuple> = [:]
+    fileprivate var _didChangeStateAction: changeActionTuple?
     
 // MARK: Current State
     /// PRIVATE: The backing store for the current state of the machine
-    private var _currentState : T
+    fileprivate var _currentState : T
     
     
     /// The current state of the State Machine
-    public var currentState : T {
+    open var currentState : T {
         var state : T?
-        dispatch_sync(self.machineQueue) { state = self._currentState }
+        self.machineQueue.sync { state = self._currentState }
         return state!
     }
     
@@ -72,7 +72,7 @@ public class StateMachine <T where T: Hashable>
     
     - Returns: the state Machine
 */
-    public init(initialState: T, targetQueue : dispatch_queue_t = dispatch_get_main_queue()) {
+    public init(initialState: T, targetQueue : DispatchQueue = DispatchQueue.main) {
         self._currentState = initialState
         self.targetQueue = targetQueue
     }
@@ -87,18 +87,18 @@ public class StateMachine <T where T: Hashable>
     - Parameter destinationState: the state you want to check
     - Parameter userInfo: any extra info you want to pass to your State change actions
 */
-    public func canChangeTo(destinationState: T, userInfo:Any?=nil) throws {
-        var error : ErrorType?
+    open func canChangeTo(_ destinationState: T, userInfo:Any?=nil) throws {
+        var error : Error?
         
-        dispatch_sync(self.machineQueue) {
+        self.machineQueue.sync {
             do {
                 guard self._currentState != destinationState else {
-                    throw StateMachineError.AlreadyInRequestedState
+                    throw StateMachineError.alreadyInRequestedState
                 }
                 
                 let stateChangeExists = self.stateChangeExistsForStartingState(self._currentState, destinationState: destinationState)
                 guard stateChangeExists == true else {
-                    throw StateMachineError.UnsupportedStateChange
+                    throw StateMachineError.unsupportedStateChange
                 }
                 
                 let fromConditions = self._willChangeFromStateConditions[self._currentState]
@@ -129,18 +129,18 @@ public class StateMachine <T where T: Hashable>
     
     - Returns: the state that the transition will move to
 */
-    public func canPerformTransition(named name:String, userInfo:Any?=nil) throws -> T {
+    open func canPerformTransition(named name:String, userInfo:Any?=nil) throws -> T {
         var destinationState : T?
         
         do {
-            var error : ErrorType?
+            var error : Error?
             var maybeTransition : StateTransition<T>?
             
-            dispatch_sync(self.machineQueue) {
+            self.machineQueue.sync {
                 maybeTransition = self._stateTransitions[name]
                 
                 guard let transition = maybeTransition else {
-                    error = StateMachineError.NoTransitionMatchingName(name)
+                    error = StateMachineError.noTransitionMatchingName(name)
                     return
                 }
                 
@@ -170,7 +170,7 @@ public class StateMachine <T where T: Hashable>
     
     - Returns: a bool success value
 */
-    func stateChangeExistsForStartingState(startingState:T, destinationState:T) -> Bool {
+    func stateChangeExistsForStartingState(_ startingState:T, destinationState:T) -> Bool {
         guard self._stateChangeRules.count > 0 else {
             return true
         }
@@ -190,10 +190,10 @@ public class StateMachine <T where T: Hashable>
     - Parameter destinationState:
     - Parameter withUserInfo:
 */
-    func allConditionsPass(conditions:[changeCondition]?, forStartingState startingState:T, destinationState:T, withUserInfo userInfo:Any?=nil) throws {
+    func allConditionsPass(_ conditions:[changeCondition]?, forStartingState startingState:T, destinationState:T, withUserInfo userInfo:Any?=nil) throws {
         if let conditions = conditions {
             for condition in conditions {
-                try condition(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
+                try condition(destinationState, startingState, userInfo)
             }
         }
     }
@@ -201,25 +201,25 @@ public class StateMachine <T where T: Hashable>
 // MARK: Perform State Changes
     
     // change the state and perform the stored actions
-    func performStateChangeActionsFor(startingState: T, destinationState: T, userInfo:Any? = nil) {
-        dispatch_async(self.machineQueue) {
+    func performStateChangeActionsFor(_ startingState: T, destinationState: T, userInfo:Any? = nil) {
+        self.machineQueue.async {
             
             self._currentState = destinationState
             
             // did change actions
             if let didChangeToActionTuple = self._didChangeToStateActions[destinationState] {
-                dispatch_async(didChangeToActionTuple.queue ?? self.targetQueue) {
-                    didChangeToActionTuple.action(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
+                (didChangeToActionTuple.queue ?? self.targetQueue).async {
+                    didChangeToActionTuple.action(destinationState, startingState, userInfo)
                 }
             }
             if let didChangeFromActionTuple = self._didChangeFromStateActions[startingState] {
-                dispatch_async(didChangeFromActionTuple.queue ?? self.targetQueue) {
-                    didChangeFromActionTuple.action(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
+                (didChangeFromActionTuple.queue ?? self.targetQueue).async {
+                    didChangeFromActionTuple.action(destinationState, startingState, userInfo)
                 }
             }
             if let didChangeStateActionTuple = self._didChangeStateAction {
-                dispatch_async(didChangeStateActionTuple.queue ?? self.targetQueue) {
-                    didChangeStateActionTuple.action(destinationState: destinationState, startingState: startingState, userInfo: userInfo)
+                (didChangeStateActionTuple.queue ?? self.targetQueue).async {
+                    didChangeStateActionTuple.action(destinationState, startingState, userInfo)
                 }
             }
         }
@@ -249,7 +249,7 @@ public class StateMachine <T where T: Hashable>
         - `<Your Error Here>` if you throw from any of the conditions you
     have defined matching this state change
 */
-    public func changeTo(destinationState: T, userInfo:Any?=nil) throws {
+    open func changeTo(_ destinationState: T, userInfo:Any?=nil) throws {
         // this will dispatch_sync for us
         try self.canChangeTo(destinationState, userInfo: userInfo)
         
@@ -273,7 +273,7 @@ public class StateMachine <T where T: Hashable>
     - Parameter state: the state you want to change to
     - Parameter userInfo: any extra info you want to pass to your State change actions
 */
-    public func performTransition(named name:String, userInfo:Any?=nil) throws {
+    open func performTransition(named name:String, userInfo:Any?=nil) throws {
         // this will dispatch_sync for us
         let destinationState = try self.canPerformTransition(named: name)
         
@@ -286,8 +286,8 @@ public class StateMachine <T where T: Hashable>
 // MARK: - Add State Change Rules
     
     // Base Helper method to add state change rules
-    func addStateChangeRulesFrom(startingStates: [T], to destinationStates: [T]) {
-        dispatch_async(self.machineQueue) {
+    func addStateChangeRulesFrom(_ startingStates: [T], to destinationStates: [T]) {
+        self.machineQueue.async {
             let change = StateChange(withDestinationStates: destinationStates, fromStartingStates: startingStates)
             if !self._stateChangeRules.contains(change) {
                 self._stateChangeRules.append(change)
@@ -301,7 +301,7 @@ public class StateMachine <T where T: Hashable>
     - Parameter destinationState: the state you want to allow movement to
     - Parameter from: a list of states that will allow moving to the destinationState
 */
-    public func allowChangingTo(destinationState: T, from startingStates: [T]) {
+    open func allowChangingTo(_ destinationState: T, from startingStates: [T]) {
         guard startingStates.count > 0 else { return }
         
         self.addStateChangeRulesFrom(startingStates, to: [destinationState])
@@ -313,7 +313,7 @@ public class StateMachine <T where T: Hashable>
     - Parameter startingState: a state that will allow moving to the destinationStates
     - Parameter to: the list of states you want to allow movement to
 */
-    public func allowChangingFrom(startingState: T, to destinationStates: [T]) {
+    open func allowChangingFrom(_ startingState: T, to destinationStates: [T]) {
         guard destinationStates.count > 0 else { return }
         
         self.addStateChangeRulesFrom([startingState], to: destinationStates)
@@ -327,10 +327,10 @@ public class StateMachine <T where T: Hashable>
     - Parameter to: the state you want to allow movement to
     - Parameter from: a list of states that will allow moving to the destinationState
 */
-    public func addStateTransition(named name:String, from startingStates: [T], to destinationState:T) {
+    open func addStateTransition(named name:String, from startingStates: [T], to destinationState:T) {
         guard startingStates.count > 0 else { return }
         
-        dispatch_async(self.machineQueue) {
+        self.machineQueue.async {
             let transition = StateTransition(named: name, to: destinationState, from: startingStates)
             self._stateTransitions[name] = transition
             self.addStateChangeRulesFrom(startingStates, to: [destinationState])
@@ -351,10 +351,10 @@ public class StateMachine <T where T: Hashable>
     - Parameter states: an array of states to add the condition for
     - Parameter closure: the block to perform
 */
-    public func checkConditionBeforeChangingFrom(states: [T], condition:changeCondition) {
+    open func checkConditionBeforeChangingFrom(_ states: [T], condition:@escaping changeCondition) {
         guard states.count > 0 else { return }
         
-        dispatch_async(self.machineQueue) {
+        self.machineQueue.async {
             for state in states {
                 var stateConditionsArray:[changeCondition]!  = self._willChangeFromStateConditions[state] ?? []
                 stateConditionsArray.append(condition)
@@ -374,10 +374,10 @@ public class StateMachine <T where T: Hashable>
     - Parameter states: an array of states to add the condition for
     - Parameter closure: the block to perform
 */
-    public func checkConditionBeforeChangingTo(states: [T], condition:changeCondition) {
+    open func checkConditionBeforeChangingTo(_ states: [T], condition:@escaping changeCondition) {
         guard states.count > 0 else { return }
         
-        dispatch_async(self.machineQueue) {
+        self.machineQueue.async {
             for state in states {
                 var stateConditionsArray:[changeCondition]!  = self._willChangeToStateConditions[state] ?? []
                 stateConditionsArray.append(condition)
@@ -393,8 +393,8 @@ public class StateMachine <T where T: Hashable>
     
     - Parameter closure: the block to be executed when the state machine did change to the provided state
 */
-    public func performAfterChanging(onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
-        dispatch_async(self.machineQueue) {
+    open func performAfterChanging(onQueue queue:DispatchQueue? = nil, closure:@escaping changeAction) {
+        self.machineQueue.async {
             self._didChangeStateAction = (queue, closure)
         }
     }
@@ -405,10 +405,10 @@ public class StateMachine <T where T: Hashable>
     - Parameter closure: the block to be executed when the state machine did change to the provided states
     - Parameter states: the states to add the action for
 */
-    public func performAfterChangingTo(states: [T], onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
+    open func performAfterChangingTo(_ states: [T], onQueue queue:DispatchQueue? = nil, closure:@escaping changeAction) {
         guard states.count > 0 else { return }
         
-        dispatch_async(self.machineQueue) {
+        self.machineQueue.async {
             for state in states {
                 self._didChangeToStateActions[state] = (queue, closure)
             }
@@ -421,10 +421,10 @@ public class StateMachine <T where T: Hashable>
      - Parameter states: the states to add the action for
      - Parameter closure: the block to be executed when the state machine did change from the provided states
 */
-    public func performAfterChangingFrom(states: [T], onQueue queue:dispatch_queue_t? = nil, closure:changeAction) {
+    open func performAfterChangingFrom(_ states: [T], onQueue queue:DispatchQueue? = nil, closure:@escaping changeAction) {
         guard states.count > 0 else { return }
         
-        dispatch_async(self.machineQueue) {
+        self.machineQueue.async {
             for state in states {
                 self._didChangeFromStateActions[state] = (queue, closure)
             }
@@ -433,7 +433,7 @@ public class StateMachine <T where T: Hashable>
 }
 
 // MARK:- StateChange Definition
-struct StateChange <T where T:Equatable> {
+struct StateChange <T> where T:Equatable {
     var destinationStates : [T] = []
     var startingStates : [T] = []
     
@@ -445,12 +445,12 @@ struct StateChange <T where T:Equatable> {
 
 extension StateChange : Equatable {}
 
-func ==<T where T:Equatable>(lhs:StateChange<T>, rhs:StateChange<T>) -> Bool {
+func ==<T>(lhs:StateChange<T>, rhs:StateChange<T>) -> Bool where T:Equatable {
     return lhs.destinationStates != rhs.destinationStates && lhs.startingStates == rhs.startingStates
 }
 
 // MARK: - State Change Event Definition
-struct StateTransition <T where T:Equatable> {
+struct StateTransition <T> where T:Equatable {
     let name : String
     var stateChange : StateChange<T>
     
@@ -463,18 +463,18 @@ struct StateTransition <T where T:Equatable> {
 
 
 /// Default errors for the state machine to throw regarding issues with invalid use of the state machine
-public enum StateMachineError: ErrorType {
+public enum StateMachineError: Error {
     /// A change in state has been attempted that is not allowed because at least one rule has been created but none that match moving from the current state to the attempted state
-    case UnsupportedStateChange
+    case unsupportedStateChange
     
     /// A change in state has been attempted when the state machine is already in the requested state
-    case AlreadyInRequestedState
+    case alreadyInRequestedState
     
     /// A transition has been attempted that does not exist on this state machine
-    case NoTransitionMatchingName(String)
+    case noTransitionMatchingName(String)
     
     /// The state machine has an invalid setup. Thrown when a transition is attempted to a state that does not exist.
-    case InvalidStateMachineSetup
+    case invalidStateMachineSetup
 }
 
 
@@ -483,13 +483,13 @@ extension StateMachineError : CustomStringConvertible, CustomDebugStringConverti
     /// Provides a description of the state machine error
     public var description : String {
         switch self {
-        case .UnsupportedStateChange:
+        case .unsupportedStateChange:
             return "Attempted state change is not supported"
-        case .AlreadyInRequestedState:
+        case .alreadyInRequestedState:
             return "Already in the state you're trying to change to"
-        case .NoTransitionMatchingName(let name):
+        case .noTransitionMatchingName(let name):
             return "You have not added a transition named: \(name)"
-        case InvalidStateMachineSetup:
+        case .invalidStateMachineSetup:
             return "Invalid State Machine Setup"
         }
     }

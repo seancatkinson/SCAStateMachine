@@ -38,11 +38,11 @@ enum TestState : String, CustomStringConvertible {
     }
 }
 
-func createTestStateMachine(withStartingState: TestState = TestState.Pending) -> StateMachine<TestState> {
+func createTestStateMachine(_ withStartingState: TestState = TestState.Pending) -> StateMachine<TestState> {
     return StateMachine(initialState: withStartingState)
 }
 
-func addTestStateRulesToTestStateMachine(stateMachine:StateMachine<TestState>) -> StateMachine<TestState> {
+func addTestStateRulesToTestStateMachine(_ stateMachine:StateMachine<TestState>) -> StateMachine<TestState> {
     stateMachine.allowChangingFrom(.Pending, to: [.Testing]) // this indicates a test started
     stateMachine.allowChangingFrom(.Testing, to: [.Passed, .Failed]) // this indicates test failed with a result
     stateMachine.allowChangingTo(.Pending, from: [.Passed, .Failed]) // this allows restarting the test

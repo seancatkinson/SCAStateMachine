@@ -442,9 +442,11 @@
 					96E1DBED1B19D58E000DBF49 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 994W3RC44F;
+						LastSwiftMigration = 0810;
 					};
 					96E1DBF81B19D58E000DBF49 = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -1144,6 +1146,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1193,6 +1196,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1249,6 +1253,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = "$(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1293,6 +1298,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @executable_path/../Frameworks  @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.seancatkinson.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = "$(inherited)";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

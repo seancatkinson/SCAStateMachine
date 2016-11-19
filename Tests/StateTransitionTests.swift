@@ -16,7 +16,7 @@ class StateTransitionTests: SCAStateMachineBaseTests {
         self.stateMachine.addStateTransition(named: "test", from: [.Pending], to: .Testing)
         
         do {
-            try self.stateMachine.canPerformTransition(named: "test")
+            _ = try self.stateMachine.canPerformTransition(named: "test")
             XCTAssertTrue(true)
         }
         catch {
@@ -26,10 +26,10 @@ class StateTransitionTests: SCAStateMachineBaseTests {
     
     func testWillCatchUndefinedTransitions() {
         do {
-            try self.stateMachine.canPerformTransition(named: "test")
+            _ = try self.stateMachine.canPerformTransition(named: "test")
             XCTFail("Should throw before we get here")
         }
-        catch StateMachineError.NoTransitionMatchingName(let name) {
+        catch StateMachineError.noTransitionMatchingName(let name) {
             XCTAssertEqual(name, "test")
         }
         catch {
@@ -39,7 +39,7 @@ class StateTransitionTests: SCAStateMachineBaseTests {
     
     func testWillPerformTransitions() {
         
-        let expectation = self.expectationWithDescription("Should be performed")
+        let expectation = self.expectation(description: "Should be performed")
         
         self.stateMachine.addStateTransition(named: "test", from: [.Pending], to: .Testing)
         self.stateMachine.performAfterChangingFrom([.Pending]) { (destinationState, startingState, userInfo) -> () in
@@ -53,7 +53,7 @@ class StateTransitionTests: SCAStateMachineBaseTests {
             XCTFail("This shoudn't fail")
         }
         
-        self.waitForExpectationsWithTimeout(0.5, handler: nil)
+        self.waitForExpectations(timeout: 0.5, handler: nil)
     }
 
 }
