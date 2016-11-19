@@ -9,6 +9,7 @@
 cd ../
 jazzy \
   --clean \
+  --module SCAStateMachine \
   --author SeanCAtkinson \
   --author_url http://seancatkinson.com \
   --github_url https://github.com/seancatkinson/SCAStateMachine \
